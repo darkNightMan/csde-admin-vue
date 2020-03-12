@@ -1,22 +1,11 @@
 <template>
 <div>
-  <tabs></tabs>
    <div class="mainContent">
-    <el-table :data="tableData">
-      <el-table-column prop="date" label="日期" width="140">
-      </el-table-column>
-      <el-table-column prop="name" label="姓名" width="120">
-      </el-table-column>
-      <el-table-column prop="address" label="地址">
-      </el-table-column>
-    </el-table>
   </div>
 </div>
 </template>
 
 <script>
-import tabs from './tabs'
-
 export default {
   name: 'Main',
   data () {
@@ -29,8 +18,11 @@ export default {
       tableData: Array(20).fill(item)
     }
   },
+  created () {
+    console.log(this.$router.options.routes)
+    console.log(this.$route)
+  },
   components: {
-    tabs
   }
 }
 </script>

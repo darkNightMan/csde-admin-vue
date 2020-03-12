@@ -1,10 +1,11 @@
 <template>
-  <div>文章列表</div>
+  <div>test2</div>
 </template>
 
 <script>
 export default {
-
+  created () {
+  }
 }
 </script>
 
