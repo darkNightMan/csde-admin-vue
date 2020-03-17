@@ -3,8 +3,8 @@
     <form class="login-form">
       <div class="login-title">博客后台登入</div>
       <el-form  :model="loginForm"  ref="loginForm" :rules="loginRule">
-        <el-form-item label="" prop="userName"  icon="el-icon-user">
-          <el-input  class="el-icon-user-solid"  placeholder="请输入内容"  v-model="loginForm.userName"  clearable></el-input>
+        <el-form-item label="" prop="phone"  icon="el-icon-user">
+          <el-input  class="el-icon-user-solid"  placeholder="请输入内容"  v-model="loginForm.phone"  clearable></el-input>
         </el-form-item>
         <el-form-item label="" prop="password">
           <el-input placeholder="请输入密码" v-model="loginForm.password" show-password></el-input>
@@ -18,15 +18,18 @@
 </template>
 
 <script>
+import { api } from '@/request/api.js'
+import { mapMutations } from 'vuex'
+
 export default {
   data () {
     return {
       loginForm: {
-        password: '',
-        userName: ''
+        phone: '',
+        password: ''
       },
       loginRule: {
-        userName: [
+        phone: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
         password: [
@@ -36,11 +39,16 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('user', ['setToken']),
     submint (formName) {
-      debugger
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert('submit!')
+          let { data, code } = await this.Req.post(api.login, this.loginForm)
+          if (code === 200) {
+            this.setToken(data.token)
+            window.localStorage.setItem('token', data.token)
+            this.$router.push('/home')
+          }
         } else {
           console.log('error submit!!')
           return false
@@ -59,7 +67,8 @@ export default {
     overflow: hidden;
 }
 .login-form{
-  padding: 150px 700px;
+  width: 400px;
+  margin: 300px auto;
 }
 .login-title{
   font-size: 32px;

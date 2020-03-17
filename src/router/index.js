@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-const login = resolve => require(['@/pages/login'], resolve)
+const login = resolve => require(['@/pages/login/index'], resolve)
 const test = resolve => require(['@/pages/test'], resolve)
 const test2 = resolve => require(['@/pages/test2'], resolve)
 const layout = resolve => require(['@/pages/layout/index'], resolve)
@@ -63,6 +63,7 @@ let router = new Router({
 
 // 拦截登录，token验证
 router.beforeEach((to, from, next) => {
+  debugger
   if (to.meta.requireAuth === undefined) {
     next()
     // if (store.state.token) {
