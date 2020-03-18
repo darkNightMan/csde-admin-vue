@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <form class="login-form">
-      <div class="login-title">博客后台登入</div>
+      <!-- <div class="login-title">博客后台登入</div> -->
       <el-form  :model="loginForm"  ref="loginForm" :rules="loginRule">
         <el-form-item label="" prop="phone"  icon="el-icon-user">
           <el-input  class="el-icon-user-solid"  placeholder="请输入内容"  v-model="loginForm.phone"  clearable></el-input>

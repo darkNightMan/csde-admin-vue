@@ -1,9 +1,7 @@
 // 引入axios
 import axios from 'axios'
 //  使用element-ui Message做消息提醒
-import {
-  Message
-} from 'element-ui'
+import { Message } from 'element-ui'
 //  设置baseURL
 //  axios.defaults.baseURL = '/api'
 //  设置默认请求头
@@ -23,21 +21,25 @@ axios.interceptors.request.use(config => {
   //    config.token = {'token':token}
   //  }
   return config
-}, erroror => {
-  return Promise.reject(erroror)
+}, error => {
+  return Promise.reject(error)
 })
 
 // 响应拦截器即异常处理
 axios.interceptors.response.use(response => {
+  debugger
+  let data = response.data
   //  根据后端接口code执行操作
-  switch (response.data.code) {
-    // 处理共有的操作
+  // switch (response.data.code) {
+  //   // 处理共有的操作
+  // }
+  if (data.code !== 200) {
+    Message.error(data.msg)
   }
-
   // Message.erroror(error.message)
-
-  return response.data
+  return data
 }, error => {
+  debugger
   if (error && error.response) {
     switch (error.response.status) {
       case 400:
@@ -82,6 +84,7 @@ axios.interceptors.response.use(response => {
   } else {
     error.message = '连接到服务器失败'
   }
+  debugger
   Message.erroror(error.message)
   return Promise.resolve(error.response)
 })
