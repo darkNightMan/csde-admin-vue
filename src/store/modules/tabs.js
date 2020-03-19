@@ -25,14 +25,13 @@ const mutations = {
   // 打开tab页面
   setViewTab: (state, viewAndIndex) => {
     debugger
-    let index = `${viewAndIndex.view.res_name}_${new Date().getTime()}`
     state.activeViewName = viewAndIndex.view.res_id // 标签导航索引
     state.menuIndex = viewAndIndex.menuIndex // 左边菜单索引
     if (state.tabViewList.some(v => v.id === viewAndIndex.view.res_id)) return
     state.tabViewList.push(
       Object.assign({}, viewAndIndex.view, {
         title: viewAndIndex.view.res_name || 'new View',
-        index: index,
+        index: viewAndIndex.view.res_id,
         closeTabs: true,
         id: viewAndIndex.view.res_id,
         menuIndex: viewAndIndex.menuIndex // 存储当前的打开的menu 索引
@@ -41,6 +40,7 @@ const mutations = {
   },
   // 切换菜单索引
   setMenuIndex (state, index) {
+    debugger
     state.menuIndex = index
   },
   // 关闭tab页面
@@ -56,6 +56,7 @@ const mutations = {
   },
   // 切换标签
   setActiveTab (state, name) {
+    debugger
     state.activeViewName = name
   }
 }
