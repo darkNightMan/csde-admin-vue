@@ -16,7 +16,6 @@
     </form>
   </div>
 </template>
-
 <script>
 import { api } from '@/request/api.js'
 import { mapMutations } from 'vuex'
@@ -39,13 +38,13 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('user', ['setToken']),
+    ...mapMutations('user', ['setUserInfo']),
     submint (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           let { data, code } = await this.Req.post(api.login, this.loginForm)
           if (code === 200) {
-            this.setToken(data.token)
+            this.setUserInfo(data)
             window.localStorage.setItem('token', data.token)
             this.$router.push('/home')
           }

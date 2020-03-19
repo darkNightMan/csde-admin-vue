@@ -4,9 +4,8 @@ const state = {
   tabViewList: [
     {
       path: 'home',
-      name: '首页',
       component: home,
-      index: '首页',
+      res_name: '首页',
       closeTabs: false // 默认首页不能关闭
     }
   ],
@@ -25,15 +24,17 @@ const actions = {
 const mutations = {
   // 打开tab页面
   setViewTab: (state, viewAndIndex) => {
-    let index = `${viewAndIndex.view.name}_${new Date().getTime()}`
-    state.activeViewName = index
-    state.menuIndex = viewAndIndex.menuIndex
-    if (state.tabViewList.some(v => v.path === viewAndIndex.view.path)) return
+    debugger
+    let index = `${viewAndIndex.view.res_name}_${new Date().getTime()}`
+    state.activeViewName = viewAndIndex.view.res_id // 标签导航索引
+    state.menuIndex = viewAndIndex.menuIndex // 左边菜单索引
+    if (state.tabViewList.some(v => v.id === viewAndIndex.view.res_id)) return
     state.tabViewList.push(
       Object.assign({}, viewAndIndex.view, {
-        title: viewAndIndex.view.meta.title || 'new View',
+        title: viewAndIndex.view.res_name || 'new View',
         index: index,
         closeTabs: true,
+        id: viewAndIndex.view.res_id,
         menuIndex: viewAndIndex.menuIndex // 存储当前的打开的menu 索引
       })
     )

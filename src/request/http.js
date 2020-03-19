@@ -14,7 +14,8 @@ axios.defaults.timeout = 10000
 //  请求拦截器
 axios.interceptors.request.use(config => {
   config.headers = {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'token': window.localStorage.getItem('token')
   }
   //  配置token
   //  if(token){
@@ -27,7 +28,6 @@ axios.interceptors.request.use(config => {
 
 // 响应拦截器即异常处理
 axios.interceptors.response.use(response => {
-  debugger
   let data = response.data
   //  根据后端接口code执行操作
   // switch (response.data.code) {
@@ -39,7 +39,6 @@ axios.interceptors.response.use(response => {
   // Message.erroror(error.message)
   return data
 }, error => {
-  debugger
   if (error && error.response) {
     switch (error.response.status) {
       case 400:
@@ -84,8 +83,7 @@ axios.interceptors.response.use(response => {
   } else {
     error.message = '连接到服务器失败'
   }
-  debugger
-  Message.erroror(error.message)
+  Message.error(error.message)
   return Promise.resolve(error.response)
 })
 

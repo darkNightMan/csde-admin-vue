@@ -31,8 +31,7 @@ let router = new Router({
         {
           path: 'home',
           component: home,
-          name: 'home',
-          meta: { title: 'home' }
+          name: 'home'
         }
       ]
     },
@@ -46,15 +45,13 @@ let router = new Router({
           path: 'list',
           component: test,
           name: '文章列表',
-          url: '/article/list',
-          meta: { title: 'test' }
+          url: '/article/list'
         },
         {
           path: 'test',
           url: '/article/test',
           component: test2,
-          name: '测试页面',
-          meta: { title: 'test' }
+          name: '测试页面'
         }
       ]
     }
@@ -63,7 +60,6 @@ let router = new Router({
 
 // 拦截登录，token验证
 router.beforeEach((to, from, next) => {
-  debugger
   if (to.meta.requireAuth === undefined) {
     next()
     // if (store.state.token) {

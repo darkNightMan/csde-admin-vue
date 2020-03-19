@@ -5,7 +5,7 @@
     </el-header>
     <el-container>
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <menuList :routers="data.options.routes"></menuList>
+        <menuList></menuList>
      </el-aside>
       <el-main>
          <tabs></tabs>
