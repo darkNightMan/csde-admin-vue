@@ -1,17 +1,18 @@
 <template>
-  <div>
-      <template v-for="(item, parentIndex) in menu">
-          <el-menu :key="parentIndex"  :default-active="menuIndex">
+  <div  v-loading="!menu">
+      <template v-for="(item, parentIndex) in menu"  >
+          <el-menu :key="parentIndex"  :default-active="menuIndex" >
             <!-- 如果一级菜单还有子集使用下面这个模板 -->
             <el-submenu  :index="String(parentIndex)" v-if="!item.hiddenMenu">
-                <template slot="title" >
-                    <i class="el-icon-message"></i>{{item.res_name}}
+                <template slot="title" > <!--一级-->
+                    <i :class="item.res_icon ? item.res_icon: 'el-icon-eleme'"></i>
+                    {{item.res_name}}
                 </template>
                 <template  v-for="(child, childrenIndex) in item.children">
-                  <template  v-if="!child.children">
-                      <!-- <router-link  :key="childrenIndex" :to="`${item.path}/${child.path}`" > -->
-                        <el-menu-item :key="childrenIndex" @click="addView({view: child, menuIndex:`${parentIndex}-${childrenIndex}`})" :index="`${parentIndex}-${childrenIndex}`">{{child.res_name}}</el-menu-item>
-                      <!-- </router-link> -->
+                    <template  v-if="!child.children">
+                      <el-menu-item style="cursor: pointer" :key="childrenIndex" @click="addView({view: child, menuIndex:`${parentIndex}-${childrenIndex}`})" :index="`${parentIndex}-${childrenIndex}`">
+                        <span class="menuName">{{child.res_name}}</span> <!--二级-->
+                      </el-menu-item>
                     </template>
                     <menu-item v-else  :key="childrenIndex" :routers="[child]"></menu-item>
                   </template>
@@ -33,9 +34,7 @@ export default {
     }
   },
   mounted () {
-    debugger
-    console.log(this.menu, '123123')
-    this.getMenuList(this.userInfo.user_id)
+    this.userInfoMenu()
   },
   computed: {
     ...mapGetters('user', ['userInfo', 'menu']),
@@ -43,7 +42,7 @@ export default {
   },
   methods: {
     ...mapActions('tabs', ['addView']),
-    ...mapActions('user', ['getMenuList'])
+    ...mapActions('user', ['userInfoMenu'])
   }
 }
 </script>
@@ -51,5 +50,9 @@ export default {
 <style>
   .el-aside {
     color: #333;
+  }
+  .menuName{
+    padding-left:20px;
+    cursor: pointer;
   }
 </style>

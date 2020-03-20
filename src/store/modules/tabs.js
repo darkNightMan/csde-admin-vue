@@ -1,12 +1,13 @@
 
-const home = resolve => require(['@/pages/home/index'], resolve)
+import tabpages from '../../router/tabpage.js'
 const state = {
   tabViewList: [
     {
       path: 'home',
-      component: home,
+      component: tabpages.home,
       res_name: '首页',
-      closeTabs: false // 默认首页不能关闭
+      closeTabs: false, // 默认首页不能关闭
+      index: '首页'
     }
   ],
   activeViewName: '首页', // 当前打开的 tab名字
@@ -24,23 +25,24 @@ const actions = {
 const mutations = {
   // 打开tab页面
   setViewTab: (state, viewAndIndex) => {
-    debugger
-    state.activeViewName = viewAndIndex.view.res_id // 标签导航索引
+    window.localStorage.setItem('viewAndIndex', JSON.stringify(viewAndIndex))
+    state.activeViewName = viewAndIndex.view.res_id.toString() // 标签导航索引
     state.menuIndex = viewAndIndex.menuIndex // 左边菜单索引
-    if (state.tabViewList.some(v => v.id === viewAndIndex.view.res_id)) return
+    if (state.tabViewList.some(v => v.id === viewAndIndex.view.res_id)) return false // 如果已经打开过的标签不做就不在push
     state.tabViewList.push(
       Object.assign({}, viewAndIndex.view, {
         title: viewAndIndex.view.res_name || 'new View',
-        index: viewAndIndex.view.res_id,
-        closeTabs: true,
-        id: viewAndIndex.view.res_id,
+        index: viewAndIndex.view.res_id.toString(),
+        closeTabs: true, // 是否显示关闭标签
+        component: tabpages[viewAndIndex.view.component], // 当前打开的页面
+        id: viewAndIndex.view.res_id, // 菜单id
         menuIndex: viewAndIndex.menuIndex // 存储当前的打开的menu 索引
       })
     )
   },
   // 切换菜单索引
   setMenuIndex (state, index) {
-    debugger
+    // window.localStorage.setItem('menuIndex', index)
     state.menuIndex = index
   },
   // 关闭tab页面
@@ -56,7 +58,7 @@ const mutations = {
   },
   // 切换标签
   setActiveTab (state, name) {
-    debugger
+    // window.localStorage.setItem('activeViewName', name)
     state.activeViewName = name
   }
 }

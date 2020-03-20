@@ -2,7 +2,7 @@
   <div class="login-container">
     <form class="login-form">
       <!-- <div class="login-title">博客后台登入</div> -->
-      <el-form  :model="loginForm"  ref="loginForm" :rules="loginRule">
+      <el-form  :model="loginForm"  @keyup.enter.native="submint('loginForm')"   ref="loginForm" :rules="loginRule">
         <el-form-item label="" prop="phone"  icon="el-icon-user">
           <el-input  class="el-icon-user-solid"  placeholder="请输入内容"  v-model="loginForm.phone"  clearable></el-input>
         </el-form-item>
@@ -10,7 +10,7 @@
           <el-input placeholder="请输入密码" v-model="loginForm.password" show-password></el-input>
        </el-form-item>
        <el-form-item>
-          <el-button type="primary"  style="width:100%" @click="submint('loginForm')">登入</el-button>
+          <el-button type="primary"  style="width:100%" @click="submint('loginForm')" :loading="loading">登入</el-button>
        </el-form-item>
       </el-form>
     </form>
@@ -23,6 +23,7 @@ import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
+      loading: false,
       loginForm: {
         phone: '',
         password: ''
@@ -38,13 +39,15 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('user', ['setUserInfo']),
+    ...mapMutations('user', ['setToken']),
     submint (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
+          this.loading = true
           let { data, code } = await this.Req.post(api.login, this.loginForm)
           if (code === 200) {
-            this.setUserInfo(data)
+            this.loading = false
+            this.setToken(data.token)
             window.localStorage.setItem('token', data.token)
             this.$router.push('/home')
           }

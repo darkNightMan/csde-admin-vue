@@ -9,7 +9,6 @@
      </el-aside>
       <el-main>
          <tabs></tabs>
-         <Main></Main>
       </el-main>
     </el-container>
   </el-container>
@@ -22,7 +21,6 @@
 import menuList from './menu'
 import tabs from './tabs'
 import headerTop from './header'
-import Main from './main'
 import router from '../../router/index'
 
 export default {
@@ -34,7 +32,7 @@ export default {
   components: {
     menuList,
     headerTop,
-    Main,
+    // Main,
     tabs
   }
 }

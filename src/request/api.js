@@ -1,4 +1,6 @@
 export const api = {
   login: '/api/login',
-  menuList: '/api/getMenuList'
+  loginOut: '/api/loginOut',
+  userInfoMenu: '/api/getUserMenuList',
+  menuList: '/api/sysMenu/'
 }

@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// import store from '../store'
 const login = resolve => require(['@/pages/login/index'], resolve)
-const test = resolve => require(['@/pages/test'], resolve)
-const test2 = resolve => require(['@/pages/test2'], resolve)
 const layout = resolve => require(['@/pages/layout/index'], resolve)
 const home = resolve => require(['@/pages/home/index'], resolve)
 Vue.use(Router)
@@ -14,12 +13,6 @@ let router = new Router({
       name: 'login',
       hiddenMenu: true,
       component: login
-    },
-    {
-      path: '/test',
-      name: 'test',
-      hiddenMenu: true,
-      component: test
     },
     {
       path: '/',
@@ -34,43 +27,23 @@ let router = new Router({
           name: 'home'
         }
       ]
-    },
-    {
-      path: '/article',
-      name: '文章管理',
-      component: layout,
-      meta: { title: '文章管理' },
-      children: [
-        {
-          path: 'list',
-          component: test,
-          name: '文章列表',
-          url: '/article/list'
-        },
-        {
-          path: 'test',
-          url: '/article/test',
-          component: test2,
-          name: '测试页面'
-        }
-      ]
     }
   ]
 })
 
 // 拦截登录，token验证
 router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth === undefined) {
+  let token = window.localStorage.getItem('token')
+  if (token) {
     next()
-    // if (store.state.token) {
-    //   next()
-    // } else {
-    //   next({
-    //     path: '/login'
-    //   })
-    // }
   } else {
-    next()
+    if (to.path === '/login') {
+      next()
+    } else {
+      next({
+        path: '/login'
+      })
+    }
   }
 })
 

@@ -1,7 +1,13 @@
 <template>
 <div>
   <el-tabs v-model="activeViewName" type="card"  @tab-remove="closeTabs" @tab-click="clickTab($event)">
-    <el-tab-pane  v-for="(item) in tabViewList" :key="item.name" :label="item.res_name" :closable="item.closeTabs" :name="item.index" :activeIndex="item.menuIndex" :com="item.component">
+    <el-tab-pane  v-for="(item) in tabViewList"
+      :key="item.name"
+      :label="item.res_name"
+      :closable="item.closeTabs"
+      :name="item.index"
+      :activeIndex="item.menuIndex"
+     >
       <transition name="el-zoom-in-top">
         <component :is="item.component"></component>
       </transition>
@@ -33,9 +39,8 @@ export default {
   methods: {
     ...mapMutations('tabs', ['setActiveTab', 'setMenuIndex', 'closeTabs']),
     clickTab (tabs) {
-      debugger
       this.setMenuIndex(tabs.$attrs.activeIndex)
-      this.setActiveTab(tabs.$attrs.index)
+      this.setActiveTab(tabs.name)
     }
   }
 }

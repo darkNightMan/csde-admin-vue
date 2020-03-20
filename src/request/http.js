@@ -1,7 +1,17 @@
 // 引入axios
 import axios from 'axios'
+import router from '../router/index'
 //  使用element-ui Message做消息提醒
 import { Message } from 'element-ui'
+
+const toLogin = () => {
+  router.replace({
+    path: '/login',
+    query: {
+      redirect: router.currentRoute.fullPath
+    }
+  })
+}
 //  设置baseURL
 //  axios.defaults.baseURL = '/api'
 //  设置默认请求头
@@ -10,6 +20,15 @@ axios.defaults.headers = {
 }
 //  设置请求过期时间
 axios.defaults.timeout = 10000
+
+// 环境的切换
+// if (process.env.NODE_ENV === 'development') {
+//   axios.defaults.baseURL = 'https://www.baidu.com'
+// } else if (process.env.NODE_ENV === 'debug') {
+//   axios.defaults.baseURL = 'https://www.ceshi.com'
+// } else if (process.env.NODE_ENV === 'production') {
+//   axios.defaults.baseURL = 'https://www.production.com'
+// }
 
 //  请求拦截器
 axios.interceptors.request.use(config => {
@@ -30,9 +49,17 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   let data = response.data
   //  根据后端接口code执行操作
-  // switch (response.data.code) {
-  //   // 处理共有的操作
-  // }
+  switch (response.data.code) {
+    // 处理共有的操作
+    case 401: // '未授权
+      toLogin()
+      break
+    case 403: // token过期
+      setTimeout(() => {
+        toLogin()
+      }, 1000)
+      break
+  }
   if (data.code !== 200) {
     Message.error(data.msg)
   }
@@ -44,12 +71,12 @@ axios.interceptors.response.use(response => {
       case 400:
         error.message = '错误请求'
         break
-      case 401:
-        error.message = '未授权，请重新登录'
-        break
-      case 403:
-        error.message = '拒绝访问'
-        break
+      // case 401:
+      //   error.message = '未授权，请重新登录'
+      //   break
+      // case 403:
+      //   error.message = '拒绝访问'
+      //   break
       case 404:
         error.message = '请求错误,未找到该资源'
         break
