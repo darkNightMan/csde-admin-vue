@@ -50,6 +50,8 @@ export default {
             this.setToken(data.token)
             window.localStorage.setItem('token', data.token)
             this.$router.push('/home')
+          } else {
+            this.loading = false
           }
         } else {
           console.log('error submit!!')
