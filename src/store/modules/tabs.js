@@ -25,7 +25,7 @@ const actions = {
 const mutations = {
   // 打开tab页面
   setViewTab: (state, viewAndIndex) => {
-    window.localStorage.setItem('viewAndIndex', JSON.stringify(viewAndIndex))
+    window.localStorage.setItem('viewAndIndex', JSON.stringify(viewAndIndex)) // 存储当前打开的页面
     state.activeViewName = viewAndIndex.view.res_id.toString() // 标签导航索引
     state.menuIndex = viewAndIndex.menuIndex // 左边菜单索引
     if (state.tabViewList.some(v => v.id === viewAndIndex.view.res_id)) return false // 如果已经打开过的标签不做就不在push

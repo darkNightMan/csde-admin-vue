@@ -35,6 +35,7 @@ export default {
       let { code } = await this.Req.get(api.loginOut)
       if (code === 200) {
         window.localStorage.setItem('token', '')
+        window.localStorage.setItem('viewAndIndex', '')
         this.setUserInfo({})
         this.$router.push({path: '/login'})
         window.location.reload()

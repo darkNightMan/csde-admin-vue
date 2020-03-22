@@ -1,5 +1,5 @@
 <template>
-  <el-container class="container-box">
+  <el-container class="container-box" :style="{'height':`${height}px`}">
     <el-header>
       <headerTop></headerTop>
     </el-header>
@@ -26,7 +26,8 @@ import router from '../../router/index'
 export default {
   data () {
     return {
-      data: router
+      data: router,
+      height: `${document.documentElement.clientHeight}`
     }
   },
   components: {
@@ -40,7 +41,7 @@ export default {
 
 <style scoped>
 .container-box{
-  background-color: #fff;
+  background-color: #fff
 }
 html,body,#app{
   background-color: #fff;
