@@ -9,5 +9,6 @@ export const api = {
   getRoleTreePer: '/api/getRoleTreePer/',
   setRoleTreePer: '/api/setRoleTreePer/',
   createRole: '/api/createRole',
-  updateRole: '/api/updateRole'
+  updateRole: '/api/updateRole',
+  deleteRole: '/api/deleteRole'
 }

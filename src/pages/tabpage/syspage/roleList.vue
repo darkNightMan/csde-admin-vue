@@ -14,7 +14,8 @@
         <el-button type="primary" @click="submit">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog  title="新增角色"  :visible.sync="dialogVisiblerole"   width="25%"  >
+
+    <el-dialog :title="isRoleCheck ? '编辑角色' : '新增角色'"  :visible.sync="dialogVisiblerole" width="25%" >
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
           <el-form-item
             label="角色名"
@@ -23,10 +24,10 @@
               { required: true, message: '角色名不能为空'}
             ]"
           >
-            <el-input type="input" v-model.number="roleValidateForm.role_name" autocomplete="off"></el-input>
+            <el-input type="input" v-model="roleValidateForm.role_name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item    label="角色编码">
-              <el-input type="input" v-model.number="roleValidateForm.role_code" autocomplete="off"></el-input>
+          <el-form-item  prop="role_code"   label="角色编码">
+              <el-input type="input" v-model="roleValidateForm.role_code" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
       <span slot="footer" class="dialog-footer">
@@ -35,7 +36,7 @@
       </span>
     </el-dialog>
     <div class="btn-box">
-      <el-button type="primary" @click="dialogVisiblerole= true">创建角色</el-button>
+      <el-button type="primary" @click="createDialog">创建角色</el-button>
     </div>
     <el-table :data="tableData"    border    style="width: 100%">
       <el-table-column      fixed   prop="role_id"      label="角色ID"    width="150"></el-table-column>
@@ -43,9 +44,10 @@
       <el-table-column      prop="role_name"      label="角色名称" ></el-table-column>
       <el-table-column      label="操作"     width="00">
           <template slot-scope="scope">
-            <el-button @click="checksEdit(scope.row, true)" type="text" size="small">查看权限</el-button>
-            <el-button @click="checksEdit(scope.row, false)" type="text" size="small">编辑权限</el-button>
-            <el-button @click="changeRoleName(scope.row, false)" type="text" size="small">修改角色名</el-button>
+            <el-button @click="checksEdit(scope.row, true)" type="primary" size="small">查看权限</el-button>
+            <el-button @click="checksEdit(scope.row, false)" type="warning" size="small">编辑权限</el-button>
+            <el-button @click="changeRoleName(scope.row, false),isRoleCheck = true" type="success" size="small">修改角色名</el-button>
+            <el-button @click="deleteRole(scope.row, false)" type="danger" size="small">删除角色</el-button>
          </template>
       </el-table-column>
     </el-table>
@@ -63,14 +65,14 @@ export default {
       }
     },
     changeRoleName (row) {
-      this.isRoleCheck = false
       this.dialogVisiblerole = true
-      this.roleValidateForm = row
+      this.$nextTick(() => { // 确保dom渲染玩再做赋值处理不然当重置表单会有问题
+        this.roleValidateForm = row
+      })
     },
-    // 查看编辑
+    // 查看编辑权限
     checksEdit (row, flag) {
       this.dialogVisible = true
-      this.isRoleCheck = true
       this.roleid = row.role_id
       this.getRoleTreePer(this.roleid)
       function setDisabled (trees, flag) {
@@ -96,6 +98,7 @@ export default {
         this.$refs.tree.setCheckedKeys(data.res_id)
       }
     },
+    // 修改权限
     async submit () {
       let resIdArr = this.$refs.tree.getCheckedKeys()
       let { code, msg } = await this.Req.post(api.setRoleTreePer, {res_idArr: resIdArr, role_id: this.roleid})
@@ -113,13 +116,14 @@ export default {
         })
       }
     },
+    // 编辑创建
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isRoleCheck) {
-            this.createRole()
-          } else {
             this.updateRole()
+          } else {
+            this.createRole()
           }
         } else {
           console.log('error submit!!')
@@ -166,14 +170,43 @@ export default {
         })
       }
     },
+    async deleteRole (row) {
+      this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        let { code, msg } = await this.Req.get(api.deleteRole, {role_id: row.role_id})
+        if (code === 200) {
+          this.init()
+          this.$message({
+            type: 'success',
+            message: msg
+          })
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    createDialog () {
+      this.dialogVisiblerole = true
+      this.isRoleCheck = false
+      this.resetForm('roleValidateForm')
+    },
     resetForm (formName) {
-      this.$refs[formName].resetFields()
+      this.$nextTick(() => {
+        this.$refs[formName].resetFields()
+      })
     }
   },
   data () {
     return {
       dialogVisible: false,
       dialogVisiblerole: false,
+      isRoleCheck: false,
       tableData: [],
       dataTree: [],
       resIdarr: [],
