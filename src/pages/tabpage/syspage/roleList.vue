@@ -83,14 +83,16 @@ export default {
           }
         })
       }
-      setDisabled(this.dataTree, flag)
-      console.log(this.dataTree)
+      this.treeMenu(() => { // 当树加载完毕再修改disabled属性
+        setDisabled(this.dataTree, flag)
+      })
     },
     // 获取菜单树
-    async treeMenu () {
+    async treeMenu (callback) {
       let { data, code } = await this.Req.get(api.sysMenutree)
       if (code === 200) {
         this.dataTree = data.treeMenu
+        callback()
       }
     },
     async getRoleTreePer (roleid) {
@@ -225,7 +227,6 @@ export default {
   },
   created () {
     this.init()
-    this.treeMenu()
   }
 }
 </script>
