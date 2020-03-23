@@ -6,5 +6,8 @@ export const api = {
   userAllList: '/api/getAllUser',
   getAllRole: '/api/getAllRole',
   sysMenutree: '/api/sysMenutree/',
-  getUserPer: '/api/getUserPer/'
+  getRoleTreePer: '/api/getRoleTreePer/',
+  setRoleTreePer: '/api/setRoleTreePer/',
+  createRole: '/api/createRole',
+  updateRole: '/api/updateRole'
 }
