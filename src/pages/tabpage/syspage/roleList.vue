@@ -84,6 +84,7 @@ export default {
         })
       }
       setDisabled(this.dataTree, flag)
+      console.log(this.dataTree)
     },
     // 获取菜单树
     async treeMenu () {

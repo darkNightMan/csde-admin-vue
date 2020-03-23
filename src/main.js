@@ -5,10 +5,12 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
+// import { Tree } from 'view-design'
 import 'element-ui/lib/theme-chalk/index.css'
 import Req from './request/http'
 Vue.config.productionTip = false
-console.log(router)
+// console.log(Tree)
+// Vue.component('Tree', Tree)
 Vue.use(ElementUI) // 引入饿了么主题
 Vue.prototype.Req = new Req()
 /* eslint-disable no-new */
