@@ -9,6 +9,11 @@
       <el-table-column      prop="login_time" label="登录时间" ></el-table-column>
       <el-table-column      prop="state"      label="状态"     ></el-table-column>
       <el-table-column      prop="login_ip"      label="登入IP"      width="120"></el-table-column>
+       <el-table-column          label="角色名"      width="120">
+            <template slot-scope="scope">
+              {{scope.row.roleList}}
+            </template>
+       </el-table-column>
       <el-table-column      prop="avatar"      label="头像"     > </el-table-column>
       <el-table-column      prop="create_time"      label="创建时间"      width="120"></el-table-column>
       <el-table-column      prop="update_id"      label="更新人"      width="120"></el-table-column>
