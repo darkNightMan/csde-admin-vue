@@ -10,5 +10,6 @@ export const api = {
   setRoleTreePer: '/api/setRoleTreePer/',
   createRole: '/api/createRole',
   updateRole: '/api/updateRole',
-  deleteRole: '/api/deleteRole'
+  deleteRole: '/api/deleteRole',
+  createUser: '/api/user/createUser'
 }

@@ -1,17 +1,55 @@
 <template>
   <div>
+    <el-dialog :title="isRoleCheck ? '编辑用户' : '新增用户'"  :visible.sync="dialogVisiblerole" width="20%" >
+      {{roleValidateForm}}
+      <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item   label="角色"  prop="role_id"  :rules="[ { required: true, message: '角色名不能为空'}]">
+            <el-select multiple v-model="roleValidateForm.role_id" placeholder="请选择角色" style="width:100%">
+              <el-option  v-for="item in roleList"  :key="item.role_id"  :label="item.role_name" :value="item.role_id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item   label="用户名"  prop="nick_name"  :rules="[
+              { required: true, message: '用户名不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.nick_name" autocomplete="off"></el-input>
+          </el-form-item>
+         <el-form-item   label="电话"  prop="phone"  :rules="[
+              { required: true, message: '电话名不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.phone" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item   label="密码"  prop="password"  :rules="[
+              { required: true, message: '密码名不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.password" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item   label="email"  prop="email">
+            <el-input type="input" v-model="roleValidateForm.email" autocomplete="off"></el-input>
+          </el-form-item>
+           <el-form-item   label="avatar"  prop="avatar">
+            <el-input type="input" v-model="roleValidateForm.avatar" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+      <span slot="footer" class="dialog-footer">
+         <el-button type="primary" @click="submitForm('roleValidateForm')">提交</el-button>
+          <el-button @click="resetForm('roleValidateForm')">重置</el-button>
+      </span>
+    </el-dialog>
+     <div class="btn-box">
+      <el-button type="primary" size="small" @click="createDialog">新建用户</el-button>
+    </div>
      <el-table    :data="tableData"    border    style="width: 100%">
       <el-table-column      fixed   prop="user_id"      label="用户ID"    width="150"></el-table-column>
       <el-table-column      fixed   prop="nick_name"      label="用户名"    width="150"></el-table-column>
       <el-table-column      prop="password"      label="密码"      width="120"> </el-table-column>
-      <el-table-column      prop="email"      label="邮箱"      width="220"> </el-table-column>
+      <el-table-column      prop="email"      label="邮箱"   width="120"> </el-table-column>
       <el-table-column      prop="phone"      label="电话"      width="120"></el-table-column>
       <el-table-column      prop="login_time" label="登录时间" ></el-table-column>
-      <el-table-column      prop="state"      label="状态"     ></el-table-column>
-      <el-table-column      prop="login_ip"      label="登入IP"      width="120"></el-table-column>
-       <el-table-column          label="角色名"      width="120">
+      <el-table-column      prop="state"      label="状态"  width="80"   ></el-table-column>
+      <el-table-column      prop="login_ip"   label="登入IP"      width="120"></el-table-column>
+       <el-table-column     label="角色名"  >
             <template slot-scope="scope">
-              {{scope.row.roleList}}
+              <el-tag style="margin:5px" type="primary" effect="dark" v-for="(it, index) in scope.row.roleList" :key="index" size="small">
+                {{it.role_name}}
+              </el-tag>
             </template>
        </el-table-column>
       <el-table-column      prop="avatar"      label="头像"     > </el-table-column>
@@ -36,20 +74,86 @@ export default {
       if (code === 200) {
         this.tableData = data.userList
       }
+    },
+    async getroleList () {
+      let { data, code } = await this.Req.get(api.getAllRole)
+      if (code === 200) {
+        this.roleList = data.roleList
+      }
+    },
+    createDialog () {
+      this.dialogVisiblerole = true
+      this.isRoleCheck = false
+      this.resetForm('roleValidateForm')
+    },
+    resetForm (formName) {
+      this.$nextTick(() => {
+        this.$refs[formName].resetFields()
+      })
+    },
+    async createUser () {
+      let { code, msg } = await this.Req.post(api.createUser, this.roleValidateForm)
+      if (code === 200) {
+        this.init()
+        this.$message({
+          message: msg,
+          type: 'success'
+        })
+        this.dialogVisiblerole = false
+      } else {
+        this.dialogVisiblerole = false
+        this.$message({
+          message: msg,
+          type: 'success'
+        })
+      }
+    },
+    // 编辑创建
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (this.isRoleCheck) {
+            this.updateRole()
+          } else {
+            this.createUser()
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
   },
   data () {
     return {
       tableData: [],
-      dialogVisible: false,
+      roleList: [],
+      isRoleCheck: false,
+      dialogVisiblerole: false,
       defaultProps: {
         children: 'children',
         label: 'res_name'
+      },
+      roleValidateForm: {
+        nick_name: '',
+        password: '',
+        email: '',
+        phone: '',
+        avatar: '',
+        role_id: []
       }
     }
   },
+  filters: {
+  },
   created () {
     this.init()
+    this.getroleList()
   }
 }
 </script>
+<style lang="">
+  .btn-box{
+    padding: 10px 0;
+  }
+</style>

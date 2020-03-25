@@ -11,7 +11,7 @@
       </el-tree>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submit">确 定</el-button>
+        <el-button size="small"  type="primary" @click="submit">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -36,7 +36,7 @@
       </span>
     </el-dialog>
     <div class="btn-box">
-      <el-button type="primary" @click="createDialog">创建角色</el-button>
+      <el-button size="small" type="primary" @click="createDialog">创建角色</el-button>
     </div>
     <el-table :data="tableData"    border    style="width: 100%">
       <el-table-column      fixed   prop="role_id"      label="角色ID"    width="150"></el-table-column>
@@ -44,10 +44,10 @@
       <el-table-column      prop="role_name"      label="角色名称" ></el-table-column>
       <el-table-column      label="操作"     width="00">
           <template slot-scope="scope">
-            <el-button @click="checksEdit(scope.row, true)" type="primary" size="small">查看权限</el-button>
-            <el-button @click="checksEdit(scope.row, false)" type="warning" size="small">编辑权限</el-button>
+            <el-button @click="checksEdit(scope.row, true)" type="primary" size="mini">查看权限</el-button>
+            <el-button @click="checksEdit(scope.row, false)" type="warning" size="mini">编辑权限</el-button>
             <el-button @click="changeRoleName(scope.row, false),isRoleCheck = true" type="success" size="small">修改角色名</el-button>
-            <el-button @click="deleteRole(scope.row, false)" type="danger" size="small">删除角色</el-button>
+            <el-button @click="deleteRole(scope.row, false)" type="danger" size="mini">删除角色</el-button>
          </template>
       </el-table-column>
     </el-table>
@@ -233,6 +233,6 @@ export default {
 
 <style lang="">
   .btn-box{
-    padding: 10px;
+    padding: 10px 0;
   }
 </style>
