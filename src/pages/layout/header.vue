@@ -1,7 +1,7 @@
 <template>
   <div >
     <div class="logo">
-      <!-- <img src="../../assets/logo.jpg"> -->
+      <img  src="../../assets/logo2.jpg">
     </div>
     <div class="avatar-right" v-if="userInfo">
       <el-dropdown @command="handleCommand">
@@ -54,5 +54,15 @@ export default {
   }
   .avatar-right{
     float: right;
+  }
+  .logo{
+    width: 200px;
+    height: 40px;
+    margin-top: 4px;
+    margin-left: 0px;
+    float: left;
+  }
+  .logo img{
+    width: 100%;
   }
 </style>
