@@ -35,7 +35,7 @@
      <div class="btn-box">
       <el-button type="primary" size="small" @click="createDialog">新建用户</el-button>
     </div>
-     <el-table    :data="tableData"    border    style="width: 100%">
+     <el-table    :data="tableData"    :height="winH"  border    style="width: 100%">
       <el-table-column      fixed   prop="user_id"      label="用户ID"    width="150"></el-table-column>
       <el-table-column      fixed   prop="nick_name"      label="用户名"    width="150"></el-table-column>
       <el-table-column      prop="password"      label="密码"      width="120"> </el-table-column>
@@ -56,8 +56,9 @@
       <el-table-column      prop="update_id"      label="更新人"      width="120"></el-table-column>
       <el-table-column          label="操作"     >
           <template slot-scope="scope">
-          <el-button @click="checksEdit(scope.row, true)" type="text" size="small">查看</el-button>
-          <el-button @click="checksEdit(scope.row, false)" type="text" size="small">编辑</el-button>
+          <!-- <el-button @click="checksEdit(scope.row, true)" type="primary" size="small">查看</el-button> -->
+          <el-button @click="checksEdit(scope.row, false)" type="primary" size="small">编辑</el-button>
+          <el-button @click="deleteUser(scope.row, false)" type="danger" size="small">删除</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -65,6 +66,7 @@
 </template>
 <script>
 import { api } from '@/request/api.js'
+import { mapGetters } from 'vuex'
 export default {
   methods: {
     // handleClose () {}
@@ -74,10 +76,70 @@ export default {
         this.tableData = data.userList
       }
     },
+    checksEdit (row) {
+      debugger
+      this.isRoleCheck = true
+      this.dialogVisiblerole = true
+      this.roleValidateForm = {
+        user_id: row.user_id,
+        nick_name: row.nick_name,
+        password: row.password,
+        email: row.email,
+        phone: row.phone,
+        avatar: row.avatar,
+        role_id: row.roleList ? getRole(row.roleList) : []
+      }
+      function getRole (roleList) {
+        let roleid = []
+        roleList.map((it) => {
+          roleid.push(it.role_id)
+        })
+        return roleid
+      }
+    },
+    deleteUser (row) {
+      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        let { code, msg } = await this.Req.post(api.deleteUser, {user_id: row.user_id})
+        if (code === 200) {
+          this.init()
+          this.$message({
+            type: 'success',
+            message: msg
+          })
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
     async getroleList () {
       let { data, code } = await this.Req.get(api.getAllRole)
       if (code === 200) {
         this.roleList = data.roleList
+      }
+    },
+    async updateuUser () {
+      let { code, msg } = await this.Req.post(api.updateUser, this.roleValidateForm)
+      if (code === 200) {
+        this.init()
+        this.$message({
+          message: msg,
+          type: 'success'
+        })
+        this.dialogVisiblerole = false
+      } else {
+        this.dialogVisiblerole = false
+        this.$message({
+          message: msg,
+          type: 'success'
+        })
+        this.resetForm('roleValidateForm')
       }
     },
     createDialog () {
@@ -105,6 +167,7 @@ export default {
           message: msg,
           type: 'success'
         })
+        this.resetForm('roleValidateForm')
       }
     },
     // 编辑创建
@@ -112,7 +175,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isRoleCheck) {
-            this.updateRole()
+            this.updateuUser()
           } else {
             this.createUser()
           }
@@ -144,6 +207,9 @@ export default {
     }
   },
   filters: {
+  },
+  computed: {
+    ...mapGetters('app', ['winH'])
   },
   created () {
     this.init()

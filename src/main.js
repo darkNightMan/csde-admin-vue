@@ -8,6 +8,7 @@ import ElementUI from 'element-ui'
 // import { Tree } from 'view-design'
 import 'element-ui/lib/theme-chalk/index.css'
 import Req from './request/http'
+import { mapMutations } from 'vuex'
 Vue.config.productionTip = false
 // console.log(Tree)
 // Vue.component('Tree', Tree)
@@ -19,5 +20,11 @@ new Vue({
   router,
   store,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  created () {
+    this.setWinHeight()
+  },
+  methods: {
+    ...mapMutations('app', ['setWinHeight'])
+  }
 })

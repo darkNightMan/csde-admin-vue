@@ -11,5 +11,7 @@ export const api = {
   createRole: '/api/createRole',
   updateRole: '/api/updateRole',
   deleteRole: '/api/deleteRole',
-  createUser: '/api/user/createUser'
+  createUser: '/api/user/createUser',
+  updateUser: '/api/user/updateUser',
+  deleteUser: '/api/user/deleteUser'
 }

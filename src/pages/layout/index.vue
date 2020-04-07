@@ -7,7 +7,7 @@
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <menuList></menuList>
      </el-aside>
-      <el-main>
+      <el-main >
          <tabs></tabs>
       </el-main>
     </el-container>
@@ -22,6 +22,7 @@ import menuList from './menu'
 import tabs from './tabs'
 import headerTop from './header'
 import router from '../../router/index'
+import { mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -35,6 +36,9 @@ export default {
     headerTop,
     // Main,
     tabs
+  },
+  methods: {
+    ...mapMutations('app', ['setWinHeight'])
   }
 }
 </script>
