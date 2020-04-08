@@ -5,7 +5,7 @@
       <div class="login-title">CSDE系统后台</div>
       <el-form  :model="loginForm"  @keyup.enter.native="submint('loginForm')"   ref="loginForm" :rules="loginRule">
         <el-form-item label="" prop="phone"  icon="el-icon-user">
-          <el-input  class="el-icon-user-solid"  placeholder="请输入内容"  type="number" v-model.number="loginForm.phone"  clearable></el-input>
+          <el-input  class="el-icon-user-solid"  placeholder="请输入账号"  type="number" v-model.number="loginForm.phone"  clearable></el-input>
         </el-form-item>
         <el-form-item label="" prop="password">
           <el-input placeholder="请输入密码" v-model="loginForm.password" show-password></el-input>
