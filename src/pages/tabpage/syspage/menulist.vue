@@ -2,17 +2,30 @@
   <div>
      <el-dialog :title="isRoleCheck ? '编辑菜单' : '新增菜单'"  :visible.sync="dialogVisiblerole" width="25%" >
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item
-            label="角色名"
-            prop="role_name"
-            :rules="[
-              { required: true, message: '角色名不能为空'}
-            ]"
-          >
-            <el-input type="input" v-model="roleValidateForm.role_name" autocomplete="off"></el-input>
+         <el-form-item  prop="parent_id"   label="父级菜单">
+               <el-select  v-model="roleValidateForm.parent_id" clearable placeholder="请选择" style="width:100%">
+                <el-option
+                  v-for="item in tableData"
+                  :key="item.res_id"
+                  :label="item.res_name"
+                  :value="item.res_id">
+                </el-option>
+              </el-select>
+          </el-form-item>
+          <el-form-item   label="菜单名"   prop="res_name"  :rules="[{ required: true, message: '角色名不能为空'}]" >
+            <el-input type="input" v-model="roleValidateForm.res_name" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item  prop="role_code"   label="角色编码">
-              <el-input type="input" v-model="roleValidateForm.role_code" autocomplete="off"></el-input>
+              <el-input type="input" v-model="roleValidateForm.res_code" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item  prop="component"   label="菜单组件">
+              <el-input type="input" v-model="roleValidateForm.component" autocomplete="off"></el-input>
+          </el-form-item>
+           <el-form-item  prop="res_icon"   label="ICON图标">
+              <el-input type="input" v-model="roleValidateForm.res_icon" autocomplete="off"></el-input>
+          </el-form-item>
+           <el-form-item  prop="description"   label="菜单描述">
+              <el-input type="input" v-model="roleValidateForm.description" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
       <span slot="footer" class="dialog-footer">
@@ -23,9 +36,9 @@
     <div class="btn-box">
       <el-button type="primary" size="small" @click="createDialog">新建菜单</el-button>
     </div>
-    <el-table    :data="tableData"    border    style="width: 100%">
+    <el-table    :data="tableData" :height="winH"    border    style="width: 100%">
       <el-table-column      fixed   prop="res_id"      label="res_id"    width="150"></el-table-column>
-      <el-table-column      fixed   prop="parent_id"      label="父级菜单"    width="150"></el-table-column>
+      <el-table-column      fixed   prop="parent_id"      label="parent_id"    width="150"></el-table-column>
       <el-table-column      prop="res_name"      label="菜单名"     > </el-table-column>
       <el-table-column      prop="component"      label="菜单组件名"    > </el-table-column>
       <el-table-column      prop="res_icon"      label="菜单ICON"      width="120"></el-table-column>
@@ -37,8 +50,8 @@
       <el-table-column      prop="dsecription"      label="描述"      width="120"></el-table-column>
       <el-table-column      fixed="right"      label="操作"      >
           <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="mini">编辑</el-tag>
+          <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="mini">删除</el-tag>
       </template>
       </el-table-column>
     </el-table>
@@ -47,6 +60,7 @@
 
 <script>
 import { api } from '@/request/api.js'
+import { mapGetters } from 'vuex'
 export default {
   methods: {
     handleClick (row) {
@@ -67,24 +81,16 @@ export default {
       this.isRoleCheck = true
       this.dialogVisiblerole = true
       this.roleValidateForm = {
-        user_id: row.user_id,
-        nick_name: row.nick_name,
-        password: row.password,
-        email: row.email,
-        phone: row.phone,
-        avatar: row.avatar,
-        role_id: row.roleList ? getRole(row.roleList) : []
-      }
-      function getRole (roleList) {
-        let roleid = []
-        roleList.map((it) => {
-          roleid.push(it.role_id)
-        })
-        return roleid
+        res_name: row.res_name,
+        parent_id: row.parent_id,
+        component: row.component,
+        description: row.description,
+        res_code: row.res_code,
+        res_icon: row.res_icon
       }
     },
-    async createUser () {
-      let { code, msg } = await this.Req.post(api.createUser, this.roleValidateForm)
+    async createMenu () {
+      let { code, msg } = await this.Req.post(api.createMenu, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -122,6 +128,11 @@ export default {
         })
       })
     },
+    resetForm (formName) {
+      this.$nextTick(() => {
+        this.$refs[formName].resetFields()
+      })
+    },
     // 编辑创建
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
@@ -129,7 +140,7 @@ export default {
           if (this.isRoleCheck) {
             this.updateuUser()
           } else {
-            this.createUser()
+            this.createMenu()
           }
         } else {
           console.log('error submit!!')
@@ -138,18 +149,21 @@ export default {
       })
     }
   },
+  computed: {
+    ...mapGetters('app', ['winH'])
+  },
   data () {
     return {
       tableData: [],
       isRoleCheck: false,
       dialogVisiblerole: false,
       roleValidateForm: {
-        nick_name: '',
-        password: '',
-        email: '',
-        phone: '',
-        avatar: '',
-        role_id: []
+        res_name: '',
+        parent_id: '',
+        component: '',
+        description: '',
+        res_code: '',
+        res_icon: ''
       }
     }
   },

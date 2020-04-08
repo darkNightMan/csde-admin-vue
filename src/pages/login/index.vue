@@ -2,7 +2,7 @@
   <div class="login-container">
     <canvas id="canvas" :style="{height: screenHeight+'px'}"></canvas>
     <form class="login-form">
-      <!-- <div class="login-title">博客后台登入</div> -->
+      <div class="login-title">CSDE系统后台</div>
       <el-form  :model="loginForm"  @keyup.enter.native="submint('loginForm')"   ref="loginForm" :rules="loginRule">
         <el-form-item label="" prop="phone"  icon="el-icon-user">
           <el-input  class="el-icon-user-solid"  placeholder="请输入内容"  type="number" v-model.number="loginForm.phone"  clearable></el-input>
@@ -192,6 +192,7 @@ export default {
   font-size: 32px;
   color: #FFf;
   padding: 50px;
+  text-align: center
 }
 canvas {
   width: 100%;
