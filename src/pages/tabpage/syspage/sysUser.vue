@@ -36,8 +36,8 @@
       <el-button type="primary" size="small" @click="createDialog">新建用户</el-button>
     </div>
      <el-table    :data="tableData"    :height="winH"  border    style="width: 100%">
-      <el-table-column      fixed   prop="user_id"      label="用户ID"    width="150"></el-table-column>
-      <el-table-column      fixed   prop="nick_name"      label="用户名"    width="150"></el-table-column>
+      <el-table-column      fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
+      <el-table-column      fixed   prop="nick_name"      label="用户名"    width="120"></el-table-column>
       <el-table-column      prop="password"      label="密码"      width="120"> </el-table-column>
       <el-table-column      prop="email"      label="邮箱"   width="120"> </el-table-column>
       <el-table-column      prop="phone"      label="电话"      width="120"></el-table-column>
@@ -57,8 +57,8 @@
       <el-table-column          label="操作"     >
           <template slot-scope="scope">
           <!-- <el-button @click="checksEdit(scope.row, true)" type="primary" size="small">查看</el-button> -->
-          <el-button @click="checksEdit(scope.row, false)" type="primary" size="small">编辑</el-button>
-          <el-button @click="deleteUser(scope.row, false)" type="danger" size="small">删除</el-button>
+          <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="mini">编辑</el-tag>
+          <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="mini">删除</el-tag>
       </template>
       </el-table-column>
     </el-table>
@@ -77,7 +77,6 @@ export default {
       }
     },
     checksEdit (row) {
-      debugger
       this.isRoleCheck = true
       this.dialogVisiblerole = true
       this.roleValidateForm = {
