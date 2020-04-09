@@ -12,10 +12,10 @@
                 </el-option>
               </el-select>
           </el-form-item>
-          <el-form-item   label="菜单名"   prop="res_name"  :rules="[{ required: true, message: '角色名不能为空'}]" >
+          <el-form-item   label="菜单名"   prop="res_name"  :rules="[{ required: true, message: '菜单名不能为空'}]" >
             <el-input type="input" v-model="roleValidateForm.res_name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item  prop="role_code"   label="角色编码">
+          <el-form-item  prop="res_code"   label="菜单编码">
               <el-input type="input" v-model="roleValidateForm.res_code" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item  prop="component"   label="菜单组件">
@@ -47,9 +47,9 @@
       <el-table-column      prop="state"      label="状态"     ></el-table-column>
       <el-table-column      prop="type"      label="类型"    > </el-table-column>
       <el-table-column      prop="create_time"      label="创建时间"     ></el-table-column>
-      <el-table-column      prop="dsecription"      label="描述"      width="120"></el-table-column>
-      <el-table-column      fixed="right"      label="操作"      >
-          <template slot-scope="scope">
+      <el-table-column      prop="description"      label="描述"      width="120"></el-table-column>
+      <el-table-column      fixed="right"      label="操作"  >
+          <template slot-scope="scope" v-if="scope.row.res_id">
           <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="mini">编辑</el-tag>
           <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="mini">删除</el-tag>
       </template>
@@ -140,6 +140,7 @@ export default {
           if (this.isRoleCheck) {
             this.updateuUser()
           } else {
+            debugger
             this.createMenu()
           }
         } else {

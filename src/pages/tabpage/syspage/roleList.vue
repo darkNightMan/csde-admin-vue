@@ -91,7 +91,8 @@ export default {
     async treeMenu (callback) {
       let { data, code } = await this.Req.get(api.sysMenutree)
       if (code === 200) {
-        this.dataTree = data.treeMenu
+        debugger
+        this.dataTree = data
         callback()
       }
     },
