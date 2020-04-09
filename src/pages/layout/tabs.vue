@@ -8,9 +8,11 @@
       :name="item.index"
       :activeIndex="item.menuIndex"
      >
+     <keep-alive>
       <transition name="el-zoom-in-top">
         <component :is="item.component"></component>
       </transition>
+      </keep-alive>
     </el-tab-pane>
   </el-tabs>
 </div>
