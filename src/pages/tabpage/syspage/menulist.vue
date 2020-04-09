@@ -37,18 +37,18 @@
       <el-button type="primary" size="small" @click="createDialog">新建菜单</el-button>
     </div>
     <el-table    :data="tableData" :height="winH"    border    style="width: 100%">
-      <el-table-column      fixed   prop="res_id"      label="res_id"    width="150"></el-table-column>
-      <el-table-column      fixed   prop="parent_id"      label="parent_id"    width="150"></el-table-column>
+      <el-table-column      prop="res_id"      label="res_id"   ></el-table-column>
+      <el-table-column      prop="parent_id"      label="parent_id"    ></el-table-column>
       <el-table-column      prop="res_name"      label="菜单名"     > </el-table-column>
       <el-table-column      prop="component"      label="菜单组件名"    > </el-table-column>
       <el-table-column      prop="res_icon"      label="菜单ICON"      width="120"></el-table-column>
       <el-table-column      prop="res_code"      label="菜单编码"      width="120"></el-table-column>
-      <el-table-column      prop="sort"      label="排序"      width="300"></el-table-column>
+      <el-table-column      prop="sort"      label="排序"   ></el-table-column>
       <el-table-column      prop="state"      label="状态"     ></el-table-column>
       <el-table-column      prop="type"      label="类型"    > </el-table-column>
       <el-table-column      prop="create_time"      label="创建时间"     ></el-table-column>
       <el-table-column      prop="description"      label="描述"      width="120"></el-table-column>
-      <el-table-column      fixed="right"      label="操作"  >
+      <el-table-column      label="操作"  >
           <template slot-scope="scope" v-if="scope.row.res_id">
           <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="mini">编辑</el-tag>
           <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="mini">删除</el-tag>
