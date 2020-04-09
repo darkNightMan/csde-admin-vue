@@ -1,6 +1,6 @@
 <template>
   <div>
-     <el-dialog :title="isRoleCheck ? '编辑菜单' : '新增菜单'"  :visible.sync="dialogVisiblerole" width="25%" >
+     <el-dialog :title="isRoleCheck ? '编辑菜单' : '新增菜单'"  :visible.sync="dialogVisiblerole" width="30%" >
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
          <el-form-item  prop="parent_id"   label="父级菜单">
                <el-select  v-model="roleValidateForm.parent_id" clearable placeholder="请选择" style="width:100%">
@@ -75,12 +75,14 @@ export default {
     createDialog () {
       this.dialogVisiblerole = true
       this.isRoleCheck = false
+      this.roleValidateForm.res_id = ''
       this.resetForm('roleValidateForm')
     },
     checksEdit (row) {
       this.isRoleCheck = true
       this.dialogVisiblerole = true
       this.roleValidateForm = {
+        res_id: row.res_id,
         res_name: row.res_name,
         parent_id: row.parent_id,
         component: row.component,
@@ -108,12 +110,12 @@ export default {
       }
     },
     deleteUser (row) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该菜单, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.post(api.deleteUser, {user_id: row.user_id})
+        let { code, msg } = await this.Req.post(api.deleteMenu, {res_id: row.res_id})
         if (code === 200) {
           this.init()
           this.$message({
@@ -128,6 +130,24 @@ export default {
         })
       })
     },
+    async updateuMenu () {
+      let { code, msg } = await this.Req.post(api.updateMenu, this.roleValidateForm)
+      if (code === 200) {
+        this.init()
+        this.$message({
+          message: msg,
+          type: 'success'
+        })
+        this.dialogVisiblerole = false
+      } else {
+        this.dialogVisiblerole = false
+        this.$message({
+          message: msg,
+          type: 'success'
+        })
+        this.resetForm('roleValidateForm')
+      }
+    },
     resetForm (formName) {
       this.$nextTick(() => {
         this.$refs[formName].resetFields()
@@ -138,7 +158,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isRoleCheck) {
-            this.updateuUser()
+            this.updateuMenu()
           } else {
             debugger
             this.createMenu()
@@ -159,6 +179,7 @@ export default {
       isRoleCheck: false,
       dialogVisiblerole: false,
       roleValidateForm: {
+        res_id: '',
         res_name: '',
         parent_id: '',
         component: '',

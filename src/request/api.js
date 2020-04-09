@@ -14,5 +14,7 @@ export const api = {
   createUser: '/api/user/createUser',
   updateUser: '/api/user/updateUser',
   deleteUser: '/api/user/deleteUser',
-  createMenu: '/api/menu/createMenu'
+  createMenu: '/api/menu/createMenu',
+  updateMenu: '/api/menu/updatedMenu',
+  deleteMenu: '/api/menu/deleteMenu'
 }
