@@ -7,7 +7,7 @@
 
 <script>
 export default {
-name: '112122',
+name: 'wangxiping',
   data () {
     return {
       msg: '测试'
