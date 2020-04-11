@@ -10,7 +10,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'App1222222222122222222是1122'
+      msg: 'a'
     }
   }
 }
