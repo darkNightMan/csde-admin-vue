@@ -160,7 +160,6 @@ export default {
           if (this.isRoleCheck) {
             this.updateuMenu()
           } else {
-            debugger
             this.createMenu()
           }
         } else {
