@@ -7,7 +7,7 @@
 
 <script>
 export default {
-name: '1121',
+name: '112122',
   data () {
     return {
       msg: '1'
