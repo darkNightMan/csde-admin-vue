@@ -24,7 +24,7 @@
           href="https://chat.vuejs.org"
           target="_blank"
         >
-          Community Chatwebhooks
+          Community 
         </a>
       </li>
       <li>
@@ -32,7 +32,7 @@
           href="https://twitter.com/vuejs"
           target="_blank"
         >
-          Twitter
+          TwitterChatwebhooks
         </a>
       </li>
       <br>
