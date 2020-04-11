@@ -16,7 +16,7 @@
           href="https://forum.vuejs.org"
           target="_blank"
         >
-          Forum测试
+          Forum测试ces
         </a>
       </li>
       <li>
