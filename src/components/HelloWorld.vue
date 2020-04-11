@@ -10,7 +10,7 @@ export default {
 name: '112122',
   data () {
     return {
-      msg: '122222222222222222'
+      msg: '1'
     }
   }
 }
