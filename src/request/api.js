@@ -16,5 +16,6 @@ export const api = {
   deleteUser: '/api/user/deleteUser',
   createMenu: '/api/menu/createMenu',
   updateMenu: '/api/menu/updatedMenu',
-  deleteMenu: '/api/menu/deleteMenu'
+  deleteMenu: '/api/menu/deleteMenu',
+  loginLogs: '/api/loginLogs/list'
 }
