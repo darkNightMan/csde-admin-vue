@@ -38,7 +38,7 @@
     <!-- <div class="btn-box">
       <el-button size="small" type="primary" @click="createDialog">创建角色</el-button>
     </div> -->
-    <el-table :data="tableData"    border    style="width: 100%">
+    <el-table :data="tableData"  :height="winH"  border  style="width: 100%">
       <el-table-column      fixed   prop="id"      label="日志编号"    width="150"></el-table-column>
       <el-table-column      fixed   prop="user_id"    label="用户ID"></el-table-column>
       <el-table-column      fixed   prop="user_name"    label="用户名"></el-table-column>
@@ -49,7 +49,8 @@
             </el-tag>
           </template>
       </el-table-column>
-      <el-table-column      prop="login_ip"      label="登录IP地址" ></el-table-column>
+      <el-table-column      prop="login_ip"      label="IP地址" ></el-table-column>
+      <el-table-column      prop="login_address" label="地点" ></el-table-column>
       <el-table-column      prop="login_time"      label="登录时间" ></el-table-column>
       <el-table-column      prop="login_description"      label="登录描述" ></el-table-column>
        <el-table-column     prop="login_agent"     label="登录设备" ></el-table-column>
@@ -70,7 +71,8 @@ import { api } from '@/request/api.js'
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters('user', ['userInfo'])
+    ...mapGetters('user', ['userInfo']),
+    ...mapGetters('app', ['winH'])
   },
   methods: {
     handleClose () {},
