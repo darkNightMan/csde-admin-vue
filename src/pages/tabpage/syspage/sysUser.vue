@@ -100,7 +100,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.post(api.deleteUser, {user_id: row.user_id})
+        let { code, msg } = await this.Req.delete(api.deleteUser, { data: {user_id: row.user_id} })
         if (code === 200) {
           this.init()
           this.$message({
@@ -122,7 +122,7 @@ export default {
       }
     },
     async updateuUser () {
-      let { code, msg } = await this.Req.post(api.updateUser, this.roleValidateForm)
+      let { code, msg } = await this.Req.put(api.updateUser, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({
