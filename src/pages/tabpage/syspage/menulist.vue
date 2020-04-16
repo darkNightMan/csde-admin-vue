@@ -69,7 +69,7 @@ export default {
     async init () {
       let { data, code } = await this.Req.get(api.menuList)
       if (code === 200) {
-        this.tableData = data
+        this.tableData = data.list
       }
     },
     createDialog () {
@@ -115,7 +115,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.post(api.deleteMenu, {res_id: row.res_id})
+        let { code, msg } = await this.Req.delete(api.deleteMenu, {data: {res_id: row.res_id}})
         if (code === 200) {
           this.init()
           this.$message({
@@ -131,7 +131,7 @@ export default {
       })
     },
     async updateuMenu () {
-      let { code, msg } = await this.Req.post(api.updateMenu, this.roleValidateForm)
+      let { code, msg } = await this.Req.put(api.updateMenu, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({

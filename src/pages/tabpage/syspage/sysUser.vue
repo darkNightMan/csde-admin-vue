@@ -42,7 +42,7 @@
       <el-table-column      prop="email"      label="邮箱"   width="120"> </el-table-column>
       <el-table-column      prop="phone"      label="电话"      width="120"></el-table-column>
       <el-table-column      prop="state"      label="状态"  width="80"   ></el-table-column>
-      <el-table-column     label="角色名"  >
+      <el-table-column     label="角色"   >
             <template slot-scope="scope">
               <el-tag style="margin:5px" type="primary" effect="dark" v-for="(it, index) in scope.row.roleList" :key="index" size="small">
                 {{it.role_name}}
@@ -50,7 +50,7 @@
             </template>
       </el-table-column>
       <el-table-column      prop="avatar"      label="头像"     > </el-table-column>
-      <el-table-column      prop="create_time"      label="创建时间"      width="120"></el-table-column>
+      <el-table-column      prop="create_time"      label="创建时间"      ></el-table-column>
       <el-table-column      prop="update_id"      label="更新人"      width="120"></el-table-column>
       <el-table-column          label="操作"     >
           <template slot-scope="scope">
@@ -100,7 +100,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.post(api.deleteUser, {user_id: row.user_id})
+        let { code, msg } = await this.Req.delete(api.deleteUser, { data: {user_id: row.user_id} })
         if (code === 200) {
           this.init()
           this.$message({
@@ -122,7 +122,7 @@ export default {
       }
     },
     async updateuUser () {
-      let { code, msg } = await this.Req.post(api.updateUser, this.roleValidateForm)
+      let { code, msg } = await this.Req.put(api.updateUser, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({

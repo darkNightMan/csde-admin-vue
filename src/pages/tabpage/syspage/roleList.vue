@@ -154,7 +154,7 @@ export default {
       }
     },
     async updateRole () {
-      let { code, msg } = await this.Req.post(api.updateRole, {
+      let { code, msg } = await this.Req.put(api.updateRole, {
         role_id: this.roleValidateForm.role_id,
         role_name: this.roleValidateForm.role_name,
         role_code: this.roleValidateForm.role_code })
@@ -179,7 +179,8 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.get(api.deleteRole, {role_id: row.role_id})
+        let param = { role_id: row.role_id }
+        let { code, msg } = await this.Req.delete(api.deleteRole, {data: param})
         if (code === 200) {
           this.init()
           this.$message({
