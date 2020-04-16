@@ -1,10 +1,11 @@
 <template>
-  <el-container class="container-box" :style="{'height':`${height}px`}">
+  <!-- :style="{'height':`${height}px`}" -->
+  <el-container class="container-box" style="height:100%">
     <el-header>
       <headerTop></headerTop>
     </el-header>
     <el-container>
-      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+      <el-aside width="200px">
         <menuList></menuList>
      </el-aside>
       <el-main >
@@ -27,8 +28,7 @@ import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
-      data: router,
-      height: `${document.documentElement.clientHeight}`
+      data: router
     }
   },
   components: {

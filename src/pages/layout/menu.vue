@@ -1,9 +1,11 @@
 <template>
-  <div  v-loading="!menu">
-      <template v-for="(item, parentIndex) in menu"  >
-          <el-menu :key="parentIndex"  :default-active="menuIndex" >
-            <!-- 如果一级菜单还有子集使用下面这个模板 -->
-            <el-submenu  :index="String(parentIndex)" v-if="!item.hiddenMenu">
+  <el-container :style="`height:100%;background:${theme.background};border-right:solid 1px #e6e6e6;`"  v-loading="!menu">
+      <el-main style="padding:0px;">
+        <el-scrollbar class="page-component__nav" style="height:100%">
+          <template v-for="(item, parentIndex) in menu"  >
+            <el-menu style="border-right:none;" :key="parentIndex"  :default-active="menuIndex" >
+              <!-- 如果一级菜单还有子集使用下面这个模板 -->
+              <el-submenu  :index="String(parentIndex)" v-if="!item.hiddenMenu">
                 <template slot="title" > <!--一级-->
                     <i :class="item.res_icon ? item.res_icon: 'el-icon-eleme'"></i>
                     {{item.res_name}}
@@ -18,8 +20,10 @@
                   </template>
               </el-submenu>
             </el-menu>
-      </template>
-  </div>
+          </template>
+        </el-scrollbar>
+      </el-main>
+  </el-container>
 </template>
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
@@ -38,7 +42,8 @@ export default {
   },
   computed: {
     ...mapGetters('user', ['userInfo', 'menu']),
-    ...mapState('tabs', ['menuIndex'])
+    ...mapState('tabs', ['menuIndex']),
+    ...mapGetters('theme', ['theme'])
   },
   methods: {
     ...mapActions('tabs', ['addView']),
@@ -55,4 +60,8 @@ export default {
     padding-left:20px;
     cursor: pointer;
   }
+  .page-component__nav>.el-scrollbar__wrap {
+    height: 100%;
+    overflow-x: hidden;
+}
 </style>

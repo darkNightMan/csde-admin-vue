@@ -19,7 +19,7 @@ const actions = {
     if (code === 200) {
       commit('setMeunList', data.menuList)
       commit('setUserInfo', data.userInfo)
-      commit('tabs/setViewTab', JSON.parse(viewAndIndex), {root: true})
+      viewAndIndex && commit('tabs/setViewTab', JSON.parse(viewAndIndex), {root: true})
     }
     // }
   }

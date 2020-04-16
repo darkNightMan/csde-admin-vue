@@ -5,14 +5,18 @@
       <div class="login-title">CSDE系统后台</div>
       <el-form  :model="loginForm"  @keyup.enter.native="submint('loginForm')"   ref="loginForm" :rules="loginRule">
         <el-form-item label="" prop="phone"  icon="el-icon-user">
-          <el-input  class="el-icon-user-solid"  placeholder="请输入账号"  type="number" v-model.number="loginForm.phone"  clearable></el-input>
+          <el-input :controls="false"  class="el-icon-user-solid"  placeholder="请输入手机号"   v-model.number="loginForm.phone" ></el-input>
         </el-form-item>
         <el-form-item label="" prop="password">
           <el-input placeholder="请输入密码" v-model="loginForm.password" show-password></el-input>
-       </el-form-item>
-       <el-form-item>
-          <el-button type="primary"  style="width:100%" @click="submint('loginForm')" :loading="loading">登入</el-button>
-       </el-form-item>
+        </el-form-item>
+        <el-form-item label="" prop="code">
+          <el-input style="width:150px;" placeholder="请输入验证码" v-model="loginForm.code"></el-input>
+          <el-button type="primary" style="width:calc(100% - 180px);float:right;" :loading="loading">获取验证码</el-button>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary"  style="width:100%" @click="submint('loginForm')" :loading="loading">登入</el-button>
+        </el-form-item>
       </el-form>
     </form>
   </div>
@@ -28,14 +32,20 @@ export default {
       screenHeight: window.innerHeight, // 屏幕高度
       loginForm: {
         phone: '',
-        password: ''
+        password: '',
+        code: '123456'
       },
       loginRule: {
         phone: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { type: 'number', message: '', trigger: 'blur' }
+          // {pattern:/^1[0-9]{10}$/,message: '请输入正确的手机号码', trigger: 'blur'}
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: '请输入验证码', trigger: 'blur' }
         ]
       }
     }
@@ -159,14 +169,13 @@ export default {
         if (valid) {
           this.loading = true
           let { data, code } = await this.Req.post(api.login, this.loginForm)
-          if (code === 200) {
+          if (code === 200 && data) {
             this.loading = false
             this.setToken(data.token)
             window.localStorage.setItem('token', data.token)
             this.$router.push('/home')
-          } else {
-            this.loading = false
           }
+          this.loading = false
         } else {
           console.log('error submit!!')
           return false
@@ -186,7 +195,12 @@ export default {
 }
 .login-form{
   width: 400px;
-  margin: 300px auto;
+  /* margin: 300px auto; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: -200px;
 }
 .login-title{
   font-size: 32px;
