@@ -49,7 +49,7 @@ const mutations = {
   closeTabs (state, targetName) {
     state.tabViewList.map((its, idx) => {
       if (its.index === targetName) {
-        let tabs = state.tabViewList[idx - 1]
+        const tabs = state.tabViewList[idx - 1]
         state.activeViewName = tabs.index // 激活tab选中状态
         state.menuIndex = tabs.menuIndex // 激活菜单选中状态
       }

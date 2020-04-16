@@ -8,7 +8,7 @@ const getters = {
 const actions = {
 }
 const mutations = {
-  setWinHeight (state, data) {
+  setWinHeight: (state, data) => {
     state.windowHeight = data || document.documentElement.clientHeight - 300
   }
 }
