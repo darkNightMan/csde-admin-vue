@@ -69,7 +69,7 @@ export default {
     async init () {
       let { data, code } = await this.Req.get(api.menuList)
       if (code === 200) {
-        this.tableData = data
+        this.tableData = data.list
       }
     },
     createDialog () {
