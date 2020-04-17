@@ -5,7 +5,7 @@
          <el-form-item  prop="parent_id"   label="父级菜单">
                <el-select  v-model="roleValidateForm.parent_id" clearable placeholder="请选择" style="width:100%">
                 <el-option
-                  v-for="item in tableData.list"
+                  v-for="item in  selectMenuList.data"
                   :key="item.res_id"
                   :label="item.res_name"
                   :value="item.res_id">
