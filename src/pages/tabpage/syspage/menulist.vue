@@ -88,7 +88,10 @@ export default {
         console.log(ex)
       }
     },
-    handleSizeChange () {},
+    handleSizeChange (pageSize) {
+      this.pageSize = pageSize
+      this.init()
+    },
     handleCurrentChange (page) {
       this.queryParam.page = page
       this.init()
