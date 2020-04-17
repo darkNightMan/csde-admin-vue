@@ -120,12 +120,11 @@ export default class Req {
     return new Promise((resolve, reject) => {
       axios.get(url, {
         params: param
+      }).then(res => {
+        resolve(res)
+      }, error => {
+        reject(error)
       })
-        .then(res => {
-          resolve(res)
-        }, error => {
-          reject(error)
-        })
     })
   }
   //  post请求

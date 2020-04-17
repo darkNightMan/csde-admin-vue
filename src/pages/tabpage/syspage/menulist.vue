@@ -5,7 +5,7 @@
          <el-form-item  prop="parent_id"   label="父级菜单">
                <el-select  v-model="roleValidateForm.parent_id" clearable placeholder="请选择" style="width:100%">
                 <el-option
-                  v-for="item in tableData"
+                  v-for="item in tableData.list"
                   :key="item.res_id"
                   :label="item.res_name"
                   :value="item.res_id">
@@ -36,7 +36,7 @@
     <div class="btn-box">
       <el-button type="primary" size="small" @click="createDialog">新建菜单</el-button>
     </div>
-    <el-table    :data="tableData" :height="winH"    border    style="width: 100%">
+    <el-table    :data="tableData.list" :height="winH"    border    style="width: 100%">
       <el-table-column      prop="res_id"      label="res_id"   ></el-table-column>
       <el-table-column      prop="parent_id"      label="parent_id"    ></el-table-column>
       <el-table-column      prop="res_name"      label="菜单名"     > </el-table-column>
@@ -55,6 +55,17 @@
       </template>
       </el-table-column>
     </el-table>
+    <div class="page-bottom">
+       <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="tableData.currentPage"
+        :page-sizes="[tableData.pageSize, 20, 30, 40]"
+        :page-size="tableData.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="tableData.totalCount">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -67,12 +78,22 @@ export default {
       console.log(row)
     },
     async init () {
-      let { data, code } = await this.Req.get(api.menuList)
-      if (code === 200) {
-        this.tableData = data.list
+      try {
+        let { data, code } = await this.Req.get(api.menuList, this.queryParam)
+        this.selectMenuList = await this.Req.get(api.selectMenuList)
+        if (code === 200) {
+          this.tableData = data
+        }
+      } catch (ex) {
+        console.log(ex)
       }
     },
-    createDialog () {
+    handleSizeChange () {},
+    handleCurrentChange (page) {
+      this.queryParam.page = page
+      this.init()
+    },
+    async createDialog () {
       this.dialogVisiblerole = true
       this.isRoleCheck = false
       this.roleValidateForm.res_id = ''
@@ -175,6 +196,11 @@ export default {
   data () {
     return {
       tableData: [],
+      selectMenuList: [],
+      queryParam: {
+        page: 1,
+        pageSize: 10
+      },
       isRoleCheck: false,
       dialogVisiblerole: false,
       roleValidateForm: {
@@ -196,5 +222,9 @@ export default {
 <style lang="">
   .btn-box{
     padding: 10px 0;
+  }
+  .page-bottom{
+    padding: 10px;
+    text-align: right;
   }
 </style>
