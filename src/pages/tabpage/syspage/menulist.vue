@@ -60,7 +60,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="tableData.currentPage"
-        :page-sizes="[tableData.pageSize, 20, 30, 40]"
+        :page-sizes="[10, 20, 30, 40]"
         :page-size="tableData.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="tableData.totalCount">
@@ -89,7 +89,7 @@ export default {
       }
     },
     handleSizeChange (pageSize) {
-      this.pageSize = pageSize
+      this.queryParam.pageSize = pageSize
       this.init()
     },
     handleCurrentChange (page) {
@@ -222,12 +222,3 @@ export default {
   }
 }
 </script>
-<style lang="">
-  .btn-box{
-    padding: 10px 0;
-  }
-  .page-bottom{
-    padding: 10px;
-    text-align: right;
-  }
-</style>

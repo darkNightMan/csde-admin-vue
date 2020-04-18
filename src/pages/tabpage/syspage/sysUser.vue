@@ -35,9 +35,9 @@
      <div class="btn-box">
       <el-button type="primary" size="small" @click="createDialog">新建用户</el-button>
     </div>
-     <el-table    :data="tableData"    :height="winH"  border    style="width: 100%">
+     <el-table    :data="tableData.list"    :height="winH"  border    style="width: 100%">
       <el-table-column      fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
-      <el-table-column      fixed   prop="nick_name"      label="用户名"    width="120"></el-table-column>
+      <el-table-column      fixed  prop="nick_name"      label="用户名"    width="120"></el-table-column>
       <el-table-column      prop="password"      label="密码"      width="120"> </el-table-column>
       <el-table-column      prop="email"      label="邮箱"   width="120"> </el-table-column>
       <el-table-column      prop="phone"      label="电话"      width="120"></el-table-column>
@@ -60,6 +60,17 @@
       </template>
       </el-table-column>
     </el-table>
+     <div class="page-bottom">
+       <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryParam.currentPage"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="queryParam.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="tableData.totalCount">
+      </el-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -67,11 +78,19 @@ import { api } from '@/request/api.js'
 import { mapGetters } from 'vuex'
 export default {
   methods: {
+    handleSizeChange (pageSize) {
+      this.queryParam.pageSize = pageSize
+      this.init()
+    },
+    handleCurrentChange (page) {
+      this.queryParam.page = page
+      this.init()
+    },
     // handleClose () {}
     async init () {
-      let { data, code } = await this.Req.get(api.userAllList)
+      let { data, code } = await this.Req.get(api.userAllList, this.queryParam)
       if (code === 200) {
-        this.tableData = data.userList
+        this.tableData = data
       }
     },
     checksEdit (row) {
@@ -193,6 +212,11 @@ export default {
         children: 'children',
         label: 'res_name'
       },
+      queryParam: {
+        page: 1,
+        pageSize: 10,
+        currentPage: 1
+      },
       roleValidateForm: {
         nick_name: '',
         password: '',
@@ -214,8 +238,3 @@ export default {
   }
 }
 </script>
-<style lang="">
-  .btn-box{
-    padding: 10px 0;
-  }
-</style>

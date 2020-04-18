@@ -231,9 +231,3 @@ export default {
   }
 }
 </script>
-
-<style lang="">
-  .btn-box{
-    padding: 10px 0;
-  }
-</style>
