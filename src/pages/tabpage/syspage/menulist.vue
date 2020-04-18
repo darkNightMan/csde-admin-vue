@@ -36,7 +36,7 @@
     <div class="btn-box">
       <el-button type="primary" size="small" @click="createDialog">新建菜单</el-button>
     </div>
-    <el-table    :data="tableData.list" :height="winH"    border    style="width: 100%">
+    <el-table  v-loading="loading"  :data="tableData.list" :height="winH"    border    style="width: 100%">
       <el-table-column      prop="res_id"      label="res_id"   ></el-table-column>
       <el-table-column      prop="parent_id"      label="parent_id"    ></el-table-column>
       <el-table-column      prop="res_name"      label="菜单名"     > </el-table-column>
@@ -79,11 +79,13 @@ export default {
     },
     async init () {
       try {
+        this.loading = true
         let { data, code } = await this.Req.get(api.menuList, this.queryParam)
         this.selectMenuList = await this.Req.get(api.selectMenuList)
         if (code === 200) {
           this.tableData = data
         }
+        this.loading = false
       } catch (ex) {
         console.log(ex)
       }
@@ -198,6 +200,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       tableData: [],
       selectMenuList: [],
       queryParam: {

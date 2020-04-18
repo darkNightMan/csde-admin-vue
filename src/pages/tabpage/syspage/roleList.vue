@@ -38,7 +38,7 @@
     <div class="btn-box">
       <el-button size="small" type="primary" @click="createDialog">创建角色</el-button>
     </div>
-    <el-table :data="tableData"    border    style="width: 100%">
+    <el-table :data="tableData" v-loading="loading"   border    style="width: 100%">
       <el-table-column      fixed   prop="role_id"      label="角色ID"    width="150"></el-table-column>
       <el-table-column      fixed   prop="role_code"    label="角色编码"></el-table-column>
       <el-table-column      prop="role_name"      label="角色名称" ></el-table-column>
@@ -59,10 +59,12 @@ export default {
   methods: {
     handleClose () {},
     async init () {
+      this.loading = true
       let { data, code } = await this.Req.get(api.getAllRole)
       if (code === 200) {
         this.tableData = data.roleList
       }
+      this.loading = false
     },
     changeRoleName (row) {
       this.dialogVisiblerole = true
@@ -215,6 +217,7 @@ export default {
       dataTree: [],
       resIdarr: [],
       roleid: '',
+      loading: false,
       defaultProps: {
         children: 'children',
         label: 'res_name'

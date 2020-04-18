@@ -35,7 +35,7 @@
      <div class="btn-box">
       <el-button type="primary" size="small" @click="createDialog">新建用户</el-button>
     </div>
-     <el-table    :data="tableData.list"    :height="winH"  border    style="width: 100%">
+     <el-table   v-loading="loading"   :data="tableData.list"    :height="winH"  border    style="width: 100%">
       <el-table-column      fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
       <el-table-column      fixed  prop="nick_name"      label="用户名"    width="120"></el-table-column>
       <el-table-column      prop="password"      label="密码"      width="120"> </el-table-column>
@@ -88,10 +88,12 @@ export default {
     },
     // handleClose () {}
     async init () {
+      this.loading = true
       let { data, code } = await this.Req.get(api.userAllList, this.queryParam)
       if (code === 200) {
         this.tableData = data
       }
+      this.loading = false
     },
     checksEdit (row) {
       this.isRoleCheck = true

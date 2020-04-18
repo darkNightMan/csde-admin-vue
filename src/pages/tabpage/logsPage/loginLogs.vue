@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="tableData.list"  :height="winH"  border  style="width: 100%">
+    <el-table :data="tableData.list"  v-loading="loading" :height="winH"  border  style="width: 100%">
       <el-table-column      fixed   prop="id"      label="日志编号"    width="150"></el-table-column>
       <el-table-column      fixed   prop="user_id"    label="用户ID"></el-table-column>
       <el-table-column      fixed   prop="user_name"    label="用户名"></el-table-column>
@@ -58,10 +58,12 @@ export default {
       this.init()
     },
     async init () {
+      this.loading = true
       let { data, code } = await this.Req.get(api.loginLogs, this.queryParam)
       if (code === 200) {
         this.tableData = data
       }
+      this.loading = false
     }
   },
   data () {
@@ -70,6 +72,7 @@ export default {
         page: 1,
         pageSize: 10
       },
+      loading: false,
       tableData: []
     }
   },
