@@ -4,8 +4,10 @@
       <el-tree
         :data="dataTree"
         show-checkbox
+        :expand-on-click-node="true"
+        accordion highlight-current
+        check-strictly
         node-key="res_id"
-        default-expand-all
         ref="tree"
         :props="defaultProps">
       </el-tree>
@@ -44,10 +46,10 @@
       <el-table-column      prop="role_name"      label="角色名称" ></el-table-column>
       <el-table-column      label="操作"     width="00">
           <template slot-scope="scope">
-            <el-button @click="checksEdit(scope.row, true)" type="primary" size="mini">查看权限</el-button>
-            <el-button @click="checksEdit(scope.row, false)" type="warning" size="mini">编辑权限</el-button>
-            <el-button @click="changeRoleName(scope.row, false),isRoleCheck = true" type="success" size="small">修改角色名</el-button>
-            <el-button @click="deleteRole(scope.row, false)" type="danger" size="mini">删除角色</el-button>
+            <el-tag @click="checksEdit(scope.row, true)" type="primary" size="mini" effect="dark">查看</el-tag>
+            <el-tag @click="checksEdit(scope.row, false)" type="warning" size="mini" effect="dark">编辑</el-tag>
+            <el-tag @click="changeRoleName(scope.row, false),isRoleCheck = true" type="success" effect="dark" size="small">修改</el-tag>
+            <el-tag @click="deleteRole(scope.row, false)" type="danger" effect="dark" size="mini">删除</el-tag>
          </template>
       </el-table-column>
     </el-table>
