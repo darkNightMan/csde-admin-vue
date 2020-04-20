@@ -1,8 +1,16 @@
 <template>
   <div>
      <el-dialog :title="isRoleCheck ? '编辑菜单' : '新增菜单'"  :visible.sync="dialogVisiblerole" width="30%" >
+       {{roleValidateForm}}
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
-         <el-form-item  prop="parent_id"   label="父级菜单">
+         <el-form-item   label="类型"   prop="type"  :rules="[{ required: true, message: '菜单名不能为空'}]" >
+             <el-radio-group v-model="roleValidateForm.type">
+                <el-radio :label="1">目录</el-radio>
+                <el-radio :label="2">菜单</el-radio>
+                <el-radio :label="3">按钮</el-radio>
+              </el-radio-group>
+          </el-form-item>
+         <el-form-item  prop="parent_id"   label="上级菜单">
                <el-select  v-model="roleValidateForm.parent_id" clearable placeholder="请选择" style="width:100%">
                 <el-option
                   v-for="item in  selectMenuList.data"
@@ -12,7 +20,7 @@
                 </el-option>
               </el-select>
           </el-form-item>
-          <el-form-item   label="菜单名"   prop="res_name"  :rules="[{ required: true, message: '菜单名不能为空'}]" >
+          <el-form-item   label="菜单名称"   prop="res_name"  :rules="[{ required: true, message: '菜单名不能为空'}]" >
             <el-input type="input" v-model="roleValidateForm.res_name" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item  prop="res_code"   label="菜单编码">
@@ -210,6 +218,7 @@ export default {
       isRoleCheck: false,
       dialogVisiblerole: false,
       roleValidateForm: {
+        type: '',
         res_id: '',
         res_name: '',
         parent_id: '',

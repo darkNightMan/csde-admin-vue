@@ -1,10 +1,11 @@
 <template>
   <div>
-    <el-dialog  title="菜单权限" :visible.sync="dialogVisible"  width="20%"  >
+    <el-dialog  title="菜单权限" :visible.sync="dialogVisible"  width="15%"  >
       <el-tree
         :data="dataTree"
         show-checkbox
         :expand-on-click-node="true"
+        default-expand-all
         accordion highlight-current
         check-strictly
         node-key="res_id"
