@@ -8,12 +8,14 @@ import ElementUI from 'element-ui'
 import './assets/css/common.css'
 // import { Tree } from 'view-design'
 import 'element-ui/lib/theme-chalk/index.css'
+import iconPicker from 'vue-fontawesome-elementui-icon-picker'
 import Req from './request/http'
 import { mapMutations } from 'vuex'
 Vue.config.productionTip = false
 // console.log(Tree)
 // Vue.component('Tree', Tree)
 Vue.use(ElementUI) // 引入饿了么主题
+Vue.use(iconPicker)
 Vue.prototype.Req = new Req()
 /* eslint-disable no-new */
 new Vue({

@@ -3,7 +3,7 @@
      <el-dialog :title="isRoleCheck ? '编辑菜单' : '新增菜单'"  :visible.sync="dialogVisiblerole" width="30%" >
        {{roleValidateForm}}
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
-         <el-form-item   label="类型"   prop="type"  :rules="[{ required: true, message: '菜单名不能为空'}]" >
+         <el-form-item  v-show="!isRoleCheck"  prop="type" label="类型">
              <el-radio-group v-model="roleValidateForm.type">
                 <el-radio :label="1">目录</el-radio>
                 <el-radio :label="2">菜单</el-radio>
@@ -26,14 +26,20 @@
           <el-form-item  prop="res_code"   label="菜单编码">
               <el-input type="input" v-model="roleValidateForm.res_code" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item  prop="component"   label="菜单组件">
+          <el-form-item  prop="component"   label="菜单组件" v-show="roleValidateForm.type === 2">
               <el-input type="input" v-model="roleValidateForm.component" autocomplete="off"></el-input>
           </el-form-item>
-           <el-form-item  prop="res_icon"   label="ICON图标">
-              <el-input type="input" v-model="roleValidateForm.res_icon" autocomplete="off"></el-input>
+           <el-form-item  prop="res_icon"  v-show="roleValidateForm.type === 2 || roleValidateForm.type === 1"  label="菜单图标">
+             <icon-picker v-model="roleValidateForm.res_icon"></icon-picker>
+          </el-form-item>
+           <el-form-item  prop="sort"   label="排序">
+              <el-input type="input" v-model="roleValidateForm.sort" autocomplete="off"></el-input>
           </el-form-item>
            <el-form-item  prop="description"   label="菜单描述">
               <el-input type="input" v-model="roleValidateForm.description" autocomplete="off"></el-input>
+          </el-form-item>
+            <el-form-item  prop="state"   label="状态">
+              <el-switch v-model="roleValidateForm.state" active-text="启用" :active-value="1" :inactive-value="0"></el-switch>
           </el-form-item>
         </el-form>
       <span slot="footer" class="dialog-footer">
@@ -45,8 +51,8 @@
       <el-button type="primary" size="small" @click="createDialog">新建菜单</el-button>
     </div>
     <el-table  v-loading="loading"  :data="tableData.list" :height="winH"    border    style="width: 100%">
-      <el-table-column      prop="res_id"      label="res_id"   ></el-table-column>
-      <el-table-column      prop="parent_id"      label="parent_id"    ></el-table-column>
+      <el-table-column      prop="res_id"      label="菜单ID"   ></el-table-column>
+      <el-table-column      prop="parent_id"      label="上级菜单"    ></el-table-column>
       <el-table-column      prop="res_name"      label="菜单名"     > </el-table-column>
       <el-table-column      prop="component"      label="菜单组件名"    > </el-table-column>
       <el-table-column      prop="res_icon"      label="菜单ICON"      width="120"></el-table-column>
@@ -110,20 +116,26 @@ export default {
       this.dialogVisiblerole = true
       this.isRoleCheck = false
       this.roleValidateForm.res_id = ''
+      this.roleValidateForm.res_icon = ''
       this.resetForm('roleValidateForm')
     },
     checksEdit (row) {
       this.isRoleCheck = true
       this.dialogVisiblerole = true
-      this.roleValidateForm = {
-        res_id: row.res_id,
-        res_name: row.res_name,
-        parent_id: row.parent_id,
-        component: row.component,
-        description: row.description,
-        res_code: row.res_code,
-        res_icon: row.res_icon
-      }
+      this.$nextTick(() => {
+        this.roleValidateForm = {
+          type: row.type,
+          res_id: row.res_id,
+          res_name: row.res_name,
+          parent_id: row.parent_id,
+          component: row.component,
+          description: row.description,
+          res_code: row.res_code,
+          res_icon: row.res_icon,
+          sort: row.sort,
+          state: row.state
+        }
+      })
     },
     async createMenu () {
       let { code, msg } = await this.Req.post(api.createMenu, this.roleValidateForm)
@@ -218,14 +230,16 @@ export default {
       isRoleCheck: false,
       dialogVisiblerole: false,
       roleValidateForm: {
-        type: '',
+        type: 1,
         res_id: '',
         res_name: '',
         parent_id: '',
         component: '',
         description: '',
         res_code: '',
-        res_icon: ''
+        res_icon: '',
+        sort: '',
+        state: 1
       }
     }
   },
