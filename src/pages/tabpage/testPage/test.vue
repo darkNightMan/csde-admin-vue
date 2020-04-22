@@ -1,5 +1,5 @@
 <template>
-  <div>文章列表</div>
+  <div>测试列表</div>
 </template>
 
 <script>
