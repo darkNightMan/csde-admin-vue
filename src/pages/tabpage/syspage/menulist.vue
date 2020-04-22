@@ -29,6 +29,9 @@
           <el-form-item  prop="component"   label="菜单组件" v-show="roleValidateForm.type === 2">
               <el-input type="input" v-model="roleValidateForm.component" autocomplete="off"></el-input>
           </el-form-item>
+          <el-form-item  prop="perms"   label="授权标识">
+              <el-input type="input" v-model="roleValidateForm.perms" autocomplete="off"></el-input>
+          </el-form-item>
            <el-form-item  prop="res_icon"  v-show="roleValidateForm.type === 2 || roleValidateForm.type === 1"  label="菜单图标">
              <icon-picker v-model="roleValidateForm.res_icon"></icon-picker>
           </el-form-item>
@@ -133,7 +136,8 @@ export default {
           res_code: row.res_code,
           res_icon: row.res_icon,
           sort: row.sort,
-          state: row.state
+          state: row.state,
+          perms: row.perms
         }
       })
     },
@@ -239,7 +243,8 @@ export default {
         res_code: '',
         res_icon: '',
         sort: '',
-        state: 1
+        state: 1,
+        perms: ''
       }
     }
   },
