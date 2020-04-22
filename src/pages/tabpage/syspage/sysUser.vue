@@ -55,8 +55,8 @@
       <el-table-column          label="操作"     >
           <template slot-scope="scope">
           <!-- <el-button @click="checksEdit(scope.row, true)" type="primary" size="small">查看</el-button> -->
-          <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="mini">编辑</el-tag>
-          <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="mini">删除</el-tag>
+          <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="small">编辑</el-tag>
+          <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="small">删除</el-tag>
       </template>
       </el-table-column>
     </el-table>

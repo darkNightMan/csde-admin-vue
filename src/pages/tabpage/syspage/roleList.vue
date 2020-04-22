@@ -47,10 +47,10 @@
       <el-table-column      prop="role_name"      label="角色名称" ></el-table-column>
       <el-table-column      label="操作"     width="00">
           <template slot-scope="scope">
-            <el-tag @click="checksEdit(scope.row, true)" type="primary" size="mini" effect="dark">查看</el-tag>
-            <el-tag @click="checksEdit(scope.row, false)" type="warning" size="mini" effect="dark">编辑</el-tag>
+            <el-tag @click="checksEdit(scope.row, true)" type="primary" size="small" effect="dark">查看</el-tag>
+            <el-tag @click="checksEdit(scope.row, false)" type="warning" size="small" effect="dark">编辑</el-tag>
             <el-tag @click="changeRoleName(scope.row, false),isRoleCheck = true" type="success" effect="dark" size="small">修改</el-tag>
-            <el-tag @click="deleteRole(scope.row, false)" type="danger" effect="dark" size="mini">删除</el-tag>
+            <el-tag @click="deleteRole(scope.row, false)" type="danger" effect="dark" size="small">删除</el-tag>
          </template>
       </el-table-column>
     </el-table>

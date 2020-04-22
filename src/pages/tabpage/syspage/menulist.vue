@@ -62,28 +62,28 @@
       <el-table-column      prop="res_code"      label="菜单编码"      width="120"></el-table-column>
       <el-table-column       label="授权标识"      width="120">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.perms"  type="warning" size="mini" effect="dark"> {{scope.row.perms}}</el-tag>
+          <el-tag v-if="scope.row.perms"  type="primary" size="mini" effect="dark"> {{scope.row.perms}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column     prop="sort"      label="排序" ></el-table-column>
       <el-table-column     label="状态" >
          <template slot-scope="scope">
-          <el-tag :type="scope.row.state === 1? 'success': 'danger' " size="mini" effect="dark"> {{scope.row.state == 1 ? '启用': '禁用' }}</el-tag>
+          <el-tag :type="scope.row.state === 1? 'success': 'danger' " size="small" effect="dark"> {{scope.row.state == 1 ? '正常': '禁用' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column      prop="type"      label="类型">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.type === 1"  type="primary" size="mini" effect="dark"> 目录 </el-tag>
-          <el-tag v-if="scope.row.type === 2"  type="warning" size="mini" effect="dark" >菜单</el-tag>
-          <el-tag v-if="scope.row.type === 3"  type="success" size="mini" effect="dark"> 按钮</el-tag>
+          <el-tag v-if="scope.row.type === 1"  type="primary" size="small" effect="dark"> 目录 </el-tag>
+          <el-tag v-if="scope.row.type === 2"  type="warning" size="small" effect="dark" >菜单</el-tag>
+          <el-tag v-if="scope.row.type === 3"  type="success" size="small" effect="dark"> 按钮</el-tag>
         </template>
       </el-table-column>
       <el-table-column      prop="create_time"      label="创建时间"     ></el-table-column>
       <el-table-column      prop="description"      label="描述"      width="120"></el-table-column>
       <el-table-column      label="操作"  >
           <template slot-scope="scope" v-if="scope.row.res_id">
-          <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="mini">编辑</el-tag>
-          <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="mini">删除</el-tag>
+          <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="small">编辑</el-tag>
+          <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="small">删除</el-tag>
       </template>
       </el-table-column>
     </el-table>
