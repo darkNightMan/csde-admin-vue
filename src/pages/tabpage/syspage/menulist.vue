@@ -55,7 +55,7 @@
     </div>
     <el-table  v-loading="loading"  :data="tableData.list" :height="winH"  size="small"  border  stripe   style="width: 100%">
       <el-table-column      prop="res_id"      label="菜单ID"    width="120" ></el-table-column>
-      <el-table-column      prop="parent_id"      label="上级菜单"    width="120" ></el-table-column>
+      <el-table-column      prop="parent_name"      label="上级菜单"    width="120" ></el-table-column>
       <el-table-column      prop="res_name"      label="菜单名"     width="120" > </el-table-column>
       <el-table-column      prop="component"      label="菜单组件名"    > </el-table-column>
       <el-table-column      prop="res_icon"      label="菜单ICON"      width="160"></el-table-column>
