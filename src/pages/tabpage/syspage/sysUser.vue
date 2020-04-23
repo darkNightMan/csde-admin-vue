@@ -32,8 +32,8 @@
           <el-button @click="resetForm('roleValidateForm')">重置</el-button>
       </span>
     </el-dialog>
-     <div class="btn-box">
-      <el-button type="primary" size="small" @click="createDialog">新建用户</el-button>
+     <div class="btn-box" v-test>
+      <el-button v-has="'sys:user:create'"  type="primary" size="small" @click="createDialog">新建用户</el-button>
     </div>
      <el-table   v-loading="loading"   :data="tableData.list"  size="small"     :height="winH"  border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column      fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
