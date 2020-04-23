@@ -41,7 +41,7 @@
     <div class="btn-box">
       <el-button size="small" type="primary" @click="createDialog">创建角色</el-button>
     </div>
-    <el-table :data="tableData" v-loading="loading"   border    style="width: 100%">
+    <el-table :data="tableData" v-loading="loading"   size="small"  border  stripe  fit   style="width: 100%">
       <el-table-column      fixed   prop="role_id"      label="角色ID"    width="150"></el-table-column>
       <el-table-column      fixed   prop="role_code"    label="角色编码"></el-table-column>
       <el-table-column      prop="role_name"      label="角色名称" ></el-table-column>

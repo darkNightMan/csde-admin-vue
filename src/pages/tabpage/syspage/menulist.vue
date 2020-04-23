@@ -53,14 +53,14 @@
     <div class="btn-box">
       <el-button type="primary" size="small" @click="createDialog">新建菜单</el-button>
     </div>
-    <el-table  v-loading="loading"  :data="tableData.list" :height="winH"    border  stripe   style="width: 100%">
+    <el-table  v-loading="loading"  :data="tableData.list" :height="winH"  size="small"  border  stripe   style="width: 100%">
       <el-table-column      prop="res_id"      label="菜单ID"    width="120" ></el-table-column>
       <el-table-column      prop="parent_id"      label="上级菜单"    width="120" ></el-table-column>
       <el-table-column      prop="res_name"      label="菜单名"     width="120" > </el-table-column>
       <el-table-column      prop="component"      label="菜单组件名"    > </el-table-column>
-      <el-table-column      prop="res_icon"      label="菜单ICON"      width="120"></el-table-column>
+      <el-table-column      prop="res_icon"      label="菜单ICON"      width="160"></el-table-column>
       <el-table-column      prop="res_code"      label="菜单编码"      width="120"></el-table-column>
-       <el-table-column   prop="type"  label="类型" width="70">
+       <el-table-column   prop="type"  label="类型" width="80">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.type === 1"  type="primary" size="small" effect="dark"> 目录 </el-tag>
           <el-tag v-if="scope.row.type === 2"  type="warning" size="small" effect="dark" >菜单</el-tag>
@@ -72,13 +72,13 @@
           <el-tag v-if="scope.row.perms"  type="primary" size="mini" effect="dark"> {{scope.row.perms}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column     prop="sort"      label="排序" ></el-table-column>
-      <el-table-column     label="状态"  width="70">
+      <el-table-column     prop="sort"      label="排序"  width="80" ></el-table-column>
+      <el-table-column     label="状态"  width="80">
          <template slot-scope="scope">
           <el-tag :type="scope.row.state === 1? 'success': 'danger' " size="small" effect="dark"> {{scope.row.state == 1 ? '正常': '禁用' }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column   prop="create_time"      label="创建时间"     ></el-table-column>
+      <el-table-column   prop="create_time"      label="创建时间" ></el-table-column>
       <el-table-column   prop="description"      label="描述"      width="120"></el-table-column>
       <el-table-column   label="操作"   width="120">
           <template slot-scope="scope" v-if="scope.row.res_id">

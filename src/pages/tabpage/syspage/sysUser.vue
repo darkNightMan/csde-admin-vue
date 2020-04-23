@@ -35,7 +35,7 @@
      <div class="btn-box">
       <el-button type="primary" size="small" @click="createDialog">新建用户</el-button>
     </div>
-     <el-table   v-loading="loading"   :data="tableData.list"    :height="winH"  border    style="width: 100%">
+     <el-table   v-loading="loading"   :data="tableData.list"  size="small"     :height="winH"  border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column      fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
       <el-table-column      fixed  prop="nick_name"      label="用户名"    width="120"></el-table-column>
       <el-table-column      prop="password"      label="密码"      width="120"> </el-table-column>
@@ -44,7 +44,7 @@
       <el-table-column      prop="state"      label="状态"  width="80"   ></el-table-column>
       <el-table-column     label="角色"   >
             <template slot-scope="scope">
-              <el-tag style="margin:5px" type="primary" effect="dark" v-for="(it, index) in scope.row.roleList" :key="index" size="small">
+              <el-tag style="margin:0px 5px" type="primary" effect="dark" v-for="(it, index) in scope.row.roleList" :key="index" size="small">
                 {{it.role_name}}
               </el-tag>
             </template>

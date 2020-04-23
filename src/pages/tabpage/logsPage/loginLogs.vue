@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-table :data="tableData.list"  v-loading="loading" :height="winH"  border  style="width: 100%">
+    <el-table :data="tableData.list"  v-loading="loading"  size="small" stripe  :height="winH"  border  style="width: 100%">
       <el-table-column      fixed   prop="id"      label="日志编号"    width="150"></el-table-column>
       <el-table-column      fixed   prop="user_id"    label="用户ID"></el-table-column>
       <el-table-column      fixed   prop="user_name"    label="用户名"></el-table-column>
       <el-table-column     label="角色名"  >
           <template slot-scope="scope">
-            <el-tag style="margin:5px" type="primary" effect="dark" v-for="(it, index) in scope.row.roleList" :key="index" size="small">
+            <el-tag style="margin:0 5px" type="primary" effect="dark" v-for="(it, index) in scope.row.roleList" :key="index" size="small">
               {{it.role_name}}
             </el-tag>
           </template>
