@@ -8,7 +8,8 @@ const state = {
 const getters = {
   token: state => state.token,
   userInfo: state => state.userInfo,
-  menu: state => state.menu
+  menu: state => state.menu,
+  perms: state => state.perms
 }
 const actions = {
   // 菜单
@@ -17,8 +18,9 @@ const actions = {
     const { data, code } = await this._vm.Req.get(api.userInfoMenu)
     const viewAndIndex = window.localStorage.getItem('viewAndIndex')
     if (code === 200) {
-      commit('setMeunList', data.menuList)
+      commit('setMeunTree', data.menuList)
       commit('setUserInfo', data.userInfo)
+      commit('setMeunPerms', data.perms)
       viewAndIndex && commit('tabs/setViewTab', JSON.parse(viewAndIndex), { root: true })
     }
     // }
@@ -31,8 +33,11 @@ const mutations = {
   setToken (state, data) {
     state.token = data
   },
-  setMeunList (state, data) {
+  setMeunTree (state, data) {
     state.menu = data
+  },
+  setMeunPerms (state, data) {
+    state.perms = data
   }
 }
 
