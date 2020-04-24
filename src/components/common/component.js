@@ -31,13 +31,12 @@ export default {
           let cb = await new Promise(this.component.beforeOpen.bind(this.$root))
           if (typeof cb === 'function') {
             if (this.component.mixins) {
-              this.component
-                .mixins
-                .unshift({
-                  created () {
-                    // cb(this)
-                  }
-                })
+              this.component.mixins.unshift({
+                created () {
+                  // eslint-disable-next-line standard/no-callback-literal
+                  cb(this)
+                }
+              })
             } else {
               this.component.mixins = [{
                 created () {
@@ -57,13 +56,11 @@ export default {
     }
   },
   // 渲染函数 h [Function] 渲染函数
-  render (h) {
-    let {
-      param,
-      name
-    } = this.com
+  render (createElement) {
+    let { param, name } = this.com
     // 加载中显示loading组件，加载成功后显示相应组件，加载失败时，显示error组件
-    return h (this.component, {
+    debugger
+    return createElement(this.component, {
       ref: 'component',
       props: {
         linkParam: param || {},
@@ -76,6 +73,7 @@ export default {
     // 加载完毕后将组件实例绑定到instance属性上
     loaded (val) {
       if (val) {
+        // eslint-disable-next-line no-return-assign
         this.$nextTick(_ => this.com.instance = this.$refs.component)
       }
     }

@@ -50,14 +50,14 @@
       </span>
     </el-dialog>
     <div class="btn-box">
-      <el-button type="primary" size="small" @click="createDialog">新建菜单</el-button>
+      <el-button type="primary"  v-has="'sys:menu:create'"   icon="el-icon-circle-plus-outline"  size="mini" @click="createDialog">新建</el-button>
     </div>
     <el-table  v-loading="loading"  :data="tableData.list" :height="winH"  size="small"  border  stripe   style="width: 100%">
       <el-table-column      prop="res_id"      label="菜单ID"    width="120" ></el-table-column>
       <el-table-column      prop="parent_name"      label="上级菜单"    width="120" ></el-table-column>
       <el-table-column      prop="res_name"      label="菜单名"     width="120" > </el-table-column>
-      <el-table-column      prop="component"      label="菜单组件名"    > </el-table-column>
-      <el-table-column      prop="res_icon"      label="菜单ICON"      width="160"></el-table-column>
+      <el-table-column      prop="component"      label="菜单组件名"   width="120" > </el-table-column>
+      <el-table-column      prop="res_icon"      label="菜单ICON"      width="150"></el-table-column>
       <el-table-column      prop="res_code"      label="菜单编码"      width="120"></el-table-column>
        <el-table-column   prop="type"  label="类型" width="80">
         <template slot-scope="scope">
@@ -79,10 +79,10 @@
       </el-table-column>
       <el-table-column   prop="create_time"      label="创建时间" ></el-table-column>
       <el-table-column   prop="description"      label="描述"      width="120"></el-table-column>
-      <el-table-column   label="操作"   width="120">
+      <el-table-column   label="操作"  >
           <template slot-scope="scope" v-if="scope.row.res_id">
-          <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="small">编辑</el-tag>
-          <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="small">删除</el-tag>
+          <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-has="'sys:meun:update'" size="mini">编辑</el-button>
+          <el-button @click="deleteUser(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" v-has="'sys:meun:delete'" size="mini">删除</el-button>
       </template>
       </el-table-column>
     </el-table>

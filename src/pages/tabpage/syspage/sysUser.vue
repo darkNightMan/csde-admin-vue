@@ -32,10 +32,12 @@
           <el-button @click="resetForm('roleValidateForm')">重置</el-button>
       </span>
     </el-dialog>
-     <div class="btn-box" v-test>
-      <el-button v-has="'sys:user:create'"  type="primary" size="small" @click="createDialog">新建用户</el-button>
+     <div class="btn-box">
+        <el-button v-has="'sys:user:create'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="createDialog">新建</el-button>
+        <!-- <el-button  :disabled="disbaledBtn" v-has="'sys:user:update'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="checksEdit">修改</el-button>
+        <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
     </div>
-     <el-table   v-loading="loading"   :data="tableData.list"  size="small"     :height="winH"  border  stripe  fit  highlight-current-row style="width: 100%">
+     <el-table  @row-click="actionEvents" v-loading="loading"   :data="tableData.list"  size="small"     :height="winH"  border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column      fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
       <el-table-column      fixed  prop="nick_name"      label="用户名"    width="120"></el-table-column>
       <el-table-column      prop="password"      label="密码"      width="120"> </el-table-column>
@@ -52,11 +54,11 @@
       <el-table-column      prop="avatar"      label="头像"     > </el-table-column>
       <el-table-column      prop="create_time"      label="创建时间"      ></el-table-column>
       <el-table-column      prop="update_id"      label="更新人"      width="120"></el-table-column>
-      <el-table-column          label="操作"     >
+      <el-table-column  label="操作">
           <template slot-scope="scope">
           <!-- <el-button @click="checksEdit(scope.row, true)" type="primary" size="small">查看</el-button> -->
-          <el-tag @click="checksEdit(scope.row, false)" type="primary"  effect="dark" size="small">编辑</el-tag>
-          <el-tag @click="deleteUser(scope.row, false)" type="danger" effect="dark" size="small">删除</el-tag>
+          <el-button @click="checksEdit(scope.row, false)" type="primary" v-has="'sys:user:update'"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
+          <el-button @click="deleteUser(scope.row, false)" type="danger"  v-has="'sys:user:delete'" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -77,6 +79,7 @@
 import { api } from '@/request/api.js'
 import { mapGetters } from 'vuex'
 export default {
+  props: [],
   methods: {
     handleSizeChange (pageSize) {
       this.queryParam.pageSize = pageSize
@@ -94,6 +97,9 @@ export default {
         this.tableData = data
       }
       this.loading = false
+    },
+    actionEvents (row) {
+      this.currRow = row
     },
     checksEdit (row) {
       this.isRoleCheck = true
@@ -219,6 +225,8 @@ export default {
         pageSize: 10,
         currentPage: 1
       },
+      // 当前选择行
+      currRow: null,
       roleValidateForm: {
         nick_name: '',
         password: '',
@@ -232,7 +240,10 @@ export default {
   filters: {
   },
   computed: {
-    ...mapGetters('app', ['winH'])
+    ...mapGetters('app', ['winH']),
+    disbaledBtn () {
+      return this.currRow === null
+    }
   },
   created () {
     this.init()

@@ -10,7 +10,7 @@
      >
      <keep-alive>
       <transition name="el-zoom-in-top">
-        <component :is="item.component"></component>
+        <tabs-Component :com="item"></tabs-Component>
       </transition>
       </keep-alive>
     </el-tab-pane>
@@ -26,6 +26,9 @@ export default {
     }
   },
   created () {
+  },
+  components: {
+    // tabsComponent
   },
   computed: {
     ...mapState('tabs', ['tabViewList']),

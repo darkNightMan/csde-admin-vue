@@ -39,7 +39,7 @@
       </span>
     </el-dialog>
     <div class="btn-box">
-      <el-button size="small" type="primary" @click="createDialog">创建角色</el-button>
+      <el-button size="mini" icon="el-icon-circle-plus-outline" type="primary" @click="createDialog">新建</el-button>
     </div>
     <el-table :data="tableData" v-loading="loading"   size="small"  border  stripe  fit   style="width: 100%">
       <el-table-column      fixed   prop="role_id"      label="角色ID"    width="150"></el-table-column>
@@ -47,10 +47,10 @@
       <el-table-column      prop="role_name"      label="角色名称" ></el-table-column>
       <el-table-column      label="操作"     width="00">
           <template slot-scope="scope">
-            <el-tag @click="checksEdit(scope.row, true)" type="primary" size="small" effect="dark">查看</el-tag>
-            <el-tag @click="checksEdit(scope.row, false)" type="warning" size="small" effect="dark">编辑</el-tag>
-            <el-tag @click="changeRoleName(scope.row, false),isRoleCheck = true" type="success" effect="dark" size="small">修改</el-tag>
-            <el-tag @click="deleteRole(scope.row, false)" type="danger" effect="dark" size="small">删除</el-tag>
+            <el-button v-has="'sys:role:look'" @click="checksEdit(scope.row, true)" type="primary" icon="el-icon-view" size="mini" effect="dark">查看</el-button>
+            <el-button v-has="'sys:role:edit'" @click="checksEdit(scope.row, false)" type="warning" icon="el-icon-edit" size="mini" effect="dark">编辑</el-button>
+            <el-button v-has="'sys:role:update'" @click="changeRoleName(scope.row, false),isRoleCheck = true"  icon="el-icon-edit" type="primary" effect="dark" size="mini">修改</el-button>
+            <el-button v-has="'sys:role:delete'" @click="deleteRole(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" size="mini">删除</el-button>
          </template>
       </el-table-column>
     </el-table>
