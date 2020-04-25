@@ -150,7 +150,6 @@ export default {
     },
     async updateuUser () {
       let { code, msg } = await this.Req.put(api.updateUser, this.roleValidateForm)
-      debugger
       if (code === 200) {
         this.init()
         this.$message({

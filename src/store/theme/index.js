@@ -1,7 +1,7 @@
 
 const state = {
   theme: {
-    backGround: '#FFFFFF'
+    backGround: '#fff'
   }
 }
 const getters = {

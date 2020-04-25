@@ -47,10 +47,10 @@ export default {
 
 <style>
   .el-header {
-    background-color:rgb(0, 153, 204);
+    background-color:rgb(45, 140, 240);
     color: #fff;
     line-height: 60px;
-    /* width: 100%; */
+    /* width: 100%;rgb(45, 140, 240) rgb(45, 140, 240)*/
   }
   .avatar-right{
     float: right;
@@ -58,7 +58,7 @@ export default {
   .logo{
     width: 200px;
     height: 40px;
-    margin-top: 4px;
+    margin-top: 0px;
     margin-left: 0px;
     float: left;
   }
