@@ -5,3 +5,6 @@
   padding: 10px;
   text-align: right;
 }
+.el-button--mini {
+  padding: 6px 10px
+}

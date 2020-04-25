@@ -1,6 +1,6 @@
 <template>
   <div>
-     <el-dialog :title="isRoleCheck ? '编辑菜单' : '新增菜单'"  :visible.sync="dialogVisiblerole" width="30%" >
+     <el-dialog :title="isRoleCheck ? '编辑菜单' : '新增菜单'"  :visible.sync="dialogVisiblerole" width="30%" :fullscreen="false">
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
          <el-form-item  v-show="!isRoleCheck"  prop="type" label="类型">
              <el-radio-group v-model="roleValidateForm.type">
@@ -49,7 +49,7 @@
           size="mini"
           v-model="filterText">
         </el-input>
-        <el-tree
+        <el-tree v-loading="loading"
           class="filter-tree"
           :data="treeMenuList.tree"
           :props="defaultProps"

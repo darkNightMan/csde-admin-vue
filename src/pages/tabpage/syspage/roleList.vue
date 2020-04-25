@@ -1,10 +1,11 @@
 <template>
   <div>
-    <el-dialog  title="菜单权限" :visible.sync="dialogVisible"  width="15%"  >
+    <el-dialog  title="菜单权限" :visible.sync="dialogVisible"  width="15%">
       <el-tree
         :data="dataTree"
         show-checkbox
         :expand-on-click-node="true"
+        default-expand-all
         accordion highlight-current
         check-strictly
         node-key="res_id"
@@ -46,8 +47,8 @@
       <el-table-column      align="center"  prop="role_name"      label="角色名称" ></el-table-column>
       <el-table-column       align="center" label="操作"     width="00">
           <template slot-scope="scope">
-            <el-button v-has="'sys:role:look'" @click="checksEdit(scope.row, true)" type="primary" icon="el-icon-view" size="mini" effect="dark">查看</el-button>
-            <el-button v-has="'sys:role:edit'" @click="checksEdit(scope.row, false)" type="warning" icon="el-icon-edit" size="mini" effect="dark">编辑</el-button>
+            <el-button v-has="'sys:role:lookPerms'" @click="checksEdit(scope.row, true)" type="primary" icon="el-icon-view" size="mini" effect="dark">查看权限</el-button>
+            <el-button v-has="'sys:role:editPerms'" @click="checksEdit(scope.row, false)" type="warning" icon="el-icon-edit" size="mini" effect="dark">编辑权限</el-button>
             <el-button v-has="'sys:role:update'" @click="changeRoleName(scope.row, false),isRoleCheck = true"  icon="el-icon-edit" type="primary" effect="dark" size="mini">修改</el-button>
             <el-button v-has="'sys:role:delete'" @click="deleteRole(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" size="mini">删除</el-button>
          </template>
