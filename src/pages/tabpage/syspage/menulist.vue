@@ -52,6 +52,7 @@
         <el-tree v-loading="loading"
           class="filter-tree"
           :data="treeMenuList.tree"
+          node-key="res_id"
           :props="defaultProps"
           default-expand-all
           :filter-node-method="filterNode"
@@ -125,6 +126,7 @@ export default {
   methods: {
     nodeClick (value) {
       this.queryParam.treeId = value.res_id
+      this.$refs.tree.setCurrentKey(value.res_id)
       this.init()
     },
     filterNode (value, data) {
