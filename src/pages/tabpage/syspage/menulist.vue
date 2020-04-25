@@ -2,7 +2,7 @@
   <div>
      <el-dialog :title="isRoleCheck ? '编辑菜单' : '新增菜单'"  :visible.sync="dialogVisiblerole" width="30%" :fullscreen="false">
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
-         <el-form-item  v-show="!isRoleCheck"  prop="type" label="类型">
+         <el-form-item  v-show="!isRoleCheck"  prop="type" label="类型" size="mini">
              <el-radio-group v-model="roleValidateForm.type">
                 <el-radio :label="1">目录</el-radio>
                 <el-radio :label="2">菜单</el-radio>
@@ -10,10 +10,10 @@
               </el-radio-group>
           </el-form-item>
          <el-form-item  prop="parent_id"   label="上级菜单" :rules="[{ required: true, message: '上级菜单名不能为空'}]">
-            <tree-select :data="treeMenuList" v-model="roleValidateForm.parent_id"  label="res_name" value="res_id"></tree-select>
+            <tree-select  :data="treeMenuList" v-model="roleValidateForm.parent_id"  label="res_name" value="res_id"></tree-select>
           </el-form-item>
           <el-form-item   label="菜单名称"   prop="res_name"  :rules="[{ required: true, message: '菜单名不能为空'}]" >
-            <el-input type="input" v-model="roleValidateForm.res_name" autocomplete="off"></el-input>
+            <el-input  type="input" v-model="roleValidateForm.res_name" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item  prop="res_code"   label="菜单编码">
               <el-input type="input" v-model="roleValidateForm.res_code" autocomplete="off"></el-input>
@@ -93,8 +93,8 @@
           <el-table-column  align="center"  prop="description"      label="描述"      width="120"></el-table-column>
           <el-table-column  align="center"  label="操作"  >
               <template slot-scope="scope" v-if="scope.row.res_id">
-              <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-has="'sys:meun:update'" size="mini">编辑</el-button>
-              <el-button @click="deleteUser(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" v-has="'sys:meun:delete'" size="mini">删除</el-button>
+              <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-has="'sys:menu:update'" size="mini">编辑</el-button>
+              <el-button @click="deleteUser(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" v-has="'sys:menu:delete'" size="mini">删除</el-button>
           </template>
           </el-table-column>
         </el-table>
