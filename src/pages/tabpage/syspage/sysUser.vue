@@ -150,6 +150,7 @@ export default {
     },
     async updateuUser () {
       let { code, msg } = await this.Req.put(api.updateUser, this.roleValidateForm)
+      debugger
       if (code === 200) {
         this.init()
         this.$message({
@@ -159,10 +160,6 @@ export default {
         this.dialogVisiblerole = false
       } else {
         this.dialogVisiblerole = false
-        this.$message({
-          message: msg,
-          type: 'success'
-        })
         this.resetForm('roleValidateForm')
       }
     },

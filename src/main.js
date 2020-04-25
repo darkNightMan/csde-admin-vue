@@ -10,18 +10,16 @@ import 'element-ui/lib/theme-chalk/index.css'
 import iconPicker from 'vue-fontawesome-elementui-icon-picker'
 import Req from './request/http'
 import { mapMutations } from 'vuex'
-import tabsComponent from './components/common/tabsCom'
+import myComponents from './components'
 import perms from './utils/perms'
-
 Vue.config.productionTip = false
-
 Vue.use(ElementUI) // 引入饿了么主题
 Vue.use(iconPicker)
-Vue.use(tabsComponent)
+Vue.use(myComponents) // 自己的组件
 Vue.use(perms)
 Vue.prototype.Req = new Req()
 /* eslint-disable no-new */
-let vue = new Vue({
+new Vue({
   el: '#app',
   router,
   store,
@@ -34,4 +32,3 @@ let vue = new Vue({
     ...mapMutations('app', ['setWinHeight'])
   }
 })
-console.log(vue)

@@ -1,5 +1,6 @@
 // 自定义加载组件
 export default {
+  name: 'tabsComponent',
   // 数据
   data: _ => ({
     loaded: false, // 是否加载完成
@@ -59,7 +60,6 @@ export default {
   render (createElement) {
     let { param, name } = this.com
     // 加载中显示loading组件，加载成功后显示相应组件，加载失败时，显示error组件
-    debugger
     return createElement(this.component, {
       ref: 'component',
       props: {

@@ -10,14 +10,7 @@
               </el-radio-group>
           </el-form-item>
          <el-form-item  prop="parent_id"   label="上级菜单">
-               <el-select  v-model="roleValidateForm.parent_id" clearable placeholder="请选择" style="width:100%">
-                <el-option
-                  v-for="item in  selectMenuList.data"
-                  :key="item.res_id"
-                  :label="item.res_name"
-                  :value="item.res_id">
-                </el-option>
-              </el-select>
+            <tree-select :data="treeMenuList" v-model="roleValidateForm.parent_id"  label="res_name" value="res_id"></tree-select>
           </el-form-item>
           <el-form-item   label="菜单名称"   prop="res_name"  :rules="[{ required: true, message: '菜单名不能为空'}]" >
             <el-input type="input" v-model="roleValidateForm.res_name" autocomplete="off"></el-input>
@@ -49,54 +42,72 @@
           <el-button @click="resetForm('roleValidateForm')">重置</el-button>
       </span>
     </el-dialog>
-    <div class="btn-box">
-      <el-button type="primary"  v-has="'sys:menu:create'"   icon="el-icon-circle-plus-outline"  size="mini" @click="createDialog">新建</el-button>
-    </div>
-    <el-table  v-loading="loading"  :data="tableData.list" :height="winH"  size="small"  border  stripe   style="width: 100%">
-      <el-table-column      prop="res_id"      label="菜单ID"    width="120" ></el-table-column>
-      <el-table-column      prop="parent_name"      label="上级菜单"    width="120" ></el-table-column>
-      <el-table-column      prop="res_name"      label="菜单名"     width="120" > </el-table-column>
-      <el-table-column      prop="component"      label="菜单组件名"   width="120" > </el-table-column>
-      <el-table-column      prop="res_icon"      label="菜单ICON"      width="150"></el-table-column>
-      <el-table-column      prop="res_code"      label="菜单编码"      width="120"></el-table-column>
-       <el-table-column   prop="type"  label="类型" width="80">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.type === 1"  type="primary" size="small" effect="dark"> 目录 </el-tag>
-          <el-tag v-if="scope.row.type === 2"  type="warning" size="small" effect="dark" >菜单</el-tag>
-          <el-tag v-if="scope.row.type === 3"  type="success" size="small" effect="dark"> 按钮</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column       label="授权标识"   width="120">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.perms"  type="primary" size="mini" effect="dark"> {{scope.row.perms}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column     prop="sort"      label="排序"  width="80" ></el-table-column>
-      <el-table-column     label="状态"  width="80">
-         <template slot-scope="scope">
-          <el-tag :type="scope.row.state === 1? 'success': 'danger' " size="small" effect="dark"> {{scope.row.state == 1 ? '正常': '禁用' }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column   prop="create_time"      label="创建时间" ></el-table-column>
-      <el-table-column   prop="description"      label="描述"      width="120"></el-table-column>
-      <el-table-column   label="操作"  >
-          <template slot-scope="scope" v-if="scope.row.res_id">
-          <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-has="'sys:meun:update'" size="mini">编辑</el-button>
-          <el-button @click="deleteUser(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" v-has="'sys:meun:delete'" size="mini">删除</el-button>
-      </template>
-      </el-table-column>
-    </el-table>
-    <div class="page-bottom">
-       <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="tableData.currentPage"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="tableData.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="tableData.totalCount">
-      </el-pagination>
-    </div>
+    <el-row :gutter="20">
+      <el-col :span="4">
+          <el-input
+          placeholder="输入关键字进行过滤"
+          v-model="filterText">
+        </el-input>
+        <el-tree
+          class="filter-tree"
+          :data="treeMenuList.tree"
+          :props="defaultProps"
+          default-expand-all
+          :filter-node-method="filterNode"
+          ref="tree">
+        </el-tree>
+      </el-col>
+      <el-col :span="20">
+        <div class="btn-box">
+          <el-button type="primary"  v-has="'sys:menu:create'"   icon="el-icon-circle-plus-outline"  size="mini" @click="createDialog">新建</el-button>
+        </div>
+        <el-table  v-loading="loading"  :data="tableData.list" :height="winH"  size="small"  border  stripe   style="width: 100%">
+          <el-table-column      prop="res_id"      label="菜单ID"    width="120" ></el-table-column>
+          <el-table-column      prop="parent_name"      label="上级菜单"    width="120" ></el-table-column>
+          <el-table-column      prop="res_name"      label="菜单名"     width="120" > </el-table-column>
+          <el-table-column      prop="component"      label="菜单组件名"   width="120" > </el-table-column>
+          <el-table-column      prop="res_icon"      label="菜单ICON"      width="150"></el-table-column>
+          <el-table-column      prop="res_code"      label="菜单编码"      width="120"></el-table-column>
+          <el-table-column   prop="type"  label="类型" width="80">
+            <template slot-scope="scope">
+              <el-tag v-if="scope.row.type === 1"  type="primary" size="small" effect="dark"> 目录 </el-tag>
+              <el-tag v-if="scope.row.type === 2"  type="warning" size="small" effect="dark" >菜单</el-tag>
+              <el-tag v-if="scope.row.type === 3"  type="success" size="small" effect="dark"> 按钮</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column       label="授权标识"   width="120">
+            <template slot-scope="scope">
+              <el-tag v-if="scope.row.perms"  type="primary" size="mini" effect="dark"> {{scope.row.perms}}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column     prop="sort"      label="排序"  width="80" ></el-table-column>
+          <el-table-column     label="状态"  width="80">
+            <template slot-scope="scope">
+              <el-tag :type="scope.row.state === 1? 'success': 'danger' " size="small" effect="dark"> {{scope.row.state == 1 ? '正常': '禁用' }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column   prop="create_time"      label="创建时间" ></el-table-column>
+          <el-table-column   prop="description"      label="描述"      width="120"></el-table-column>
+          <el-table-column   label="操作"  >
+              <template slot-scope="scope" v-if="scope.row.res_id">
+              <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-has="'sys:meun:update'" size="mini">编辑</el-button>
+              <el-button @click="deleteUser(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" v-has="'sys:meun:delete'" size="mini">删除</el-button>
+          </template>
+          </el-table-column>
+        </el-table>
+        <div class="page-bottom">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="tableData.currentPage"
+            :page-sizes="[10, 20, 30, 40]"
+            :page-size="tableData.pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="tableData.totalCount">
+          </el-pagination>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -104,7 +115,16 @@
 import { api } from '@/request/api.js'
 import { mapGetters } from 'vuex'
 export default {
+  watch: {
+    filterText (val) {
+      this.$refs.tree.filter(val)
+    }
+  },
   methods: {
+    filterNode (value, data) {
+      if (!value) return true
+      return data.label.indexOf(value) !== -1
+    },
     handleClick (row) {
       console.log(row)
     },
@@ -112,7 +132,11 @@ export default {
       try {
         this.loading = true
         let { data, code } = await this.Req.get(api.menuList, this.queryParam)
-        this.selectMenuList = await this.Req.get(api.selectMenuList)
+        let treeList = await this.Req.get(api.selectMenuList)
+        this.treeMenuList = {
+          tree: treeList.data.tree,
+          list: treeList.data.list
+        }
         if (code === 200) {
           this.tableData = data
         }
@@ -238,9 +262,10 @@ export default {
   },
   data () {
     return {
+      filterText: '',
       loading: false,
       tableData: [],
-      selectMenuList: [],
+      treeMenuList: {},
       queryParam: {
         page: 1,
         pageSize: 10
@@ -259,6 +284,10 @@ export default {
         sort: '',
         state: 1,
         perms: ''
+      },
+      defaultProps: {
+        children: 'children',
+        label: 'res_name'
       }
     }
   },

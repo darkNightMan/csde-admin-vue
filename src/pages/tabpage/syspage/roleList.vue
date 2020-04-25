@@ -5,7 +5,6 @@
         :data="dataTree"
         show-checkbox
         :expand-on-click-node="true"
-        default-expand-all
         accordion highlight-current
         check-strictly
         node-key="res_id"
@@ -34,8 +33,8 @@
           </el-form-item>
         </el-form>
       <span slot="footer" class="dialog-footer">
-         <el-button type="primary" @click="submitForm('roleValidateForm')">提交</el-button>
-          <el-button @click="resetForm('roleValidateForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('roleValidateForm')">提交</el-button>
+        <el-button @click="resetForm('roleValidateForm')">重置</el-button>
       </span>
     </el-dialog>
     <div class="btn-box">
