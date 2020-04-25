@@ -9,7 +9,7 @@
                 <el-radio :label="3">按钮</el-radio>
               </el-radio-group>
           </el-form-item>
-         <el-form-item  prop="parent_id"   label="上级菜单">
+         <el-form-item  prop="parent_id"   label="上级菜单" :rules="[{ required: true, message: '上级菜单名不能为空'}]">
             <tree-select :data="treeMenuList" v-model="roleValidateForm.parent_id"  label="res_name" value="res_id"></tree-select>
           </el-form-item>
           <el-form-item   label="菜单名称"   prop="res_name"  :rules="[{ required: true, message: '菜单名不能为空'}]" >
@@ -42,10 +42,11 @@
           <el-button @click="resetForm('roleValidateForm')">重置</el-button>
       </span>
     </el-dialog>
-    <el-row :gutter="20">
-      <el-col :span="4">
+    <el-row :gutter="20" >
+      <el-col :span="3" style="margin-top:10px">
           <el-input
           placeholder="输入关键字进行过滤"
+          size="mini"
           v-model="filterText">
         </el-input>
         <el-tree
@@ -54,21 +55,22 @@
           :props="defaultProps"
           default-expand-all
           :filter-node-method="filterNode"
+          @node-click="nodeClick"
           ref="tree">
         </el-tree>
       </el-col>
-      <el-col :span="20">
+      <el-col :span="21">
         <div class="btn-box">
           <el-button type="primary"  v-has="'sys:menu:create'"   icon="el-icon-circle-plus-outline"  size="mini" @click="createDialog">新建</el-button>
         </div>
-        <el-table  v-loading="loading"  :data="tableData.list" :height="winH"  size="small"  border  stripe   style="width: 100%">
-          <el-table-column      prop="res_id"      label="菜单ID"    width="120" ></el-table-column>
-          <el-table-column      prop="parent_name"      label="上级菜单"    width="120" ></el-table-column>
-          <el-table-column      prop="res_name"      label="菜单名"     width="120" > </el-table-column>
-          <el-table-column      prop="component"      label="菜单组件名"   width="120" > </el-table-column>
-          <el-table-column      prop="res_icon"      label="菜单ICON"      width="150"></el-table-column>
-          <el-table-column      prop="res_code"      label="菜单编码"      width="120"></el-table-column>
-          <el-table-column   prop="type"  label="类型" width="80">
+        <el-table   v-loading="loading"  :data="tableData.list" :height="winH"  size="small"  border  stripe   style="width: 100%">
+          <el-table-column   align="center"   prop="res_id"      label="菜单ID"    width="80" ></el-table-column>
+          <el-table-column   align="center"    prop="parent_name"      label="上级菜单"    width="100" ></el-table-column>
+          <el-table-column   align="center"    prop="res_name"      label="菜单名"     width="100" > </el-table-column>
+          <el-table-column   align="center"    prop="component"      label="菜单组件名"   width="120" > </el-table-column>
+          <el-table-column   align="center"    prop="res_icon"      label="菜单ICON"      width="150"></el-table-column>
+          <el-table-column   align="center"    prop="res_code"      label="菜单编码"      width="120"></el-table-column>
+          <el-table-column   align="center"  prop="type"  label="类型" width="80">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.type === 1"  type="primary" size="small" effect="dark"> 目录 </el-tag>
               <el-tag v-if="scope.row.type === 2"  type="warning" size="small" effect="dark" >菜单</el-tag>
@@ -80,15 +82,15 @@
               <el-tag v-if="scope.row.perms"  type="primary" size="mini" effect="dark"> {{scope.row.perms}}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column     prop="sort"      label="排序"  width="80" ></el-table-column>
-          <el-table-column     label="状态"  width="80">
+          <el-table-column    align="center"  prop="sort"      label="排序"  width="80" ></el-table-column>
+          <el-table-column   align="center"   label="状态"  width="80">
             <template slot-scope="scope">
               <el-tag :type="scope.row.state === 1? 'success': 'danger' " size="small" effect="dark"> {{scope.row.state == 1 ? '正常': '禁用' }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column   prop="create_time"      label="创建时间" ></el-table-column>
-          <el-table-column   prop="description"      label="描述"      width="120"></el-table-column>
-          <el-table-column   label="操作"  >
+          <el-table-column  align="center"  prop="create_time"      label="创建时间" ></el-table-column>
+          <el-table-column  align="center"  prop="description"      label="描述"      width="120"></el-table-column>
+          <el-table-column  align="center"  label="操作"  >
               <template slot-scope="scope" v-if="scope.row.res_id">
               <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-has="'sys:meun:update'" size="mini">编辑</el-button>
               <el-button @click="deleteUser(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" v-has="'sys:meun:delete'" size="mini">删除</el-button>
@@ -121,9 +123,13 @@ export default {
     }
   },
   methods: {
+    nodeClick (value) {
+      this.queryParam.treeId = value.res_id
+      this.init()
+    },
     filterNode (value, data) {
       if (!value) return true
-      return data.label.indexOf(value) !== -1
+      return data.res_name.indexOf(value) !== -1
     },
     handleClick (row) {
       console.log(row)

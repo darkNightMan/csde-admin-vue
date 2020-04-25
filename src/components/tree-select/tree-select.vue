@@ -1,7 +1,6 @@
 <template>
   <div>
-    {{name}}
-    <el-select v-model="select_"  clearable placeholder="请选择" style="width:100%" ref="select">
+    <el-select v-model="select_"  clearable :placeholder="placeholder" style="width:100%" ref="select">
       <el-tree  ref="tree" highlight-current default-expand-all :expand-on-click-node="false" :node-key="value" :props="defaultProps"  :data="data.tree" @node-click="nodeClick"></el-tree>
       <el-option  v-show="isShow"  v-for="item in data.list" :key="item.res_id"  :label="item.res_name"  :value="item.res_id"> </el-option>
     </el-select>
@@ -63,6 +62,8 @@ export default {
       if (!value) return true
       return data.label.indexOf(value) !== -1
     },
+    changeValue (value) {
+    },
     changeShow (e) {
       this.isShow = true
     },
@@ -86,7 +87,6 @@ export default {
   mounted () {
     this.$nextTick(() => {
       // 保证完全挂载
-      debugger
       this.$refs.tree.setCurrentKey(this.select)
     })
   }
