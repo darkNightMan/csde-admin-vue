@@ -13,7 +13,7 @@
                 <template  v-for="(child, childrenIndex) in item.children">
                     <template  v-if="!child.children">
                       <el-menu-item style="cursor: pointer" :key="childrenIndex" @click="addView({view: child, menuIndex:`${parentIndex}-${childrenIndex}`})" :index="`${parentIndex}-${childrenIndex}`">
-                        <span class="menuName">{{child.res_name}}</span> <!--二级-->
+                        <i :class="child.res_icon == null || child.res_icon == '' ? 'el-icon-eleme': child.res_icon"></i><span class="menuName">{{child.res_name}}</span> <!--二级-->
                       </el-menu-item>
                     </template>
                     <menu-item v-else  :key="childrenIndex" :routers="[child]"></menu-item>
@@ -57,7 +57,7 @@ export default {
     color: #333;
   }
   .menuName{
-    padding-left:20px;
+    /* padding-left:20px; */
     cursor: pointer;
   }
   .page-component__nav>.el-scrollbar__wrap {
