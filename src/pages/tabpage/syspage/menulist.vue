@@ -70,7 +70,7 @@
           <el-table-column   align="center"    prop="res_name"      label="菜单名"     width="100" > </el-table-column>
           <el-table-column   align="center"    prop="component"      label="菜单组件名"   width="120" > </el-table-column>
           <el-table-column   align="center"    prop="res_icon"      label="菜单ICON"      width="150"></el-table-column>
-          <el-table-column   align="center"    prop="res_code"      label="菜单编码"      width="120"></el-table-column>
+          <el-table-column   align="center"    prop="res_code"      label="菜单编码"      width="80"></el-table-column>
           <el-table-column   align="center"  prop="type"  label="类型" width="80">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.type === 1"  type="primary" size="small" effect="dark"> 目录 </el-tag>
@@ -78,7 +78,7 @@
               <el-tag v-if="scope.row.type === 3"  type="success" size="small" effect="dark"> 按钮</el-tag>
             </template>
           </el-table-column>
-          <el-table-column       label="授权标识"   width="120">
+          <el-table-column       label="授权标识"   width="150">
             <template slot-scope="scope">
               <el-tag v-if="scope.row.perms"  type="primary" size="mini" effect="dark"> {{scope.row.perms}}</el-tag>
             </template>
@@ -89,9 +89,9 @@
               <el-tag :type="scope.row.state === 1? 'success': 'danger' " size="small" effect="dark"> {{scope.row.state == 1 ? '正常': '禁用' }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column  align="center"  prop="create_time"      label="创建时间" ></el-table-column>
-          <el-table-column  align="center"  prop="description"      label="描述"      width="120"></el-table-column>
-          <el-table-column  align="center"  label="操作"  >
+          <el-table-column  align="center"  prop="create_time"      label="创建时间" width="200"  ></el-table-column>
+          <el-table-column  align="center"  prop="description"      label="描述"      ></el-table-column>
+          <el-table-column  align="center"  label="操作" width="200"  fixed="right">
               <template slot-scope="scope" v-if="scope.row.res_id">
               <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-has="'sys:menu:update'" size="mini">编辑</el-button>
               <el-button @click="deleteUser(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" v-has="'sys:menu:delete'" size="mini">删除</el-button>
