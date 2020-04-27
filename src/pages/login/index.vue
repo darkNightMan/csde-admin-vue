@@ -194,16 +194,13 @@ export default {
     overflow: hidden;
 }
 .login-form{
-  width: 400px;
+  max-width: 300px;
+  margin: 10% auto;
   /* margin: 300px auto; */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -200px;
-  margin-top: -200px;
+
 }
 .login-title{
-  font-size: 32px;
+  font-size: 28px;
   color: #FFf;
   padding: 50px;
   text-align: center
