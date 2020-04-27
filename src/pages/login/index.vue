@@ -35,7 +35,7 @@ export default {
       loginForm: {
         phone: '',
         password: '',
-        code: '123456'
+        code: ''
       },
       loginRule: {
         phone: [
@@ -175,7 +175,7 @@ export default {
             this.loading = false
             this.setToken(data.token)
             window.localStorage.setItem('token', data.token)
-            this.$router.push('/home')
+            this.$router.push('/')
           }
           this.loading = false
         } else {
