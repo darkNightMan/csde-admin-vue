@@ -12,7 +12,9 @@
         </el-form-item>
         <el-form-item label="" prop="code">
           <el-input style="width:150px;" placeholder="请输入验证码" v-model="loginForm.code"></el-input>
-          <el-button type="primary" style="width:calc(100% - 180px);float:right;" :loading="loading">获取验证码</el-button>
+          <el-button  style="width:calc(100% - 180px);float:right;padding:0" :loading="loading" @click="getCaptcha">
+            <img ref="captchoImg" src="/api/getCaptcha" alt="captcha" >
+          </el-button>
         </el-form-item>
         <el-form-item>
             <el-button type="primary"  style="width:100%" @click="submint('loginForm')" :loading="loading">登入</el-button>
@@ -181,6 +183,9 @@ export default {
           return false
         }
       })
+    },
+    getCaptcha (e) {
+      this.$refs.captchoImg.src = '/api/getCaptcha?d=' + Math.random()
     }
   }
 }
