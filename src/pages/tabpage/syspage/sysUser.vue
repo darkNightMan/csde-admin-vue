@@ -46,7 +46,7 @@
       <el-table-column     align="center"  prop="state"      label="状态"  width="80"   ></el-table-column>
       <el-table-column     align="center"  label="角色"   >
             <template slot-scope="scope">
-              <el-tag style="margin:0px 5px" type="primary" effect="dark" v-for="(it, index) in scope.row.roleList" :key="index" size="small">
+              <el-tag style="margin:0px 5px" type="primary" effect="dark" v-for="(it, index) in scope.row.sys_roles" :key="index" size="small">
                 {{it.role_name}}
               </el-tag>
             </template>
@@ -111,7 +111,7 @@ export default {
         email: row.email,
         phone: row.phone,
         avatar: row.avatar,
-        role_id: row.roleList ? getRole(row.roleList) : []
+        role_id: row.sys_roles ? getRole(row.sys_roles) : []
       }
       function getRole (roleList) {
         let roleid = []

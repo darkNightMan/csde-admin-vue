@@ -17,12 +17,12 @@ let router = new Router({
     {
       path: '/',
       name: '',
-      redirect: '/',
+      redirect: '/home',
       hiddenMenu: true,
       component: layout,
       children: [
         {
-          path: '/',
+          path: '/home',
           component: home
         }
       ]
