@@ -4,5 +4,6 @@ export default {
   userList: resolve => require(['@/pages/tabpage/syspage/sysUser.vue'], resolve),
   roleList: resolve => require(['@/pages/tabpage/syspage/roleList'], resolve),
   loginLogs: resolve => require(['@/pages/tabpage/logsPage/loginLogs'], resolve),
+  operationLogs: resolve => require(['@/pages/tabpage/logsPage/operationLogs'], resolve),
   test: resolve => require(['@/pages/tabpage/testPage/test'], resolve)
 }
