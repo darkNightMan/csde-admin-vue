@@ -9,7 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/common.css'
 import iconPicker from 'vue-fontawesome-elementui-icon-picker'
 import Req from './request/http'
-import { mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import myComponents from './components'
 import perms from './utils/perms'
 Vue.config.productionTip = false
@@ -26,9 +26,11 @@ new Vue({
   components: { App },
   template: '<App/>',
   created () {
+    this.winDonresize()
     this.setWinHeight()
   },
   methods: {
+    ...mapActions('app', ['winDonresize']),
     ...mapMutations('app', ['setWinHeight'])
   }
 })

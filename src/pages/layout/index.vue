@@ -23,7 +23,7 @@ import menuList from './menu'
 import tabs from './tabs'
 import headerTop from './header'
 import router from '../../router/index'
-import { mapMutations } from 'vuex'
+// import { mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -38,7 +38,7 @@ export default {
     tabs
   },
   methods: {
-    ...mapMutations('app', ['setWinHeight'])
+    // ...mapMutations('app', ['WinDonresize'])
   }
 }
 </script>
