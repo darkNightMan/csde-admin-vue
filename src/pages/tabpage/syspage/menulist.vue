@@ -90,7 +90,7 @@
             </template>
           </el-table-column>
           <el-table-column  align="center"  prop="create_time"      label="创建时间" width="200"  ></el-table-column>
-          <el-table-column  align="center"  prop="description"      label="描述"      ></el-table-column>
+          <el-table-column  align="center"  prop="description"      label="描述"    show-overflow-tooltip="true" ></el-table-column>
           <el-table-column  align="center"  label="操作" width="200"  fixed="right">
               <template slot-scope="scope" v-if="scope.row.res_id">
               <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-has="'sys:menu:update'" size="mini">编辑</el-button>

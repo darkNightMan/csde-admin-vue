@@ -51,7 +51,7 @@
               </el-tag>
             </template>
       </el-table-column>
-      <el-table-column      prop="avatar"      label="头像"     > </el-table-column>
+      <el-table-column      prop="avatar"      label="头像"   show-overflow-tooltip="true"  > </el-table-column>
       <el-table-column      prop="create_time"      label="创建时间"      ></el-table-column>
       <el-table-column      prop="update_id"      label="更新人"      width="120"></el-table-column>
       <el-table-column  label="操作">
