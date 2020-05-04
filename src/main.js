@@ -9,6 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/common.css'
 import iconPicker from 'vue-fontawesome-elementui-icon-picker'
 import Req from './request/http'
+import JsonViewer from 'vue-json-viewer'
 import { mapActions, mapMutations } from 'vuex'
 import myComponents from './components'
 import perms from './utils/perms'
@@ -17,6 +18,7 @@ Vue.use(ElementUI) // 引入饿了么主题
 Vue.use(iconPicker)
 Vue.use(myComponents) // 自己的组件
 Vue.use(perms)
+Vue.use(JsonViewer)
 Vue.prototype.Req = new Req()
 /* eslint-disable no-new */
 new Vue({

@@ -1,21 +1,20 @@
 <template>
   <div>
     <el-table :data="tableData.list"  v-loading="loading"  size="small" stripe  :height="winH"  border  style="width: 100%">
-      <el-table-column      fixed   prop="id"      label="日志编号"    width="150"></el-table-column>
-      <el-table-column      fixed   prop="user_id"    label="用户ID"></el-table-column>
-      <el-table-column      fixed   prop="user_name"    label="用户名"></el-table-column>
-      <el-table-column     label="角色名"  >
-          <template slot-scope="scope">
-            <el-tag style="margin:0 5px" type="primary" effect="dark" v-for="(it, index) in  scope.row.userInfo ? scope.row.userInfo.sys_roles : [] " :key="index" size="small">
-              {{it.role_name}}
-            </el-tag>
-          </template>
+      <el-table-column      fixed   prop="id"      label="日志编号"    width="100"></el-table-column>
+      <el-table-column      fixed   prop="user_id"    label="用户ID" width="100"></el-table-column>
+      <el-table-column      fixed   prop="nick_name"    label="用户名" width="100"></el-table-column>
+      <el-table-column      prop="action_method" label="请求地址" ></el-table-column>
+      <el-table-column    label="参数" show-overflow-tooltip="true">
+        <template slot-scope="scope">
+            <el-tooltip placement="top" effect="light">
+                <div slot="content"><json-viewer :value="scope.row.action_params"></json-viewer></div>
+                <span>{{scope.row.action_params}}</span>
+            </el-tooltip>
+        </template>
       </el-table-column>
-      <el-table-column      prop="login_ip"      label="IP地址" ></el-table-column>
-      <el-table-column      prop="login_address" label="地点" ></el-table-column>
-      <el-table-column      prop="login_time"      label="登录时间" ></el-table-column>
-      <el-table-column      prop="login_description"      label="登录描述" ></el-table-column>
-       <el-table-column     prop="login_agent"     label="登录设备" ></el-table-column>
+       <el-table-column      prop="action_ip"      label="IP地址" ></el-table-column>
+      <el-table-column      prop="action_time"      label="创建时间" ></el-table-column>
       <!-- <el-table-column      label="操作"     width="00">
           <template slot-scope="scope">
             {{scope.row.user_id}}
@@ -59,7 +58,7 @@ export default {
     },
     async init () {
       this.loading = true
-      let { data, code } = await this.Req.get(api.loginLogs, this.queryParam)
+      let { data, code } = await this.Req.get(api.operationLos, this.queryParam)
       if (code === 200) {
         this.tableData = data
       }

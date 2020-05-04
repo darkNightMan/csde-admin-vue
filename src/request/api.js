@@ -18,5 +18,6 @@ export const api = {
   updateMenu: '/api/menu/updatedMenu',
   deleteMenu: '/api/menu/deleteMenu',
   loginLogs: '/api/loginLogs/list',
+  operationLos: '/api/operationLos/list',
   selectMenuList: '/api/menu/selectMenuList'
 }

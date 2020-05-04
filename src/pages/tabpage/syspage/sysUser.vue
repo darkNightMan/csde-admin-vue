@@ -37,7 +37,6 @@
         <!-- <el-button  :disabled="disbaledBtn" v-has="'sys:user:update'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="checksEdit">修改</el-button>
         <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
     </div>
-    {{winH}}
      <el-table  @row-click="actionEvents" v-loading="loading"   :height="winH"   :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column     align="center"   fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
       <el-table-column     align="center"   fixed  prop="nick_name"      label="用户名"    width="120"></el-table-column>
