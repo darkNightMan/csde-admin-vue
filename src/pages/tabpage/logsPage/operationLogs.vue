@@ -5,7 +5,7 @@
       <el-table-column      fixed   prop="user_id"    label="用户ID" width="100"></el-table-column>
       <el-table-column      fixed   prop="nick_name"    label="用户名" width="100"></el-table-column>
       <el-table-column      prop="action_method" label="请求地址" ></el-table-column>
-      <el-table-column    label="参数" show-overflow-tooltip="true">
+      <el-table-column    label="参数" :show-overflow-tooltip="true">
         <template slot-scope="scope">
             <el-tooltip placement="top" effect="light">
                 <div slot="content"><json-viewer :value="scope.row.action_params"></json-viewer></div>

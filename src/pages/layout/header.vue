@@ -9,7 +9,7 @@
         <el-avatar class="pop-avatar" :src="userInfo.avatar" icon="el-icon-user-solid" style="vertical-align: middle;" />
         <i class="el-icon-setting" ></i>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人信息</el-dropdown-item>
+            <el-dropdown-item @click="addView({view: userCenter, menuIndex: '个人信息'})">个人信息</el-dropdown-item>
             <el-dropdown-item command="loginOut">退出登入</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['setUserInfo']),
+    ...mapActions('tabs', ['addView']),
     handleCommand (command) {
       this[command]()
     },
