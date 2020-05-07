@@ -9,7 +9,7 @@
         <el-avatar class="pop-avatar" :src="userInfo.avatar" icon="el-icon-user-solid" style="vertical-align: middle;" />
         <i class="el-icon-setting" ></i>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click="addView({view: userCenter, menuIndex: '个人信息'})">个人信息</el-dropdown-item>
+            <el-dropdown-item command="userCenter">个人信息</el-dropdown-item>
             <el-dropdown-item command="loginOut">退出登入</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -32,7 +32,22 @@ export default {
     handleCommand (command) {
       this[command]()
     },
-    async loginOut () {
+    userCenter () {
+      this.addView(
+        {
+          view: {
+            path: 'userCenter',
+            component: 'userCenter',
+            res_name: '个人信息',
+            res_id: -1,
+            closeTabs: true, // 默认首页不能关闭
+            index: '个人信息'
+          }
+        }
+      )
+    },
+    async loginOut (a) {
+      console.log(api)
       let { code } = await this.Req.get(api.loginOut)
       if (code === 200) {
         window.localStorage.setItem('token', '')

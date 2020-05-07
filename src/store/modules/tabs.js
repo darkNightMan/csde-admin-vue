@@ -6,17 +6,10 @@ const state = {
       path: 'home',
       component: tabpages.home,
       res_name: '首页',
-      res_id: '首页',
+      res_id: 1,
       closeTabs: false, // 默认首页不能关闭
       index: '首页'
     }
-    // {
-    //   path: 'userCenter',
-    //   component: tabpages.userCenter,
-    //   res_name: '个人信息',
-    //   closeTabs: true,
-    //   index: '个人信息'
-    // }
   ],
   activeViewName: '首页', // 当前打开的 tab名字
   menuIndex: '0' // 当前菜单打开的索引
@@ -33,7 +26,6 @@ const actions = {
 const mutations = {
   // 打开tab页面
   setViewTab: (state, viewAndIndex) => {
-    debugger
     window.localStorage.setItem('viewAndIndex', JSON.stringify(viewAndIndex)) // 存储当前打开的页面
     state.activeViewName = viewAndIndex.view.res_id.toString() // 标签导航索引
     state.menuIndex = viewAndIndex.menuIndex // 左边菜单索引
@@ -64,7 +56,9 @@ const mutations = {
       }
     })
     state.tabViewList = state.tabViewList.filter((item) => item.index !== targetName) // 过滤关闭掉tab
-    // window.localStorage.setItem('viewAndIndex', JSON.stringify(state.tabViewList))
+    if (state.tabViewList.length === 1) {
+      window.localStorage.setItem('viewAndIndex', '')
+    }
   },
   // 切换标签
   setActiveTab (state, name) {
