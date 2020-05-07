@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
+import VueCropper from 'vue-cropper'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/common.css'
 import iconPicker from 'vue-fontawesome-elementui-icon-picker'
@@ -15,7 +16,8 @@ import myComponents from './components'
 import perms from './utils/perms'
 Vue.config.productionTip = false
 Vue.use(ElementUI) // 引入饿了么主题
-Vue.use(iconPicker)
+Vue.use(iconPicker) // icon
+Vue.use(VueCropper) // 图片剪切
 Vue.use(myComponents) // 自己的组件
 Vue.use(perms)
 Vue.use(JsonViewer)

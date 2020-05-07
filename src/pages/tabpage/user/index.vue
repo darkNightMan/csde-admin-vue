@@ -4,17 +4,196 @@
       <div slot="header" class="clearfix">
         <span>个人信息</span>
       </div>
-      1111
+      <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item   label="头像"  prop="avatar">
+            <!-- <el-input type="input" v-model="roleValidateForm.avatar" autocomplete="off"></el-input> -->
+            <div @click="dialogVisible = true">
+               <el-avatar :size="60"  >
+                <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
+              </el-avatar>
+            </div>
+          </el-form-item>
+          <el-form-item   label="角色"  prop="role_id"  :rules="[ { required: true, message: '角色名不能为空'}]">
+            <el-select multiple v-model="roleValidateForm.role_id" placeholder="请选择角色" style="width:100%">
+              <el-option  v-for="item in roleList"  :key="item.role_id"  :label="item.role_name" :value="item.role_id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item   label="用户名"  prop="nick_name"  :rules="[
+              { required: true, message: '用户名不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.nick_name" autocomplete="off"></el-input>
+          </el-form-item>
+         <el-form-item   label="电话"  prop="phone"  :rules="[
+              { required: true, message: '电话名不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.phone" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item   label="密码"  prop="password"  :rules="[
+              { required: true, message: '密码名不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.password" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item   label="email"  prop="email">
+            <el-input type="input" v-model="roleValidateForm.email" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+      <span slot="footer" class="dialog-footer">
+         <el-button type="primary" @click="submitForm('roleValidateForm')">提交</el-button>
+          <el-button @click="resetForm('roleValidateForm')">重置</el-button>
+      </span>
     </el-card>
+    <el-dialog
+        title="头像设置"
+        :visible.sync="dialogVisible"
+        width="30%"
+        >
+        <!--   @imgLoad="imgLoad"   @realTime="realTime"-->
+        <el-row :gutter="24">
+            <el-col :span="12">
+              <div class="cropper">
+                  <vueCropper
+                    ref="cropper"
+                    :img="option.img"
+                    :outputSize="option.size"
+                    :outputType="option.outputType"
+                    :info="option.info"
+                    :full="option.full"
+                    :canMove="option.canMove"
+                    :canMoveBox="option.canMoveBox"
+                    :original="option.original"
+                    :autoCrop="option.autoCrop"
+                    :autoCropWidth="option.autoCropWidth"
+                    :autoCropHeight="option.autoCropHeight"
+                    :fixedBox="option.fixedBox"
+                ></vueCropper>
+              </div>
+            </el-col>
+            <el-col :span="12">
+              <div class="croper-right">
+                <div class="img-box"></div>
+                <input type="file" id="uploads" :value="imgFile"
+                  style="position:absolute; clip:rect(0 0 0 0);width: 1px;"
+                  accept="image/png, image/jpeg, image/gif, image/jpg"
+                  @change="uploadImg($event, 1)">
+                 <label class="btn" for="uploads">选择图片</label>
+              </div>
+            </el-col>
+        </el-row>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+  </el-dialog>
   </div>
 </template>
 
 <script>
+import { api } from '@/request/api.js'
+import { mapGetters } from 'vuex'
 export default {
+  data () {
+    return {
+      crap: false,
+      previews: {},
+      option: {
+        img: '', // 裁剪图片的地址
+        info: true, // 裁剪框的大小信息
+        outputSize: 1, // 剪切后的图片质量（0.1-1）
+        full: true, // 输出原图比例截图 props名full
+        outputType: 'png', // 裁剪生成额图片的格式
+        canMove: true, // 能否拖动图片
+        original: false, // 上传图片是否显示原始宽高
+        canMoveBox: true, // 能否拖动截图框
+        autoCrop: true, // 是否默认生成截图框
+        autoCropWidth: 150,
+        autoCropHeight: 150,
+        fixedBox: false // 截图框固定大小
+      },
+      fileName: '', // 本机文件地址
+      downImg: '#',
+      imgFile: '',
+      uploadImgRelaPath: '', // 上传后的图片的地址（不带服务器域名）
 
+      roleList: [],
+      dialogVisible: false,
+      roleValidateForm: {
+        nick_name: '',
+        password: '',
+        email: '',
+        phone: '',
+        avatar: '',
+        role_id: []
+      }
+    }
+  },
+  computed: {
+    ...mapGetters('user', ['userInfo'])
+  },
+  created () {
+    this.getroleList()
+  },
+  methods: {
+    async getroleList () {
+      let { data, code } = await this.Req.get(api.getAllRole)
+      if (code === 200) {
+        this.roleList = data.roleList
+      }
+    },
+    // 选择本地图片
+    uploadImg (e, num) {
+      console.log('uploadImg')
+      var _this = this
+      // 上传图片
+      var file = e.target.files[0]
+      _this.fileName = file.name
+      if (!/\.(gif|jpg|jpeg|png|bmp|GIF|JPG|PNG)$/.test(e.target.value)) {
+        alert('图片类型必须是.gif,jpeg,jpg,png,bmp中的一种')
+        return false
+      }
+      var reader = new FileReader()
+      reader.onload = (e) => {
+        let data
+        if (typeof e.target.result === 'object') {
+          // 把Array Buffer转化为blob 如果是base64不需要
+          data = window.URL.createObjectURL(new Blob([e.target.result]))
+        } else {
+          data = e.target.result
+        }
+        if (num === 1) {
+          _this.option.img = data
+        } else if (num === 2) {
+          _this.example2.img = data
+        }
+      }
+      // 转化为base64
+      // reader.readAsDataURL(file)
+      // 转化为blob
+      reader.readAsArrayBuffer(file)
+    }
+  }
 }
 </script>
 
 <style>
-
+.cropper {
+  width: 260px;
+  height: 260px;
+}
+.img-box{
+  width: 200px;
+  height: 200px;
+  border: 1px solid #999
+}
+.btn{
+  margin: 28px 0;
+  padding: 6px 20px;
+  width: 160px;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #409EFF;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+}
+.btn:hover{
+  background-color: #387EF6;
+}
 </style>
