@@ -8,7 +8,7 @@
           <el-form-item   label="头像"   prop="avatar">
             <!-- <el-input type="input" v-model="roleValidateForm.avatar" autocomplete="off"></el-input> -->
             <div @click="dialogVisible = true">
-               <el-avatar :size="60"  icon="el-icon-user-solid" :src="userInfo"> </el-avatar>
+               <el-avatar :size="60"  icon="el-icon-user-solid" :src="userInfo.avatar"> </el-avatar>
             </div>
           </el-form-item>
           <el-form-item   label="角色"  prop="role_id"  :rules="[ { required: true, message: '角色名不能为空'}]">
@@ -85,7 +85,7 @@
         </el-row>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="submitUpload">确 定</el-button>
         </span>
   </el-dialog>
   </div>
@@ -150,7 +150,6 @@ export default {
     },
     // 实时预览函数
     realTime (data) {
-      console.log('realTime', data)
       this.previews = data
       let self = this
       this.$refs['cropper'].getCropData((data) => {
@@ -187,6 +186,27 @@ export default {
       // reader.readAsDataURL(file)
       // 转化为blob
       reader.readAsArrayBuffer(file)
+    },
+    async submitUpload () {
+      let fd = new FormData()
+      let baseToblob = this.convertBase64UrlToBlob(this.corpperImag)
+      fd.append('userAvatar', baseToblob, 'file_' + Date.parse(new Date()) + '.jpeg')
+      let { data, code } = await this.Req.upload(api.uploadAvatar, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+      if (code === 200) {
+        console.log(data)
+      }
+    },
+    // 将base64的图片转换为file文件
+    convertBase64UrlToBlob (base64Data) {
+      let arr = base64Data.split(',')
+      let mime = arr[0].match(/:(.*?);/)[1]
+      let bstr = atob(arr[1])
+      let n = bstr.length
+      let u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      return new Blob([u8arr], { type: mime })
     }
   }
 }

@@ -163,4 +163,17 @@ export default class Req {
         })
     })
   }
+  upload (url, param = {}, config = {}) {
+    return new Promise((resolve, reject) => {
+      axios.post(
+        url,
+        param,
+        config
+      ).then(res => {
+        resolve(res)
+      }, error => {
+        reject(error)
+      })
+    })
+  }
 }
