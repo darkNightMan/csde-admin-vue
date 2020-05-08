@@ -4,35 +4,33 @@
       <div slot="header" class="clearfix">
         <span>个人信息</span>
       </div>
-      <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item   label="头像"  prop="avatar">
+      <el-form style="width:50%" :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item   label="头像"   prop="avatar">
             <!-- <el-input type="input" v-model="roleValidateForm.avatar" autocomplete="off"></el-input> -->
             <div @click="dialogVisible = true">
-               <el-avatar :size="60"  >
-                <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
-              </el-avatar>
+               <el-avatar :size="60"  icon="el-icon-user-solid" :src="userInfo"> </el-avatar>
             </div>
           </el-form-item>
           <el-form-item   label="角色"  prop="role_id"  :rules="[ { required: true, message: '角色名不能为空'}]">
-            <el-select multiple v-model="roleValidateForm.role_id" placeholder="请选择角色" style="width:100%">
+            <el-select multiple v-model="userInfo.roleList" placeholder="请选择角色" style="width:100%">
               <el-option  v-for="item in roleList"  :key="item.role_id"  :label="item.role_name" :value="item.role_id">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item   label="用户名"  prop="nick_name"  :rules="[
               { required: true, message: '用户名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.nick_name" autocomplete="off"></el-input>
+            <el-input type="input" v-model="userInfo.nick_name" autocomplete="off"></el-input>
           </el-form-item>
          <el-form-item   label="电话"  prop="phone"  :rules="[
               { required: true, message: '电话名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.phone" autocomplete="off"></el-input>
+            <el-input type="input" v-model="userInfo.phone" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item   label="密码"  prop="password"  :rules="[
               { required: true, message: '密码名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.password" autocomplete="off"></el-input>
+            <el-input type="input" v-model="userInfo.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item   label="email"  prop="email">
-            <el-input type="input" v-model="roleValidateForm.email" autocomplete="off"></el-input>
+            <el-input type="input" v-model="userInfo.email" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
       <span slot="footer" class="dialog-footer">
@@ -47,7 +45,7 @@
         >
         <!--   @imgLoad="imgLoad"   @realTime="realTime"-->
         <el-row :gutter="24">
-            <el-col :span="12">
+            <el-col :span="13">
               <div class="cropper">
                   <vueCropper
                     ref="cropper"
@@ -56,6 +54,7 @@
                     :outputType="option.outputType"
                     :info="option.info"
                     :full="option.full"
+                    :canScale="option.canScale"
                     :canMove="option.canMove"
                     :canMoveBox="option.canMoveBox"
                     :original="option.original"
@@ -63,12 +62,19 @@
                     :autoCropWidth="option.autoCropWidth"
                     :autoCropHeight="option.autoCropHeight"
                     :fixedBox="option.fixedBox"
+                    :fixed="option.fixed"
+                    @realTime="realTime"
                 ></vueCropper>
+                <!--  :fixedNumber="option.fixedNumber" -->
               </div>
             </el-col>
-            <el-col :span="12">
+            <el-col :span="11">
               <div class="croper-right">
-                <div class="img-box"></div>
+                <div class="preview-box" >
+                  <div :style="previews.div" class="preview">
+                     <img v-if="corpperImag" :src="corpperImag" width="100%">
+                  </div>
+                </div>
                 <input type="file" id="uploads" :value="imgFile"
                   style="position:absolute; clip:rect(0 0 0 0);width: 1px;"
                   accept="image/png, image/jpeg, image/gif, image/jpg"
@@ -94,18 +100,22 @@ export default {
       crap: false,
       previews: {},
       option: {
+        fixed: true, // 是否开启截图框宽高固定比例
         img: '', // 裁剪图片的地址
         info: true, // 裁剪框的大小信息
         outputSize: 1, // 剪切后的图片质量（0.1-1）
-        full: true, // 输出原图比例截图 props名full
+        // full: true, // 输出原图比例截图 props名full
         outputType: 'png', // 裁剪生成额图片的格式
-        canMove: true, // 能否拖动图片
-        original: false, // 上传图片是否显示原始宽高
+        // canMove: true, // 能否拖动图片
+        // original: false, // 上传图片是否显示原始宽高
         canMoveBox: true, // 能否拖动截图框
         autoCrop: true, // 是否默认生成截图框
-        autoCropWidth: 150,
-        autoCropHeight: 150,
-        fixedBox: false // 截图框固定大小
+        // autoCropWidth: 200, // 默认生成截图框宽度
+        // autoCropHeight: 200, // 默认生成截图框高度
+        canScale: true, // 图片是否允许滚轮缩放
+        centerBox: true, // 截图框是否被限制在图片里面
+        fixedBox: false, // 截图框固定大小
+        fixedNumber: [4, 4] // 截图框的宽高比例
       },
       fileName: '', // 本机文件地址
       downImg: '#',
@@ -114,6 +124,7 @@ export default {
 
       roleList: [],
       dialogVisible: false,
+      corpperImag: '',
       roleValidateForm: {
         nick_name: '',
         password: '',
@@ -137,9 +148,18 @@ export default {
         this.roleList = data.roleList
       }
     },
+    // 实时预览函数
+    realTime (data) {
+      console.log('realTime', data)
+      this.previews = data
+      let self = this
+      this.$refs['cropper'].getCropData((data) => {
+        self.corpperImag = data
+        // let config = { headers: {'Content-Type': 'multipart/form-data'}}
+      })
+    },
     // 选择本地图片
     uploadImg (e, num) {
-      console.log('uploadImg')
       var _this = this
       // 上传图片
       var file = e.target.files[0]
@@ -174,20 +194,16 @@ export default {
 
 <style>
 .cropper {
-  width: 260px;
-  height: 260px;
-}
-.img-box{
-  width: 200px;
-  height: 200px;
-  border: 1px solid #999
+  width: 250px;
+  height: 250px;
 }
 .btn{
-  margin: 28px 0;
+  margin: 10px 0;
   padding: 6px 20px;
   width: 160px;
   text-align: center;
   border-radius: 4px;
+  margin-left: 10px;
   background-color: #409EFF;
   color: #fff;
   cursor: pointer;
@@ -196,4 +212,13 @@ export default {
 .btn:hover{
   background-color: #387EF6;
 }
+.preview {
+  min-width: 200px;
+  min-height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  border:4px solid #cccccc;
+  background: #cccccc;
+}
+
 </style>
