@@ -4,39 +4,35 @@
       <div slot="header" class="clearfix">
         <span>个人信息</span>
       </div>
-      <el-form style="width:50%" :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
+      <el-form style="width:40%" :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
           <el-form-item   label="头像"   prop="avatar">
-            <!-- <el-input type="input" v-model="roleValidateForm.avatar" autocomplete="off"></el-input> -->
             <div @click="dialogVisible = true">
-               <el-avatar :size="60"  icon="el-icon-user-solid" :src="userInfo.avatar"> </el-avatar>
+              <el-avatar :size="60"  icon="el-icon-user-solid" :src="roleValidateForm.avatar"> </el-avatar>
             </div>
           </el-form-item>
           <el-form-item   label="角色"  prop="role_id"  :rules="[ { required: true, message: '角色名不能为空'}]">
-            <el-select multiple v-model="userInfo.roleList" placeholder="请选择角色" style="width:100%">
+            <el-select multiple v-model="roleValidateForm.role_id" placeholder="请选择角色" style="width:100%">
               <el-option  v-for="item in roleList"  :key="item.role_id"  :label="item.role_name" :value="item.role_id">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item   label="用户名"  prop="nick_name"  :rules="[
               { required: true, message: '用户名不能为空'}]">
-            <el-input type="input" v-model="userInfo.nick_name" autocomplete="off"></el-input>
+            <el-input type="input" v-model="roleValidateForm.nick_name" autocomplete="off"></el-input>
           </el-form-item>
          <el-form-item   label="电话"  prop="phone"  :rules="[
               { required: true, message: '电话名不能为空'}]">
-            <el-input type="input" v-model="userInfo.phone" autocomplete="off"></el-input>
+            <el-input type="input" v-model="roleValidateForm.phone" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item   label="密码"  prop="password"  :rules="[
               { required: true, message: '密码名不能为空'}]">
-            <el-input type="input" v-model="userInfo.password" autocomplete="off"></el-input>
+            <el-input type="input" v-model="roleValidateForm.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item   label="email"  prop="email">
-            <el-input type="input" v-model="userInfo.email" autocomplete="off"></el-input>
+            <el-input type="input" v-model="roleValidateForm.email" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
-      <span slot="footer" class="dialog-footer">
-         <el-button type="primary" @click="submitForm('roleValidateForm')">提交</el-button>
-          <el-button @click="resetForm('roleValidateForm')">重置</el-button>
-      </span>
+        <el-button style="margin-left:100px" type="primary" @click="submitForm('roleValidateForm')" size="small" :loading="loading">保存</el-button>
     </el-card>
     <el-dialog
         title="头像设置"
@@ -85,7 +81,7 @@
         </el-row>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="submitUpload">确 定</el-button>
+          <el-button type="primary" @click="submitUpload" :loading="loading">确 定</el-button>
         </span>
   </el-dialog>
   </div>
@@ -99,6 +95,7 @@ export default {
     return {
       crap: false,
       previews: {},
+      loading: false,
       option: {
         fixed: true, // 是否开启截图框宽高固定比例
         img: '', // 裁剪图片的地址
@@ -140,8 +137,35 @@ export default {
   },
   created () {
     this.getroleList()
+    this.roleValidateForm = this.userInfo
   },
   methods: {
+    async updateuUser () {
+      this.loading = true
+      let { code, msg } = await this.Req.put(api.updateUser, this.roleValidateForm)
+      if (code === 200) {
+        this.$message({
+          message: msg,
+          type: 'success'
+        })
+        this.dialogVisiblerole = false
+      } else {
+        this.dialogVisiblerole = false
+        this.resetForm('roleValidateForm')
+      }
+      this.loading = false
+    },
+    // 编辑
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.updateuUser()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
     async getroleList () {
       let { data, code } = await this.Req.get(api.getAllRole)
       if (code === 200) {
@@ -154,7 +178,6 @@ export default {
       let self = this
       this.$refs['cropper'].getCropData((data) => {
         self.corpperImag = data
-        // let config = { headers: {'Content-Type': 'multipart/form-data'}}
       })
     },
     // 选择本地图片
@@ -189,15 +212,18 @@ export default {
     },
     async submitUpload () {
       let fd = new FormData()
-      let baseToblob = this.convertBase64UrlToBlob(this.corpperImag)
-      fd.append('userAvatar', baseToblob, 'file_' + Date.parse(new Date()) + '.jpeg')
+      let baseToblob = this.base64URLtoFile(this.corpperImag)
+      fd.append('userAvatar', baseToblob, `csde_${Date.parse(new Date())}.jpeg`)
+      this.loading = true
       let { data, code } = await this.Req.upload(api.uploadAvatar, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
       if (code === 200) {
-        console.log(data)
+        this.roleValidateForm.avatar = data.path
       }
+      this.dialogVisible = false
+      this.loading = false
     },
-    // 将base64的图片转换为file文件
-    convertBase64UrlToBlob (base64Data) {
+    // base64转为Blob
+    base64UrlToBlob (base64Data) {
       let arr = base64Data.split(',')
       let mime = arr[0].match(/:(.*?);/)[1]
       let bstr = atob(arr[1])
@@ -207,6 +233,18 @@ export default {
         u8arr[n] = bstr.charCodeAt(n)
       }
       return new Blob([u8arr], { type: mime })
+    },
+    // base64转换为file
+    base64URLtoFile (base64Data, filename) { // 将base64转换为文件
+      let arr = base64Data.split(',')
+      let mime = arr[0].match(/:(.*?);/)[1]
+      let bstr = atob(arr[1])
+      let n = bstr.length
+      let u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      return new File([u8arr], filename, { type: mime })
     }
   }
 }
