@@ -40,10 +40,18 @@
      <el-table  @row-click="actionEvents" v-loading="loading"   :height="winH"   :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column     align="center"   fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
       <el-table-column     align="center"   fixed  prop="nick_name"      label="用户名"    width="120"></el-table-column>
-      <el-table-column     align="center"  prop="password"      label="密码"      width="120"> </el-table-column>
+      <el-table-column     align="center"       label="密码"      width="120">
+          <template>
+              ******
+          </template>
+      </el-table-column>
       <el-table-column     align="center"  prop="email"      label="邮箱"   width="180"> </el-table-column>
       <el-table-column     align="center"  prop="phone"      label="电话"      width="120"></el-table-column>
-      <el-table-column     align="center"  prop="state"      label="状态"  width="80"   ></el-table-column>
+      <el-table-column     align="center"      label="状态"  width="80"   >
+          <template slot-scope="scope">
+              <el-tag :type="scope.row.state === 1? 'success': 'danger' " size="small" effect="dark"> {{scope.row.state == 1 ? '正常': '禁用' }}</el-tag>
+            </template>
+      </el-table-column>
       <el-table-column     align="center"  label="角色"   >
         <template slot-scope="scope">
           <el-tag style="margin:0px 5px" type="primary" effect="dark" v-for="(it, index) in scope.row.sys_roles" :key="index" size="small">
