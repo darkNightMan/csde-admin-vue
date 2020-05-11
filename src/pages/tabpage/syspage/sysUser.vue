@@ -23,7 +23,7 @@
           <el-form-item   label="email"  prop="email">
             <el-input type="input" v-model="roleValidateForm.email" autocomplete="off"></el-input>
           </el-form-item>
-           <el-form-item   label="avatar"  prop="avatar">
+             <el-form-item   label="avatar"  prop="avatar">
             <el-input type="input" v-model="roleValidateForm.avatar" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
@@ -41,19 +41,25 @@
       <el-table-column     align="center"   fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
       <el-table-column     align="center"   fixed  prop="nick_name"      label="用户名"    width="120"></el-table-column>
       <el-table-column     align="center"  prop="password"      label="密码"      width="120"> </el-table-column>
-      <el-table-column     align="center"  prop="email"      label="邮箱"   width="120"> </el-table-column>
+      <el-table-column     align="center"  prop="email"      label="邮箱"   width="180"> </el-table-column>
       <el-table-column     align="center"  prop="phone"      label="电话"      width="120"></el-table-column>
       <el-table-column     align="center"  prop="state"      label="状态"  width="80"   ></el-table-column>
       <el-table-column     align="center"  label="角色"   >
-            <template slot-scope="scope">
-              <el-tag style="margin:0px 5px" type="primary" effect="dark" v-for="(it, index) in scope.row.sys_roles" :key="index" size="small">
-                {{it.role_name}}
-              </el-tag>
-            </template>
+        <template slot-scope="scope">
+          <el-tag style="margin:0px 5px" type="primary" effect="dark" v-for="(it, index) in scope.row.sys_roles" :key="index" size="small">
+            {{it.role_name}}
+          </el-tag>
+        </template>
       </el-table-column>
-      <el-table-column      prop="avatar"      label="头像"   :show-overflow-tooltip="true"  > </el-table-column>
-      <el-table-column      prop="create_time"      label="创建时间"      ></el-table-column>
-      <el-table-column      prop="update_id"      label="更新人"      width="120"></el-table-column>
+      <el-table-column      label="头像"   width="60" >
+          <template slot-scope="scope">
+            <div style="text-align: center;">
+                <el-avatar :size="25"  icon="el-icon-user-solid" :src="scope.row.avatar" :key="scope.row.avatar"></el-avatar>
+            </div>
+          </template>
+      </el-table-column>
+      <el-table-column      prop="create_time"      label="创建时间" ></el-table-column>
+      <el-table-column      prop="update_id"      label="更新人"    width="120"></el-table-column>
       <el-table-column  label="操作">
           <template slot-scope="scope">
           <!-- <el-button @click="checksEdit(scope.row, true)" type="primary" size="small">查看</el-button> -->

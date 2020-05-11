@@ -6,7 +6,7 @@
       </div>
       <el-form style="width:40%" :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
           <el-form-item   label="头像"   prop="avatar">
-            <div @click="dialogVisible = true">
+            <div @click="dialogVisible = true,option.img = roleValidateForm.avatar">
               <el-avatar :size="60"  icon="el-icon-user-solid" :src="roleValidateForm.avatar"> </el-avatar>
             </div>
           </el-form-item>
