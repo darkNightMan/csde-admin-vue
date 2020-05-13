@@ -20,5 +20,6 @@ export const api = {
   loginLogs: '/api/loginLogs/list',
   operationLos: '/api/operationLos/list',
   selectMenuList: '/api/menu/selectMenuList',
-  uploadAvatar: '/api/uploadAvatar/'
+  uploadAvatar: '/api/uploadAvatar/',
+  articleList: '/api/blogs/articleList'
 }
