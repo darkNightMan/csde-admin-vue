@@ -21,5 +21,7 @@ export const api = {
   operationLos: '/api/operationLos/list',
   selectMenuList: '/api/menu/selectMenuList',
   uploadAvatar: '/api/uploadAvatar/',
-  articleList: '/api/blogs/articleList'
+  articleList: '/api/blogs/articleList',
+  articleClassList: '/api/blogs/articleClassList',
+  articleTagsList: '/api/blogs/articleTagsList'
 }
