@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :title="isRoleCheck ? '编辑用户' : '新增用户'"  :visible.sync="dialogVisiblerole" width="20%" >
+    <el-dialog :title="isRoleCheck ? '编辑用户' : '新增用户'" append-to-body :close-on-click-modal="false"  :visible.sync="dialogVisiblerole" width="20%" >
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
           <el-form-item   label="角色"  prop="role_id"  :rules="[ { required: true, message: '角色名不能为空'}]">
             <el-select multiple v-model="roleValidateForm.role_id" placeholder="请选择角色" style="width:100%">
