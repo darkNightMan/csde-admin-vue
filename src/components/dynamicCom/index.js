@@ -15,6 +15,7 @@ export default {
   async created () {
     let com = await new Promise(this.com.component)
     this.component = com.default
+    // console.log('component')
   },
   methods: {
   },

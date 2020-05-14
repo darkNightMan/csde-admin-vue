@@ -3,16 +3,14 @@ import tabpages from '../../router/tabpage.js'
 const state = {
   tabViewList: [
     {
-      path: 'home',
       component: tabpages.home,
       res_name: '首页',
-      res_id: 1,
       closeTabs: false, // 默认首页不能关闭
       index: '首页'
     }
   ],
   activeViewName: '首页', // 当前打开的 tab名字
-  menuIndex: '0' // 当前菜单打开的索引
+  menuIndex: '' // 当前菜单打开的索引
 }
 const getters = {
   activeItem: state => state.activeItem
@@ -26,7 +24,7 @@ const actions = {
 const mutations = {
   // 打开tab页面
   setViewTab: (state, viewAndIndex) => {
-    window.localStorage.setItem('viewAndIndex', JSON.stringify(viewAndIndex)) // 存储当前打开的页面
+    viewAndIndex.view.res_id = viewAndIndex.view.res_id ? viewAndIndex.view.res_id : `tabs_${new Date().getTime()}`
     state.activeViewName = viewAndIndex.view.res_id.toString() // 标签导航索引
     state.menuIndex = viewAndIndex.menuIndex // 左边菜单索引
     if (state.tabViewList.some(v => v.id === viewAndIndex.view.res_id)) return false // 如果已经打开过的标签不做就不在push
@@ -40,6 +38,7 @@ const mutations = {
         menuIndex: viewAndIndex.menuIndex // 存储当前的打开的menu 索引
       })
     )
+    window.localStorage.setItem('viewAndIndex', JSON.stringify(viewAndIndex)) // 存储当前打开的页面
   },
   // 切换菜单索引
   setMenuIndex (state, index) {
@@ -53,6 +52,7 @@ const mutations = {
         const tabs = state.tabViewList[idx - 1]
         state.activeViewName = tabs.index // 激活tab选中状态
         state.menuIndex = tabs.menuIndex // 激活菜单选中状态
+        window.localStorage.setItem('viewAndIndex', JSON.stringify(tabs))
       }
     })
     state.tabViewList = state.tabViewList.filter((item) => item.index !== targetName) // 过滤关闭掉tab
