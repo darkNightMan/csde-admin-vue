@@ -36,18 +36,15 @@ export default {
       this.addView(
         {
           view: {
-            path: 'userCenter',
             component: 'userCenter',
             res_name: '个人信息',
-            res_id: -1,
             closeTabs: true, // 默认首页不能关闭
             index: '个人信息'
           }
         }
       )
     },
-    async loginOut (a) {
-      console.log(api)
+    async loginOut () {
       let { code } = await this.Req.get(api.loginOut)
       if (code === 200) {
         window.localStorage.setItem('token', '')

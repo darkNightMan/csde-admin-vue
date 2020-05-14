@@ -18,7 +18,7 @@
           <el-form-item  prop="res_code"   label="菜单编码">
               <el-input type="input" v-model="roleValidateForm.res_code" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item  prop="component"   label="菜单组件" v-show="roleValidateForm.type === 2">
+          <el-form-item  prop="component"   label="菜单组件" v-show="roleValidateForm.type === 2 || roleValidateForm.type === 3">
               <el-input type="input" v-model="roleValidateForm.component" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item  prop="perms"   label="授权标识">

@@ -33,7 +33,7 @@
       </span>
     </el-dialog>
      <div class="btn-box">
-        <el-button v-has="'sys:user:create'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="createDialog">新建</el-button>
+        <el-button   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="addArticle">新建</el-button>
         <!-- <el-button  :disabled="disbaledBtn" v-has="'sys:user:update'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="checksEdit">修改</el-button>
         <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
     </div>
@@ -72,13 +72,27 @@
 </template>
 <script>
 import { api } from '@/request/api.js'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   props: [],
   methods: {
+    ...mapActions('tabs', ['addView']),
     handleSizeChange (pageSize) {
       this.queryParam.pageSize = pageSize
       this.init()
+    },
+    addArticle () {
+      this.addView(
+        {
+          view: {
+            component: 'blogArticleDetail',
+            res_name: '添加文章',
+            closeTabs: true, // 默认首页不能关闭
+            index: '添加文章',
+            param: '1231231231231'
+          }
+        }
+      )
     },
     handleCurrentChange (page) {
       this.queryParam.page = page
