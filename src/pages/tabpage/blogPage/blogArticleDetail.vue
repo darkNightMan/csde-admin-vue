@@ -2,12 +2,13 @@
   <div>
     <el-card class="box-card">
       <el-form ref="form" :model="form" label-width="80px">
+        {{form}}
           <el-form-item label="标题">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.title"></el-input>
           </el-form-item>
            <el-form-item label="文章分类">
               <el-radio-group v-model="form.class_id">
-                <el-radio   v-for="(it, index) in classIdArr" :label="it.class_name" :value="it.id" :key="index"></el-radio>
+                <el-radio   v-for="(it, index) in classIdArr" :label="it.id"  :key="index">{{it.class_name}}</el-radio>
               </el-radio-group>
           </el-form-item>
            <el-form-item label="文章标签">
@@ -18,7 +19,9 @@
           <el-form-item label="封面图">
             <el-upload
                 class="avatar-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
+                :action="uploadUrl"
+                :headers="Headers"
+                name="images"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload">
@@ -49,11 +52,16 @@ export default {
   data () {
     return {
       imageUrl: '',
+      Headers: {
+        token: localStorage.getItem('token')
+      },
+      uploadUrl: api.uploadImage,
       form: {
         title: '',
         class_id: '',
         tagsArr: [],
-        is_top: '',
+        cover_url: '',
+        is_top: false,
         content: ''
       },
       classIdArr: [],
@@ -65,8 +73,11 @@ export default {
     this.init()
   },
   methods: {
-    onSubmit () {
-      console.log('submit!')
+    saveDoc () {},
+    updateDoc () {},
+    async onSubmit () {
+      let { code, msg } = await this.Req.post(api.createArticle, this.form)
+      console.log(code, msg)
     },
     async init () {
       let value = await Promise.all([this.Req.get(api.articleClassList), this.Req.get(api.articleTagsList)])
@@ -74,6 +85,7 @@ export default {
       this.tagsIdArr = value[1].data.list
     },
     handleAvatarSuccess (res, file) {
+      this.form.cover_url = res.data.path
       this.imageUrl = URL.createObjectURL(file.raw)
     },
     beforeAvatarUpload (file) {

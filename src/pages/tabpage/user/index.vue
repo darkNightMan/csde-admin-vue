@@ -213,9 +213,9 @@ export default {
     async submitUpload () {
       let fd = new FormData()
       let baseToblob = this.base64URLtoFile(this.corpperImag)
-      fd.append('userAvatar', baseToblob, `csde_${Date.parse(new Date())}.jpeg`)
+      fd.append('images', baseToblob, `csde_${Date.parse(new Date())}.jpeg`)
       this.loading = true
-      let { data, code } = await this.Req.upload(api.uploadAvatar, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+      let { data, code } = await this.Req.upload(api.uploadImage, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
       if (code === 200) {
         this.roleValidateForm.avatar = data.path
       }
