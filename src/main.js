@@ -8,13 +8,16 @@ import ElementUI from 'element-ui'
 import VueCropper from 'vue-cropper'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/common.css'
+import 'mavon-editor/dist/css/index.css'
 import iconPicker from 'vue-fontawesome-elementui-icon-picker'
 import Req from './request/http'
 import JsonViewer from 'vue-json-viewer'
 import { mapActions, mapMutations } from 'vuex'
 import myComponents from './components'
+import mavonEditor from 'mavon-editor'
 import perms from './utils/perms'
 Vue.config.productionTip = false
+Vue.use(mavonEditor)// 富文本
 Vue.use(ElementUI) // 引入饿了么主题
 Vue.use(iconPicker) // icon
 Vue.use(VueCropper) // 图片剪切
