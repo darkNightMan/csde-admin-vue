@@ -2,7 +2,6 @@
   <div>
     <el-card class="box-card">
       <el-form ref="form" :model="form" label-width="80px">
-        {{form}}
           <el-form-item label="标题">
             <el-input v-model="form.title"></el-input>
           </el-form-item>
@@ -37,7 +36,7 @@
          </mavon-editor>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit" :loading="loading">提交</el-button>
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
@@ -48,10 +47,11 @@
 <script>
 import { api } from '@/request/api.js'
 export default {
-  props: ['linkParam'],
+  props: ['$params', '$tabsIndex', '$tabs'],
   data () {
     return {
       imageUrl: '',
+      loading: false,
       Headers: {
         token: localStorage.getItem('token')
       },
@@ -69,36 +69,47 @@ export default {
     }
   },
   created () {
-    console.log(this.linkParam, 'cre')
+    console.log(this.$params, 'cre', this.$tabsIndex, this.$tabs)
     this.init()
   },
   methods: {
     saveDoc () {},
     updateDoc () {},
-    async onSubmit () {
-      let { code, msg } = await this.Req.post(api.createArticle, this.form)
-      console.log(code, msg)
+    onSubmit () {
+      this.createArticle()
     },
     async init () {
       let value = await Promise.all([this.Req.get(api.articleClassList), this.Req.get(api.articleTagsList)])
       this.classIdArr = value[0].data.list
       this.tagsIdArr = value[1].data.list
     },
+    async createArticle () {
+      this.loading = true
+      let { code, msg } = await this.Req.post(api.createArticle, this.form)
+      if (code === 200) {
+        this.$message({
+          type: 'success',
+          message: msg
+        })
+      }
+      this.loading = false
+      this.$tabs.closeTabs(this.$tabsIndex)
+    },
     handleAvatarSuccess (res, file) {
       this.form.cover_url = res.data.path
       this.imageUrl = URL.createObjectURL(file.raw)
     },
     beforeAvatarUpload (file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
+      // const isJPG = file.type === 'image/jpeg'
+      // const isLt2M = file.size / 1024 / 1024 < 2
 
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!')
+      // }
+      // if (!isLt2M) {
+      //   this.$message.error('上传头像图片大小不能超过 2MB!')
+      // }
+      // return isJPG && isLt2M
     }
   }
 }

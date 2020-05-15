@@ -10,7 +10,12 @@
      >
      <keep-alive>
       <transition name="el-zoom-in-top">
-        <tabs-Component :com="item"></tabs-Component>
+        <tabs-Component
+          :com="item"
+          :moduleVuex='{
+            tabs: { setActiveTab, setMenuIndex,closeTabs, setViewTab }
+          }'
+        ></tabs-Component>
       </transition>
       </keep-alive>
     </el-tab-pane>
@@ -18,6 +23,7 @@
 </div>
 </template>
 <script>
+
 import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'tabs',
@@ -26,6 +32,7 @@ export default {
     }
   },
   created () {
+    console.log(this)
   },
   components: {
     // tabsComponent
@@ -42,7 +49,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('tabs', ['setActiveTab', 'setMenuIndex', 'closeTabs']),
+    ...mapMutations('tabs', ['setActiveTab', 'setMenuIndex', 'closeTabs', 'setViewTab']),
     clickTab (tabs) {
       this.setMenuIndex(tabs.$attrs.activeIndex)
       this.setActiveTab(tabs.name)

@@ -47,6 +47,7 @@ const mutations = {
   },
   // 关闭tab页面
   closeTabs (state, targetName) {
+    debugger
     state.tabViewList.map((its, idx) => {
       if (its.index === targetName) {
         const tabs = state.tabViewList[idx - 1]

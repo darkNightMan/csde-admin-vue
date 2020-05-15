@@ -1,4 +1,5 @@
 // 自定义加载组件
+
 export default {
   name: 'tabsComponent',
   // 数据

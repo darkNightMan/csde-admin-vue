@@ -22,7 +22,7 @@ export const api = {
   selectMenuList: '/api/menu/selectMenuList',
   uploadImage: '/api/single/uploadImage/',
   articleList: '/api/blogs/articleList',
-  createArticle: '/api/blogs/create',
+  createArticle: '/api/blogs/createArticle',
   articleClassList: '/api/blogs/articleClassList',
   articleTagsList: '/api/blogs/articleTagsList'
 }
