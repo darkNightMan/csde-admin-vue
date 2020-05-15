@@ -1,7 +1,8 @@
 <template>
   <div>
     <el-card class="box-card">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-scrollbar  wrap-style="height: 100%; overflow-x: hidden;" ref="scrollbar">
+        <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="标题">
             <el-input v-model="form.title"></el-input>
           </el-form-item>
@@ -40,6 +41,7 @@
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
+      </el-scrollbar>
     </el-card>
   </div>
 </template>
@@ -69,19 +71,25 @@ export default {
     }
   },
   created () {
-    console.log(this.$params, 'cre', this.$tabsIndex, this.$tabs)
     this.init()
   },
   methods: {
     saveDoc () {},
     updateDoc () {},
     onSubmit () {
-      this.createArticle()
+      if (JSON.stringify(this.$params) !== '{}') {
+        this.createArticle()
+      } else {
+        this.updateArticle()
+      }
     },
     async init () {
       let value = await Promise.all([this.Req.get(api.articleClassList), this.Req.get(api.articleTagsList)])
       this.classIdArr = value[0].data.list
       this.tagsIdArr = value[1].data.list
+      if (JSON.stringify(this.$params) !== '{}') {
+        this.getDetail()
+      }
     },
     async createArticle () {
       this.loading = true
@@ -95,9 +103,25 @@ export default {
       this.loading = false
       this.$tabs.closeTabs(this.$tabsIndex)
     },
+    async updateArticle () {
+      let { msg, code } = await this.Req.get(api.updateArticle, {article_id: this.$params.article_id})
+      if (code === 200) {
+        this.$message({
+          type: 'success',
+          message: msg
+        })
+      }
+    },
     handleAvatarSuccess (res, file) {
       this.form.cover_url = res.data.path
       this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    async getDetail () {
+      let { data, code } = await this.Req.get(api.articleDetail, {article_id: this.$params.article_id})
+      if (code === 200) {
+        this.form = data
+        this.imageUrl = data.cover_url
+      }
     },
     beforeAvatarUpload (file) {
       // const isJPG = file.type === 'image/jpeg'

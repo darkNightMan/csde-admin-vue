@@ -52,7 +52,7 @@
       <el-table-column     align="center"  prop="create_time"      label="更新时间"></el-table-column>
       <el-table-column  label="操作">
           <template slot-scope="scope">
-          <el-button @click="checksEdit(scope.row, false)" type="primary" v-has="'sys:user:update'"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
+          <el-button @click="addArticle(scope.row, false)" type="primary" v-has="'sys:user:update'"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
           <el-button @click="deleteUser(scope.row, false)" type="danger"  v-has="'sys:user:delete'" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
       </template>
       </el-table-column>
@@ -74,22 +74,22 @@
 import { api } from '@/request/api.js'
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  props: [],
+  props: ['$params', '$tabsIndex', '$tabs'],
   methods: {
     ...mapActions('tabs', ['addView']),
     handleSizeChange (pageSize) {
       this.queryParam.pageSize = pageSize
       this.init()
     },
-    addArticle () {
-      this.addView(
+    addArticle (row) {
+      this.$tabs.addView(
         {
           view: {
             component: 'blogArticleDetail',
             res_name: '添加文章',
             closeTabs: true, // 默认首页不能关闭
             index: '添加文章',
-            param: '1231231231231'
+            param: {article_id: row.article_id}
           }
         }
       )

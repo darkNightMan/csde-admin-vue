@@ -13,7 +13,7 @@
         <tabs-Component
           :com="item"
           :moduleVuex='{
-            tabs: { setActiveTab, setMenuIndex,closeTabs, setViewTab }
+            tabs: { setActiveTab, setMenuIndex,closeTabs, setViewTab, addView }
           }'
         ></tabs-Component>
       </transition>
@@ -24,7 +24,7 @@
 </template>
 <script>
 
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'tabs',
   data () {
@@ -32,7 +32,6 @@ export default {
     }
   },
   created () {
-    console.log(this)
   },
   components: {
     // tabsComponent
@@ -50,6 +49,7 @@ export default {
   },
   methods: {
     ...mapMutations('tabs', ['setActiveTab', 'setMenuIndex', 'closeTabs', 'setViewTab']),
+    ...mapActions('tabs', ['addView']),
     clickTab (tabs) {
       this.setMenuIndex(tabs.$attrs.activeIndex)
       this.setActiveTab(tabs.name)

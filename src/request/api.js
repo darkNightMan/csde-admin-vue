@@ -24,5 +24,7 @@ export const api = {
   articleList: '/api/blogs/articleList',
   createArticle: '/api/blogs/createArticle',
   articleClassList: '/api/blogs/articleClassList',
-  articleTagsList: '/api/blogs/articleTagsList'
+  articleDetail: '/api/blogs/articleDetail',
+  articleTagsList: '/api/blogs/articleTagsList',
+  updateArticle: '/api/blogs/updateArticle'
 }
