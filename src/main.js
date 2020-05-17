@@ -16,13 +16,15 @@ import { mapActions, mapMutations } from 'vuex'
 import myComponents from './components'
 import mavonEditor from 'mavon-editor'
 import perms from './utils/perms'
+import vuexFun from './utils/vuexFun'
 Vue.config.productionTip = false
 Vue.use(mavonEditor)// 富文本
 Vue.use(ElementUI) // 引入饿了么主题
 Vue.use(iconPicker) // icon
 Vue.use(VueCropper) // 图片剪切
 Vue.use(myComponents) // 自己的组件
-Vue.use(perms)
+Vue.use(perms) //  权限
+Vue.use(vuexFun)
 Vue.use(JsonViewer)
 Vue.prototype.Req = new Req()
 /* eslint-disable no-new */
