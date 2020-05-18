@@ -20,7 +20,7 @@
        :current-page="page.currentPage"
        :page-sizes="[10, 30, 50]"
        :page-size="page.pageSize"
-       layout="total, sizes, prev, pager, next, jumper" 
+       layout="total, sizes, prev, pager, next, jumper"
        :total="total">
     </el-footer>
   </el-container>
@@ -117,7 +117,7 @@ export default {
             end.setMinutes(0)
             end.setTime(end.getTime() - 1000)
             const start = new Date()
-            start.setMonth(start.getMonth() - 1,1)
+            start.setMonth(start.getMonth() - 1, 1)
             // start.setDate(1)
             start.setHours(0)
             start.setSeconds(0)
