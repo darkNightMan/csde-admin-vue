@@ -1,11 +1,8 @@
 <template>
   <div>
     <el-card class="box-card">
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="标题">
-          <el-input v-model="form.title"></el-input>
-        </el-form-item>
-        <el-form-item label="标题">
+      <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+        <el-form-item label="标题" prop="title">
           <el-input v-model="form.title"></el-input>
         </el-form-item>
         <el-form-item label="文章分类">
@@ -67,7 +64,12 @@ export default {
         content: ''
       },
       classIdArr: [],
-      tagsIdArr: []
+      tagsIdArr: [],
+      rules: {
+        title: [
+          { required: true, message: '请输入标题', trigger: 'blur' }
+        ]
+      }
     }
   },
   created () {
@@ -77,13 +79,19 @@ export default {
     saveDoc () {},
     updateDoc () {},
     async onSubmit () {
-      if (JSON.stringify(this.$params) !== '{}') {
-        await this.createArticle()
+      if (this.$params.article_id === undefined) {
+        this.$refs['form'].validate(async (valid) => {
+          if (valid) {
+            await this.createArticle()
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
       } else {
         await this.updateArticle()
       }
       this.loading = false
-      this.$closeTabs(this.$tabsIndex)
     },
     async init () {
       let value = await Promise.all([this.Req.get(api.articleClassList), this.Req.get(api.articleTagsList)])
@@ -101,6 +109,7 @@ export default {
           type: 'success',
           message: msg
         })
+        this.$closeTabs(this.$tabsIndex)
       }
     },
     async updateArticle () {
@@ -110,6 +119,7 @@ export default {
           type: 'success',
           message: msg
         })
+        this.$closeTabs(this.$tabsIndex)
       }
     },
     handleAvatarSuccess (res, file) {

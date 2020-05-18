@@ -22,11 +22,11 @@ export default {
   },
   // 渲染函数 h [Function] 渲染函数
   render (createElement) {
-    let { param, id } = this.com
+    let { params, id } = this.com
     return createElement(this.component, {
       ref: 'component',
       props: {
-        $params: param || {},
+        $params: params || {},
         $tabsIndex: id
       }
     })
