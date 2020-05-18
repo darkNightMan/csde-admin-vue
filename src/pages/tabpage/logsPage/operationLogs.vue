@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="tableData.list"  v-loading="loading"  size="small" stripe  :height="$tableHeight()"  border  style="width: 100%">
+    <el-table :data="tableData.list"  v-loading="loading"  size="small" stripe  :height="$tableHeight() + 50"  border  style="width: 100%">
       <el-table-column    align="center"    fixed   prop="id"      label="日志编号"    width="100"></el-table-column>
       <el-table-column    align="center"    fixed   prop="user_id"    label="用户ID" width="100"></el-table-column>
       <el-table-column    align="center"    fixed   prop="nick_name"    label="用户名" width="100"></el-table-column>
