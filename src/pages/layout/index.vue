@@ -23,8 +23,6 @@ import menuList from './menu'
 import tabs from './tabs'
 import headerTop from './header'
 import router from '../../router/index'
-// import { mapMutations } from 'vuex'
-
 export default {
   data () {
     return {
@@ -34,11 +32,7 @@ export default {
   components: {
     menuList,
     headerTop,
-    // Main,
     tabs
-  },
-  methods: {
-    // ...mapMutations('app', ['WinDonresize'])
   }
 }
 </script>

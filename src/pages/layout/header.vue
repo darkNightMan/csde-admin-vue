@@ -3,10 +3,10 @@
     <div class="logo">
       <img  src="../../assets/logo2.jpg"/>
     </div>
-    <div class="avatar-right" v-if="userInfo">
+    <div class="avatar-right" v-if="$userInfo()">
       <el-dropdown @command="handleCommand">
-        <span style="color:#fff;margin-right:10px; cursor: pointer;">{{userInfo.nick_name}} </span>
-        <el-avatar class="pop-avatar" :src="userInfo.avatar" icon="el-icon-user-solid" style="vertical-align: middle;" />
+        <span style="color:#fff;margin-right:10px; cursor: pointer;">{{$userInfo().nick_name}} </span>
+        <el-avatar class="pop-avatar" :src="$userInfo().avatar" icon="el-icon-user-solid" style="vertical-align: middle;" />
         <i class="el-icon-setting" ></i>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="userCenter">个人信息</el-dropdown-item>
@@ -18,17 +18,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
 import { api } from '@/request/api.js'
-
 export default {
   name: 'headerTop',
-  computed: {
-    ...mapGetters('user', ['userInfo'])
-  },
   methods: {
-    ...mapActions('user', ['setUserInfo']),
-    ...mapActions('tabs', ['addView']),
     handleCommand (command) {
       this[command]()
     },
@@ -49,7 +42,7 @@ export default {
       if (code === 200) {
         window.localStorage.setItem('token', '')
         window.localStorage.setItem('viewAndIndex', '')
-        this.setUserInfo({})
+        this.$setUserInfo({})
         this.$router.push({path: '/login'})
         window.location.reload()
       }

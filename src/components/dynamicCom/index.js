@@ -6,9 +6,6 @@ export default {
     com: {
       type: Object,
       require: true
-    },
-    moduleVuex: {
-      type: Object
     }
   },
   data () {
@@ -26,13 +23,11 @@ export default {
   // 渲染函数 h [Function] 渲染函数
   render (createElement) {
     let { param, id } = this.com
-    let { tabs } = this.moduleVuex
     return createElement(this.component, {
       ref: 'component',
       props: {
         $params: param || {},
-        $tabsIndex: id,
-        $tabs: tabs
+        $tabsIndex: id
       }
     })
   }

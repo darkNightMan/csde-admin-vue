@@ -1,7 +1,7 @@
 <template>
 <div>
-  <el-tabs v-model="activeViewName" type="card"  @tab-remove="closeTabs" @tab-click="clickTab($event)">
-    <el-tab-pane  v-for="(item) in tabViewList"
+  <el-tabs v-model="activeViewName" type="card"  @tab-remove="closeTab" @tab-click="clickTab($event)">
+    <el-tab-pane  v-for="(item) in $tabViewList()"
       :key="item.name"
       :label="item.res_name"
       :closable="item.closeTabs"
@@ -12,9 +12,6 @@
       <transition name="el-zoom-in-top">
         <tabs-Component
           :com="item"
-          :moduleVuex='{
-            tabs: { setActiveTab, setMenuIndex,closeTabs, setViewTab, addView }
-          }'
         ></tabs-Component>
       </transition>
       </keep-alive>
@@ -24,7 +21,7 @@
 </template>
 <script>
 
-import { mapState, mapMutations, mapActions } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
   name: 'tabs',
   data () {
@@ -32,27 +29,25 @@ export default {
     }
   },
   created () {
-  },
-  components: {
-    // tabsComponent
+    console.log(this)
   },
   computed: {
-    ...mapState('tabs', ['tabViewList']),
     activeViewName: {
       get () {
-        return this.$store.state.tabs.activeViewName
+        return this.$activeViewName()
       },
       set (value) {
-        this.setActiveTab(value)
+        this.$setActiveTab(value)
       }
     }
   },
   methods: {
-    ...mapMutations('tabs', ['setActiveTab', 'setMenuIndex', 'closeTabs', 'setViewTab']),
-    ...mapActions('tabs', ['addView']),
     clickTab (tabs) {
-      this.setMenuIndex(tabs.$attrs.activeIndex)
-      this.setActiveTab(tabs.name)
+      this.$setMenuIndex(tabs.$attrs.activeIndex)
+      this.$setActiveTab(tabs.name)
+    },
+    closeTab (name) {
+      this.$closeTabs(name)
     }
   }
 }

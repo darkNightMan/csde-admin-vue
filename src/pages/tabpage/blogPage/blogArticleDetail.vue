@@ -1,17 +1,19 @@
 <template>
   <div>
-    <el-card class="box-card">
-      <el-scrollbar  wrap-style="height: 100%; overflow-x: hidden;" ref="scrollbar">
+      <el-card class="box-card">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="标题">
             <el-input v-model="form.title"></el-input>
           </el-form-item>
-           <el-form-item label="文章分类">
+          <el-form-item label="标题">
+            <el-input v-model="form.title"></el-input>
+          </el-form-item>
+          <el-form-item label="文章分类">
               <el-radio-group v-model="form.class_id">
                 <el-radio   v-for="(it, index) in classIdArr" :label="it.id"  :key="index">{{it.class_name}}</el-radio>
               </el-radio-group>
           </el-form-item>
-           <el-form-item label="文章标签">
+          <el-form-item label="文章标签">
             <el-select v-model="form.tagsArr" multiple placeholder="请选择标签">
               <el-option v-for="(it, index) in tagsIdArr" :label="it.tags_name" :value="it.tags_id" :key="index"></el-option>
             </el-select>
@@ -33,23 +35,22 @@
             <el-switch v-model="form.is_top"></el-switch>
           </el-form-item>
           <el-form-item label="内容">
-             <mavon-editor   @save="saveDoc"   @change="updateDoc"  ref="editor" v-model="form.content">
-         </mavon-editor>
+            <mavon-editor   @save="saveDoc"   @change="updateDoc"  ref="editor" v-model="form.content">
+        </mavon-editor>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit" :loading="loading">提交</el-button>
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
-      </el-scrollbar>
-    </el-card>
+      </el-card>
   </div>
 </template>
 
 <script>
 import { api } from '@/request/api.js'
 export default {
-  props: ['$params', '$tabsIndex', '$tabs'],
+  props: ['$params', '$tabsIndex'],
   data () {
     return {
       imageUrl: '',
