@@ -113,7 +113,7 @@ export default {
       }
     },
     async updateArticle () {
-      let { msg, code } = await this.Req.get(api.updateArticle, {article_id: this.$params.article_id})
+      let { msg, code } = await this.Req.put(api.updateArticle, {article_id: this.$params.article_id})
       if (code === 200) {
         this.$message({
           type: 'success',
