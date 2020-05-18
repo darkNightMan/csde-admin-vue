@@ -8,7 +8,6 @@ export default {
       let keysStateGettersName = Object.keys(options.modules[module].getters)
       let stateName = Object.keys(options.modules[module].state)
       let state = mapState(module, stateName)
-      console.log(state, 'state')
       let stateGetters = mapGetters(module, keysStateGettersName)
       let actionsFun = mapActions(module, keysActionsName)
       let mutationsFun = mapMutations(module, keysMutationsName)
