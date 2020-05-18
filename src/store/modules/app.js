@@ -9,11 +9,18 @@ const getters = {
 }
 const actions = {
   winDonresize: ({ commit }, data) => {
-    window.onresize = () => {
+    let resizeTimer = null
+    let setHeight = () => {
       let tableHeight = document.documentElement.clientHeight - 260
       let screenHeight = document.documentElement.clientHeight - 160
       commit('setTableHeight', tableHeight)
       commit('setWinHeight', screenHeight)
+    }
+    window.onresize = () => {
+      if (resizeTimer) clearTimeout(resizeTimer) // 防止事件多次调用问题
+      resizeTimer = setTimeout(() => {
+        setHeight()
+      }, 300)
     }
   }
 }
