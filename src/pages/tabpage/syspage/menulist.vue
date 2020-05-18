@@ -64,7 +64,7 @@
         <div class="btn-box">
           <el-button type="primary"  v-has="'sys:menu:create'"   icon="el-icon-circle-plus-outline"  size="mini" @click="createDialog">新建</el-button>
         </div>
-        <el-table   v-loading="loading"  :data="tableData.list"  :height="winH"     size="small"  border  stripe   style="width:100%">
+        <el-table   v-loading="loading"  :data="tableData.list"  :height="$tableHeight()"     size="small"  border  stripe   style="width:100%">
           <el-table-column   align="center"   prop="res_id"      label="菜单ID"    width="80" ></el-table-column>
           <el-table-column   align="center"    prop="parent_name"      label="上级菜单"    width="100" ></el-table-column>
           <el-table-column   align="center"    prop="res_name"      label="菜单名"     width="100" > </el-table-column>

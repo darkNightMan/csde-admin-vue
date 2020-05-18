@@ -10,9 +10,11 @@
      >
      <keep-alive>
       <transition name="el-zoom-in-top">
-        <tabs-Component
-          :com="item"
-        ></tabs-Component>
+        <div :style="{'height': $windowHeight() + 'px'}">
+          <el-scrollbar  class='page-component__scroll'>
+            <tabs-Component :com="item"></tabs-Component>
+          </el-scrollbar>
+        </div>
       </transition>
       </keep-alive>
     </el-tab-pane>
@@ -29,6 +31,7 @@ export default {
     }
   },
   created () {
+    console.log(this.$windowHeight())
   },
   computed: {
     activeViewName: {
@@ -51,3 +54,11 @@ export default {
   }
 }
 </script>
+<style>
+.page-component__scroll{
+  height: 100%;
+}
+.page-component__scroll .el-scrollbar__wrap {
+ overflow-x: hidden;
+}
+</style>

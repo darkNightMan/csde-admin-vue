@@ -12,7 +12,6 @@ import 'mavon-editor/dist/css/index.css'
 import iconPicker from 'vue-fontawesome-elementui-icon-picker'
 import Req from './request/http'
 import JsonViewer from 'vue-json-viewer'
-import { mapActions, mapMutations } from 'vuex'
 import myComponents from './components'
 import mavonEditor from 'mavon-editor'
 import perms from './utils/perms'
@@ -33,11 +32,8 @@ new Vue({
   components: { App },
   template: '<App/>',
   created () {
-    this.winDonresize()
-    this.setWinHeight()
-  },
-  methods: {
-    ...mapActions('app', ['winDonresize']),
-    ...mapMutations('app', ['setWinHeight'])
+    this.$winDonresize()
+    this.$setTableHeight()
+    this.$setWinHeight()
   }
 })

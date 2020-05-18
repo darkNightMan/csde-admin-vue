@@ -1,49 +1,48 @@
 <template>
   <div>
-      <el-card class="box-card">
-        <el-form ref="form" :model="form" label-width="80px">
-          <el-form-item label="标题">
-            <el-input v-model="form.title"></el-input>
-          </el-form-item>
-          <el-form-item label="标题">
-            <el-input v-model="form.title"></el-input>
-          </el-form-item>
-          <el-form-item label="文章分类">
-              <el-radio-group v-model="form.class_id">
-                <el-radio   v-for="(it, index) in classIdArr" :label="it.id"  :key="index">{{it.class_name}}</el-radio>
-              </el-radio-group>
-          </el-form-item>
-          <el-form-item label="文章标签">
-            <el-select v-model="form.tagsArr" multiple placeholder="请选择标签">
-              <el-option v-for="(it, index) in tagsIdArr" :label="it.tags_name" :value="it.tags_id" :key="index"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="封面图">
-            <el-upload
-                class="avatar-uploader"
-                :action="uploadUrl"
-                :headers="Headers"
-                name="images"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload">
-                <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
-          </el-form-item>
-          <el-form-item label="是否置顶">
-            <el-switch v-model="form.is_top"></el-switch>
-          </el-form-item>
-          <el-form-item label="内容">
-            <mavon-editor   @save="saveDoc"   @change="updateDoc"  ref="editor" v-model="form.content">
-        </mavon-editor>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit" :loading="loading">提交</el-button>
-            <el-button>取消</el-button>
-          </el-form-item>
-        </el-form>
-      </el-card>
+    <el-card class="box-card">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="标题">
+          <el-input v-model="form.title"></el-input>
+        </el-form-item>
+        <el-form-item label="标题">
+          <el-input v-model="form.title"></el-input>
+        </el-form-item>
+        <el-form-item label="文章分类">
+            <el-radio-group v-model="form.class_id">
+              <el-radio   v-for="(it, index) in classIdArr" :label="it.id"  :key="index">{{it.class_name}}</el-radio>
+            </el-radio-group>
+        </el-form-item>
+        <el-form-item label="文章标签">
+          <el-select v-model="form.tagsArr" multiple placeholder="请选择标签">
+            <el-option v-for="(it, index) in tagsIdArr" :label="it.tags_name" :value="it.tags_id" :key="index"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="封面图">
+          <el-upload
+              class="avatar-uploader"
+              :action="uploadUrl"
+              :headers="Headers"
+              name="images"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+        </el-form-item>
+        <el-form-item label="是否置顶">
+          <el-switch v-model="form.is_top"></el-switch>
+        </el-form-item>
+        <el-form-item label="内容">
+          <mavon-editor   @save="saveDoc"   @change="updateDoc"  ref="editor" v-model="form.content"></mavon-editor>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit" :loading="loading">提交</el-button>
+          <el-button>取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
@@ -77,12 +76,14 @@ export default {
   methods: {
     saveDoc () {},
     updateDoc () {},
-    onSubmit () {
+    async onSubmit () {
       if (JSON.stringify(this.$params) !== '{}') {
-        this.createArticle()
+        await this.createArticle()
       } else {
-        this.updateArticle()
+        await this.updateArticle()
       }
+      this.loading = false
+      this.$closeTabs(this.$tabsIndex)
     },
     async init () {
       let value = await Promise.all([this.Req.get(api.articleClassList), this.Req.get(api.articleTagsList)])
@@ -101,8 +102,6 @@ export default {
           message: msg
         })
       }
-      this.loading = false
-      this.$closeTabs(this.$tabsIndex)
     },
     async updateArticle () {
       let { msg, code } = await this.Req.get(api.updateArticle, {article_id: this.$params.article_id})
