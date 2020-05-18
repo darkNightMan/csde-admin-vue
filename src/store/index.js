@@ -9,6 +9,7 @@ import VuexExtend from './vuexExtend'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
+// 将vuex module 里面所有的方法属性挂在全局
 Vue.use(VuexExtend, {
   modules: {
     app,
