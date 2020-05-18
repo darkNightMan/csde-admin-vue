@@ -33,7 +33,7 @@ export default {
       this[command]()
     },
     userCenter () {
-      this.addView(
+      this.$addView(
         {
           view: {
             component: 'userCenter',

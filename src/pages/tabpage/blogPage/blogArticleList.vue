@@ -72,17 +72,16 @@
 </template>
 <script>
 import { api } from '@/request/api.js'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
-  props: ['$params', '$tabsIndex', '$tabs'],
+  props: ['$params', '$tabsIndex'],
   methods: {
-    ...mapActions('tabs', ['addView']),
     handleSizeChange (pageSize) {
       this.queryParam.pageSize = pageSize
       this.init()
     },
     addArticle (row) {
-      this.$tabs.addView(
+      this.$addView(
         {
           view: {
             component: 'blogArticleDetail',

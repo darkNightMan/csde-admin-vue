@@ -101,7 +101,7 @@ export default {
         })
       }
       this.loading = false
-      this.$tabs.closeTabs(this.$tabsIndex)
+      this.$closeTabs(this.$tabsIndex)
     },
     async updateArticle () {
       let { msg, code } = await this.Req.get(api.updateArticle, {article_id: this.$params.article_id})

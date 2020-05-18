@@ -5,9 +5,17 @@ import tabs from './modules/tabs'
 import user from './modules/user'
 import app from './modules/app'
 import theme from './theme/index'
+import VuexExtend from './vuexExtend'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
+Vue.use(VuexExtend, {
+  modules: {
+    app,
+    tabs,
+    user
+  }
+})
 const store = new Vuex.Store({
   modules: {
     app,
