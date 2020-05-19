@@ -30,5 +30,8 @@ export const api = {
   deleteArticle: '/api/blogs/deleteArticle',
   createClassList: '/api/blogs/createClassList',
   updateClassList: '/api/blogs/updateClassList',
-  deleteClassList: '/api/blogs/deleteClassList'
+  deleteClassList: '/api/blogs/deleteClassList',
+  createTagsList: '/api/blogs/createTagsList',
+  updateTagsList: '/api/blogs/updateTagsList',
+  deleteTagsList: '/api/blogs/deleteTagsList'
 }

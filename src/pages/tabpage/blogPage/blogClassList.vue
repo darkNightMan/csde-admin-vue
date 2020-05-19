@@ -12,7 +12,7 @@
       </span>
     </el-dialog>
      <div class="btn-box">
-        <el-button v-has="'sys:user:create'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="createDialog">新建</el-button>
+        <el-button   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="createDialog">新建</el-button>
         <!-- <el-button  :disabled="disbaledBtn" v-has="'sys:user:update'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="checksEdit">修改</el-button>
         <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
     </div>
@@ -21,8 +21,8 @@
       <el-table-column     align="center"   prop="class_name"      label="分类名"></el-table-column>
       <el-table-column  label="操作">
           <template slot-scope="scope">
-          <el-button @click="checksEdit(scope.row, false)" type="primary" v-has="'sys:user:update'"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
-          <el-button @click="deleteClass(scope.row, false)" type="danger"  v-has="'sys:user:delete'" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
+          <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
+          <el-button @click="deleteClass(scope.row, false)" type="danger"  effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
       </template>
       </el-table-column>
     </el-table>

@@ -1,30 +1,10 @@
 <template>
   <div>
-    <el-dialog :title="isRoleCheck ? '编辑用户' : '新增用户'"  :visible.sync="dialogVisiblerole" width="20%" >
+    <el-dialog :title="isRoleCheck ? '编辑标签' : '新增标签'"  :visible.sync="dialogVisiblerole" width="20%" >
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item   label="角色"  prop="role_id"  :rules="[ { required: true, message: '角色名不能为空'}]">
-            <el-select multiple v-model="roleValidateForm.role_id" placeholder="请选择角色" style="width:100%">
-              <el-option  v-for="item in roleList"  :key="item.role_id"  :label="item.role_name" :value="item.role_id">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item   label="用户名"  prop="nick_name"  :rules="[
-              { required: true, message: '用户名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.nick_name" autocomplete="off"></el-input>
-          </el-form-item>
-         <el-form-item   label="电话"  prop="phone"  :rules="[
-              { required: true, message: '电话名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.phone" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item   label="密码"  prop="password"  :rules="[
-              { required: true, message: '密码名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.password" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item   label="email"  prop="email">
-            <el-input type="input" v-model="roleValidateForm.email" autocomplete="off"></el-input>
-          </el-form-item>
-             <el-form-item   label="avatar"  prop="avatar">
-            <el-input type="input" v-model="roleValidateForm.avatar" autocomplete="off"></el-input>
+          <el-form-item   label="标签名"  prop="tags_name"  :rules="[
+              { required: true, message: '标签名不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.tags_name" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
       <span slot="footer" class="dialog-footer">
@@ -33,7 +13,7 @@
       </span>
     </el-dialog>
      <div class="btn-box">
-        <el-button v-has="'sys:user:create'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="createDialog">新建</el-button>
+        <el-button  icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="createDialog">新建</el-button>
         <!-- <el-button  :disabled="disbaledBtn" v-has="'sys:user:update'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="checksEdit">修改</el-button>
         <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
     </div>
@@ -42,8 +22,8 @@
       <el-table-column     align="center"   prop="tags_name"      label="标签名"></el-table-column>
       <el-table-column  label="操作">
           <template slot-scope="scope">
-          <el-button @click="checksEdit(scope.row, false)" type="primary" v-has="'sys:user:update'"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
-          <el-button @click="deleteUser(scope.row, false)" type="danger"  v-has="'sys:user:delete'" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
+          <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
+          <el-button @click="deleteTags(scope.row, false)" type="danger"   effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -62,7 +42,6 @@
 </template>
 <script>
 import { api } from '@/request/api.js'
-import { mapGetters } from 'vuex'
 export default {
   props: [],
   methods: {
@@ -90,29 +69,17 @@ export default {
       this.isRoleCheck = true
       this.dialogVisiblerole = true
       this.roleValidateForm = {
-        user_id: row.user_id,
-        nick_name: row.nick_name,
-        password: row.password,
-        email: row.email,
-        phone: row.phone,
-        avatar: row.avatar,
-        role_id: row.sys_roles ? getRole(row.sys_roles) : []
-      }
-      function getRole (roleList) {
-        let roleid = []
-        roleList.map((it) => {
-          roleid.push(it.role_id)
-        })
-        return roleid
+        tags_id: row.tags_id,
+        tags_name: row.tags_name
       }
     },
-    deleteUser (row) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+    deleteTags (row) {
+      this.$confirm('此操作将永久删除该标签吗, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.delete(api.deleteUser, { data: {user_id: row.user_id} })
+        let { code, msg } = await this.Req.delete(api.deleteTagsList, { data: {tags_id: row.tags_id} })
         if (code === 200) {
           this.init()
           this.$message({
@@ -127,14 +94,8 @@ export default {
         })
       })
     },
-    async getroleList () {
-      let { data, code } = await this.Req.get(api.getAllRole)
-      if (code === 200) {
-        this.roleList = data.roleList
-      }
-    },
-    async updateuUser () {
-      let { code, msg } = await this.Req.put(api.updateUser, this.roleValidateForm)
+    async updateTags () {
+      let { code, msg } = await this.Req.put(api.updateTagsList, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -157,8 +118,8 @@ export default {
         this.$refs[formName].resetFields()
       })
     },
-    async createUser () {
-      let { code, msg } = await this.Req.post(api.createUser, this.roleValidateForm)
+    async createTags () {
+      let { code, msg } = await this.Req.post(api.createTagsList, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -180,9 +141,9 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isRoleCheck) {
-            this.updateuUser()
+            this.updateTags()
           } else {
-            this.createUser()
+            this.createTags()
           }
         } else {
           console.log('error submit!!')
@@ -194,34 +155,18 @@ export default {
   data () {
     return {
       tableData: [],
-      roleList: [],
       isRoleCheck: false,
       dialogVisiblerole: false,
-      defaultProps: {
-        children: 'children',
-        label: 'res_name'
-      },
       queryParam: {
         page: 1,
         pageSize: 10,
         currentPage: 1
       },
-      // 当前选择行
-      currRow: null,
       roleValidateForm: {
-        nick_name: '',
-        password: '',
-        email: '',
-        phone: '',
-        avatar: '',
-        role_id: []
+        tags_name: '',
+        tags_id: ''
       }
     }
-  },
-  filters: {
-  },
-  computed: {
-    ...mapGetters('app', ['winH'])
   },
   created () {
     this.init()

@@ -20,8 +20,8 @@
       <el-table-column     align="center"  prop="create_time"      label="更新时间"></el-table-column>
       <el-table-column  label="操作">
           <template slot-scope="scope">
-          <el-button @click="addArticle(scope.row, false)" type="primary" v-has="'sys:user:update'"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
-          <el-button @click="deleteArticle(scope.row, false)" type="danger"  v-has="'sys:user:delete'" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
+          <el-button @click="addArticle(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
+          <el-button @click="deleteArticle(scope.row, false)" type="danger" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
       </template>
       </el-table-column>
     </el-table>
