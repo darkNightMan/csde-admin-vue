@@ -1,30 +1,9 @@
 <template>
   <div>
-    <el-dialog :title="isRoleCheck ? '编辑用户' : '新增用户'"  :visible.sync="dialogVisiblerole" width="20%" >
+    <el-dialog :title="isRoleCheck ? '编辑分类' : '新增分类'"  :visible.sync="dialogVisiblerole" width="25%" >
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item   label="角色"  prop="role_id"  :rules="[ { required: true, message: '角色名不能为空'}]">
-            <el-select multiple v-model="roleValidateForm.role_id" placeholder="请选择角色" style="width:100%">
-              <el-option  v-for="item in roleList"  :key="item.role_id"  :label="item.role_name" :value="item.role_id">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item   label="用户名"  prop="nick_name"  :rules="[
-              { required: true, message: '用户名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.nick_name" autocomplete="off"></el-input>
-          </el-form-item>
-         <el-form-item   label="电话"  prop="phone"  :rules="[
-              { required: true, message: '电话名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.phone" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item   label="密码"  prop="password"  :rules="[
-              { required: true, message: '密码名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.password" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item   label="email"  prop="email">
-            <el-input type="input" v-model="roleValidateForm.email" autocomplete="off"></el-input>
-          </el-form-item>
-             <el-form-item   label="avatar"  prop="avatar">
-            <el-input type="input" v-model="roleValidateForm.avatar" autocomplete="off"></el-input>
+          <el-form-item   label="分类名"  prop="class_name"  :rules="[{ required: true, message: '分类名不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.class_name" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
       <span slot="footer" class="dialog-footer">
@@ -43,7 +22,7 @@
       <el-table-column  label="操作">
           <template slot-scope="scope">
           <el-button @click="checksEdit(scope.row, false)" type="primary" v-has="'sys:user:update'"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
-          <el-button @click="deleteUser(scope.row, false)" type="danger"  v-has="'sys:user:delete'" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
+          <el-button @click="deleteClass(scope.row, false)" type="danger"  v-has="'sys:user:delete'" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
       </template>
       </el-table-column>
     </el-table>
@@ -90,29 +69,17 @@ export default {
       this.isRoleCheck = true
       this.dialogVisiblerole = true
       this.roleValidateForm = {
-        user_id: row.user_id,
-        nick_name: row.nick_name,
-        password: row.password,
-        email: row.email,
-        phone: row.phone,
-        avatar: row.avatar,
-        role_id: row.sys_roles ? getRole(row.sys_roles) : []
-      }
-      function getRole (roleList) {
-        let roleid = []
-        roleList.map((it) => {
-          roleid.push(it.role_id)
-        })
-        return roleid
+        class_name: row.class_name,
+        id: row.id
       }
     },
-    deleteUser (row) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+    deleteClass (row) {
+      this.$confirm('此操作将永久删除该分类, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.delete(api.deleteUser, { data: {user_id: row.user_id} })
+        let { code, msg } = await this.Req.delete(api.deleteClassList, { data: { id: row.id } })
         if (code === 200) {
           this.init()
           this.$message({
@@ -133,8 +100,8 @@ export default {
         this.roleList = data.roleList
       }
     },
-    async updateuUser () {
-      let { code, msg } = await this.Req.put(api.updateUser, this.roleValidateForm)
+    async updateClassList () {
+      let { code, msg } = await this.Req.put(api.updateClassList, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -157,8 +124,8 @@ export default {
         this.$refs[formName].resetFields()
       })
     },
-    async createUser () {
-      let { code, msg } = await this.Req.post(api.createUser, this.roleValidateForm)
+    async createArticleClass () {
+      let { code, msg } = await this.Req.post(api.createClassList, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -180,9 +147,9 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isRoleCheck) {
-            this.updateuUser()
+            this.updateClassList()
           } else {
-            this.createUser()
+            this.createArticleClass()
           }
         } else {
           console.log('error submit!!')
@@ -209,12 +176,8 @@ export default {
       // 当前选择行
       currRow: null,
       roleValidateForm: {
-        nick_name: '',
-        password: '',
-        email: '',
-        phone: '',
-        avatar: '',
-        role_id: []
+        id: '',
+        class_name: ''
       }
     }
   },
@@ -225,7 +188,6 @@ export default {
   },
   created () {
     this.init()
-    this.getroleList()
   }
 }
 </script>

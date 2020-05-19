@@ -61,7 +61,8 @@ export default {
         tagsArr: [],
         cover_url: '',
         is_top: false,
-        content: ''
+        content: '',
+        article_id: ''
       },
       classIdArr: [],
       tagsIdArr: [],
@@ -97,7 +98,7 @@ export default {
       let value = await Promise.all([this.Req.get(api.articleClassList), this.Req.get(api.articleTagsList)])
       this.classIdArr = value[0].data.list
       this.tagsIdArr = value[1].data.list
-      if (JSON.stringify(this.$params) !== '{}') {
+      if (this.$params.article_id !== undefined) {
         this.getDetail()
       }
     },
@@ -109,16 +110,18 @@ export default {
           type: 'success',
           message: msg
         })
+        this.$params.init()
         this.$closeTabs(this.$tabsIndex)
       }
     },
     async updateArticle () {
-      let { msg, code } = await this.Req.put(api.updateArticle, {article_id: this.$params.article_id})
+      let { msg, code } = await this.Req.put(api.updateArticle, Object.assign(this.form, { article_id: this.$params.article_id }))
       if (code === 200) {
         this.$message({
           type: 'success',
           message: msg
         })
+        this.$params.init()
         this.$closeTabs(this.$tabsIndex)
       }
     },
@@ -129,8 +132,13 @@ export default {
     async getDetail () {
       let { data, code } = await this.Req.get(api.articleDetail, {article_id: this.$params.article_id})
       if (code === 200) {
-        this.form = data
         this.imageUrl = data.cover_url
+        this.form.cover_url = data.cover_url
+        this.form.title = data.title
+        this.form.class_id = data.class_id
+        this.form.is_top = data.is_top
+        this.form.content = data.content
+        data.tagsArr.map(it => this.form.tagsArr.push(it.tags_id))
       }
     },
     beforeAvatarUpload (file) {

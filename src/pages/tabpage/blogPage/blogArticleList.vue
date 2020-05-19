@@ -52,10 +52,8 @@ export default {
         {
           view: {
             component: 'blogArticleDetail',
-            res_name: '添加文章',
-            closeTabs: true, // 默认首页不能关闭
-            index: '添加文章',
-            param: {article_id: row.article_id}
+            res_name: row.article_id ? '编辑文章' : '添加文章',
+            params: {article_id: row.article_id, init: this.init}
           }
         }
       )
@@ -75,26 +73,6 @@ export default {
     },
     actionEvents (row) {
       this.currRow = row
-    },
-    checksEdit (row) {
-      this.isRoleCheck = true
-      this.dialogVisiblerole = true
-      this.roleValidateForm = {
-        user_id: row.user_id,
-        nick_name: row.nick_name,
-        password: row.password,
-        email: row.email,
-        phone: row.phone,
-        avatar: row.avatar,
-        role_id: row.sys_roles ? getRole(row.sys_roles) : []
-      }
-      function getRole (roleList) {
-        let roleid = []
-        roleList.map((it) => {
-          roleid.push(it.role_id)
-        })
-        return roleid
-      }
     },
     deleteArticle (row) {
       this.$confirm('此操作将永久删除该文章吗, 是否继续?', '提示', {

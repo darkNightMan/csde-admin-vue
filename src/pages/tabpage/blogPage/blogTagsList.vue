@@ -225,7 +225,6 @@ export default {
   },
   created () {
     this.init()
-    this.getroleList()
   }
 }
 </script>
