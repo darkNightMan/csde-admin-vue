@@ -68,7 +68,7 @@
           <el-table-column   align="center"   prop="res_id"      label="菜单ID"    width="80" ></el-table-column>
           <el-table-column   align="center"    prop="parent_name"      label="上级菜单"    width="100" ></el-table-column>
           <el-table-column   align="center"    prop="res_name"      label="菜单名"     width="100" > </el-table-column>
-          <el-table-column   align="center"    prop="component"      label="菜单组件名"   width="120" > </el-table-column>
+          <el-table-column   align="center"    prop="component"      label="菜单组件名"   width="140" > </el-table-column>
           <el-table-column   align="center"    prop="res_icon"      label="图标"      width="50">
               <template slot-scope="scope">
                 <i :class="scope.row.res_icon == null || scope.row.res_icon == '' ? 'el-icon-eleme': scope.row.res_icon"></i>

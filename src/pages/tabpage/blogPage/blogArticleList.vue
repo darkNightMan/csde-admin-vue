@@ -51,7 +51,7 @@ export default {
       this.$addView(
         {
           view: {
-            component: 'blogArticleDetail',
+            component: 'blogArticleEdit',
             res_name: row.article_id ? '编辑文章' : '添加文章',
             params: {article_id: row.article_id, init: this.init}
           }

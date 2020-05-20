@@ -32,7 +32,11 @@
           <el-switch v-model="form.is_top"></el-switch>
         </el-form-item>
         <el-form-item label="内容">
-          <article  v-highlight v-html="compiledMD"></article>
+          <mavon-editor   @save="saveDoc"  @change="updateDoc" :ishljs="true" ref="editor" v-model="form.content"></mavon-editor>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit" :loading="loading">提交</el-button>
+          <el-button>取消</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -41,7 +45,6 @@
 
 <script>
 import { api } from '@/request/api.js'
-import marked from 'marked'
 export default {
   props: ['$params', '$tabsIndex'],
   data () {
@@ -73,14 +76,11 @@ export default {
   created () {
     this.init()
   },
-  computed: {
-    compiledMD () {
-      return marked(this.form.content, { sanitize: true })
-    }
-  },
   methods: {
     saveDoc () {},
-    updateDoc () {},
+    updateDoc (md, html) {
+      console.log(html)
+    },
     async onSubmit () {
       if (this.$params.article_id === undefined) {
         this.$refs['form'].validate(async (valid) => {

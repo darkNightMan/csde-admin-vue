@@ -8,7 +8,9 @@ export default {
   operationLogs: resolve => require(['@/pages/tabpage/logsPage/operationLogs'], resolve),
   blogArticleList: resolve => require(['@/pages/tabpage/blogPage/blogArticleList'], resolve),
   blogArticleDetail: resolve => require(['@/pages/tabpage/blogPage/blogArticleDetail'], resolve),
+  blogArticleEdit: resolve => require(['@/pages/tabpage/blogPage/blogArticleEdit'], resolve),
   blogClassList: resolve => require(['@/pages/tabpage/blogPage/blogClassList'], resolve),
   blogTagsList: resolve => require(['@/pages/tabpage/blogPage/blogTagsList'], resolve),
+  blogCommentsList: resolve => require(['@/pages/tabpage/blogPage/blogCommentsList'], resolve),
   test: resolve => require(['@/pages/tabpage/testPage/test'], resolve)
 }
