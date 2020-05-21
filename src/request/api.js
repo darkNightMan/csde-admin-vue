@@ -34,6 +34,7 @@ export const api = {
   createTagsList: '/api/blogs/createTagsList',
   updateTagsList: '/api/blogs/updateTagsList',
   deleteTagsList: '/api/blogs/deleteTagsList',
+  commentsList: '/api/blogs/commentsList',
   articleCommentsList: '/api/blogs/articleCommentsList',
   createCommentsList: '/api/blogs/createCommentsList',
   updateCommentsList: '/api/blogs/updateCommentsList',

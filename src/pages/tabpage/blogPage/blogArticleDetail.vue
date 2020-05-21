@@ -7,7 +7,7 @@
           <h2>{{form.title}}</h2>
         </div>
         <div class="attr-list">
-          <p>
+          <p style="padding:10px 0">
              标签：<el-tag style="margin:0 10px"
                 v-for="item in form.tagsArr"
                 :key="item.tags_name"
@@ -38,6 +38,44 @@
         </div>
       </div>
       <article  v-loading="loading"  v-highlight v-html="compiledMD"></article>
+      <div class="comment-boxs">
+        <h1 class="comments-title">评论 ({{commentsList.count}})</h1>
+        <div class="comment-input-top">
+          <div class="user-box">
+            <el-avatar :src="$userInfo().avatar">{{$userInfo().nick_name}}</el-avatar>
+          </div>
+          <el-form :model="commetForm" ref="commetForm" label-width="60px" class="demo-ruleForm">
+            <el-form-item    prop="comment_content"  :rules="[{ required: true, message: '评论内容不能为空'}]">
+              <el-input  v-model="commetForm.comment_content" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button size="small" type="primary" @click="submitComments('commetForm')">回复</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <ul class="comment-list">
+          <li v-for="item in commentsList.comments" :key="item.comment_id">
+              <div class="comments-root">
+                <el-avatar :src="item.avatar">{{item.comment_author}} </el-avatar>
+                <div class="comments-right">
+                    <p>{{item.comment_author}}</p>
+                    <p>{{item.comment_content}}</p>
+                    <p>{{item.comment_time}}</p>
+                </div>
+              </div>
+              <ul class="sub-comment-content-row">
+                  <li v-for="child in item.childComments" :key="child.comment_id">
+                      <el-avatar :src="item.avatar"> {{child.comment_content}}</el-avatar>
+                      <div  class="comments-right">
+                        <p>{{child.comment_author}}</p>
+                        <p>{{child.comment_content}}</p>
+                        <p>{{child.comment_time}}</p>
+                    </div>
+                  </li>
+              </ul>
+          </li>
+        </ul>
+      </div>
     </el-card>
   </div>
 </template>
@@ -49,6 +87,9 @@ export default {
   props: ['$params', '$tabsIndex'],
   data () {
     return {
+      commetForm: {
+        comment_content: ''
+      },
       imageUrl: '',
       loading: false,
       Headers: {
@@ -65,7 +106,8 @@ export default {
         article_id: ''
       },
       classIdArr: [],
-      tagsIdArr: []
+      tagsIdArr: [],
+      commentsList: []
     }
   },
   created () {
@@ -77,12 +119,21 @@ export default {
     }
   },
   methods: {
-    saveDoc () {},
-    updateDoc () {},
+    submitComments (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
     async init () {
-      let value = await Promise.all([this.Req.get(api.articleClassList), this.Req.get(api.articleTagsList)])
-      this.classIdArr = value[0].data.list
-      this.tagsIdArr = value[1].data.list
+      let { data, code } = await this.Req.get(api.articleCommentsList, {article_id: this.$params.article_id})
+      if (code === 200) {
+        this.commentsList = data
+      }
       if (this.$params.article_id !== undefined) {
         this.getDetail()
       }
@@ -140,6 +191,48 @@ export default {
 </script>
 
 <style>
+.comments-title{
+  font-size: 24px;
+  padding: 20px;
+  text-align: center;
+  font-weight: normal;
+}
+.comment-input-top{
+  background: #fafbfc;
+  padding: 20px;
+  position: relative;
+}
+.comment-input-top .user-box {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.comment-list{
+  padding: 20px;
+}
+.comment-list .comments-right {
+  padding-left: 10px;
+}
+.comment-list .comments-right p {
+  padding: 4px;
+}
+.comment-list{
+  padding: 40px;
+}
+.comment-list li{
+   border-top: 1px solid #f1f1f1;
+   padding-bottom: 5px;
+}
+.sub-comment-content-row li{
+  background: #fafbfc;
+  padding: 20px;
+  border-bottom: 1px solid #f1f1f1;
+  display: flex;
+}
+.comment-list .comments-root{
+  padding: 15px 0px;
+  display: flex;
+}
 .box-card {
   min-height: 500px;
 }

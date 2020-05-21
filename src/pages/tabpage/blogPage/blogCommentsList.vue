@@ -69,7 +69,7 @@ export default {
     // handleClose () {}
     async init () {
       this.loading = true
-      let { data, code } = await this.Req.get(api.articleCommentsList, this.queryParam)
+      let { data, code } = await this.Req.get(api.commentsList, this.queryParam)
       if (code === 200) {
         this.tableData = data
       }
