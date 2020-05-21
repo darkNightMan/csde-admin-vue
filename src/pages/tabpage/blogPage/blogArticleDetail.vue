@@ -1,40 +1,43 @@
 <template>
-  <div>
-    <el-card class="box-card">
-      <el-form ref="form" :model="form" label-width="80px" :rules="rules">
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="form.title"></el-input>
-        </el-form-item>
-        <el-form-item label="文章分类">
-            <el-radio-group v-model="form.class_id">
-              <el-radio   v-for="(it, index) in classIdArr" :label="it.id"  :key="index">{{it.class_name}}</el-radio>
-            </el-radio-group>
-        </el-form-item>
-        <el-form-item label="文章标签">
-          <el-select v-model="form.tagsArr" multiple placeholder="请选择标签">
-            <el-option v-for="(it, index) in tagsIdArr" :label="it.tags_name" :value="it.tags_id" :key="index"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="封面图">
-          <el-upload
-              class="avatar-uploader"
-              :action="uploadUrl"
-              :headers="Headers"
-              name="images"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload">
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-        </el-form-item>
-        <el-form-item label="是否置顶">
-          <el-switch v-model="form.is_top"></el-switch>
-        </el-form-item>
-        <el-form-item label="内容">
-          <article  v-highlight v-html="compiledMD"></article>
-        </el-form-item>
-      </el-form>
+  <div >
+    <el-card v-loading="loading" class="box-card">
+      <div slot="header" class="clearfix">
+        <div class="title-box">
+          <el-tag  v-if="form.is_top"  type='danger'>置顶</el-tag>
+          <h2>{{form.title}}</h2>
+        </div>
+        <div class="attr-list">
+          <p>
+             标签：<el-tag style="margin:0 10px"
+                v-for="item in form.tagsArr"
+                :key="item.tags_name"
+                effect="plain">
+                {{ item.tags_name }}
+              </el-tag>
+          </p>
+          <el-row :gutter="18">
+            <el-col :span="3">
+                作者：<el-link type="primary">{{ form.authorName }}</el-link>
+            </el-col>
+             <el-col :span="3">
+                分类：<el-link type="primary">{{ form.class_name }}</el-link>
+            </el-col>
+            <el-col :span="4">
+                发表时间： <el-link type="primary">{{ form.create_time }}</el-link>
+            </el-col>
+             <el-col :span="4">
+                更新时间：<el-link type="primary">{{ form.update_time }}</el-link>
+            </el-col>
+            <el-col :span="3">
+                阅读数 <el-link type="primary">{{ form.read_count }}</el-link>
+            </el-col>
+            <el-col :span="3">
+                点赞数：<el-link type="primary">{{ form.poll_count }}</el-link>
+            </el-col>
+          </el-row>
+        </div>
+      </div>
+      <article  v-loading="loading"  v-highlight v-html="compiledMD"></article>
     </el-card>
   </div>
 </template>
@@ -62,12 +65,7 @@ export default {
         article_id: ''
       },
       classIdArr: [],
-      tagsIdArr: [],
-      rules: {
-        title: [
-          { required: true, message: '请输入标题', trigger: 'blur' }
-        ]
-      }
+      tagsIdArr: []
     }
   },
   created () {
@@ -81,21 +79,6 @@ export default {
   methods: {
     saveDoc () {},
     updateDoc () {},
-    async onSubmit () {
-      if (this.$params.article_id === undefined) {
-        this.$refs['form'].validate(async (valid) => {
-          if (valid) {
-            await this.createArticle()
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
-      } else {
-        await this.updateArticle()
-      }
-      this.loading = false
-    },
     async init () {
       let value = await Promise.all([this.Req.get(api.articleClassList), this.Req.get(api.articleTagsList)])
       this.classIdArr = value[0].data.list
@@ -132,6 +115,7 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw)
     },
     async getDetail () {
+      this.loading = true
       let { data, code } = await this.Req.get(api.articleDetail, {article_id: this.$params.article_id})
       if (code === 200) {
         this.imageUrl = data.cover_url
@@ -140,47 +124,34 @@ export default {
         this.form.class_id = data.class_id
         this.form.is_top = data.is_top
         this.form.content = data.content
-        data.tagsArr.map(it => this.form.tagsArr.push(it.tags_id))
+        this.form.authorName = data.authorName
+        this.form.read_count = data.read_count
+        this.form.read_count = data.read_count
+        this.form.poll_count = data.poll_count
+        this.form.create_time = data.create_time
+        this.form.update_time = data.update_time
+        this.form.class_name = data.class_name
+        this.form.tagsArr = data.tagsArr
       }
-    },
-    beforeAvatarUpload (file) {
-      // const isJPG = file.type === 'image/jpeg'
-      // const isLt2M = file.size / 1024 / 1024 < 2
-
-      // if (!isJPG) {
-      //   this.$message.error('上传头像图片只能是 JPG 格式!')
-      // }
-      // if (!isLt2M) {
-      //   this.$message.error('上传头像图片大小不能超过 2MB!')
-      // }
-      // return isJPG && isLt2M
+      this.loading = false
     }
   }
 }
 </script>
 
 <style>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 16px;
-    color: #8c939d;
-    width: 240px;
-    height: 100px;
-    line-height: 100px;
-    text-align: center;
-  }
-  .avatar {
-    width: 240px;
-    height: 100px;
-    display: block;
-  }
+.box-card {
+  min-height: 500px;
+}
+.attr-list{
+  font-size: 12px;
+}
+.title-box{
+  display: flex;
+  padding: 20px 0px;
+}
+.title-box h2 {
+  margin: 0;
+  padding-left:20px;
+}
 </style>
