@@ -12,7 +12,7 @@
       </span>
     </el-dialog>
      <div class="btn-box">
-        <el-button   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="createDialog">新建</el-button>
+        <el-button   icon="el-icon-delete" type="danger" size="mini" @click="createDialog">批量删除</el-button>
         <!-- <el-button  :disabled="disbaledBtn" v-has="'sys:user:update'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="checksEdit">修改</el-button>
         <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
     </div>
@@ -20,7 +20,7 @@
       <el-table-column  type="selection"  width="55"></el-table-column>
       <el-table-column     align="center"   prop="comment_id"   label="评论ID"    width="80"></el-table-column>
       <el-table-column     align="center"   prop="article_id"   label="文章ID"    width="100"></el-table-column>
-      <el-table-column     align="center"   label="文章标题">
+      <el-table-column     align="center"   label="文章标题"  :show-overflow-tooltip="true"    width="240">
         <template slot-scope="scope">
           <el-link type="primary" @click="linkArticle(scope.row)">
             {{scope.row.title}}
@@ -32,9 +32,10 @@
       <el-table-column     align="center"   prop="comment_authot_email"      label="匿名评论邮箱"></el-table-column>
       <el-table-column     align="center"   prop="comment_content"   :show-overflow-tooltip="true"     label="评论内容"></el-table-column>
       <el-table-column     align="center"   prop="comment_time"      label="评论时间"></el-table-column>
-      <el-table-column  label="操作">
+      <el-table-column  label="操作" width="250">
           <template slot-scope="scope">
-          <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" size="mini">回复</el-button>
+          <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-chat-dot-round" size="mini">回复</el-button>
+          <el-button @click="checksEdit(scope.row, true)" type="primary"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
           <el-button @click="deleteComments(scope.row, false)" type="danger"  effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
       </template>
       </el-table-column>
@@ -89,39 +90,18 @@ export default {
         }
       )
     },
-    checksEdit (row) {
-      this.isRoleCheck = false
+    checksEdit (row, flag) {
+      this.isRoleCheck = flag
       this.dialogVisiblerole = true
       this.commentsForm.parent_id = row.comment_id
       this.commentsForm.user_id = this.$userInfo().nick_name
       this.commentsForm.article_id = row.article_id
-      this.commentsForm.comment_content = `@${row.comment_author} `
+      this.commentsForm.comment_content = flag ? row.comment_content : `@${row.comment_author}`
       this.commentsForm.comment_author_email = this.$userInfo().email
       this.commentsForm.comment_author = this.$userInfo().nick_name
     },
-    deleteClass (row) {
-      this.$confirm('此操作将永久删除该分类, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(async () => {
-        let { code, msg } = await this.Req.delete(api.deleteCommentsList, { data: { id: row.id } })
-        if (code === 200) {
-          this.init()
-          this.$message({
-            type: 'success',
-            message: msg
-          })
-        }
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        })
-      })
-    },
     async updateClassList () {
-      let { code, msg } = await this.Req.put(api.updateCommentsList, this.roleValidateForm)
+      let { code, msg } = await this.Req.put(api.updateCommentsList, this.commentsForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -133,11 +113,6 @@ export default {
         this.dialogVisiblerole = false
         this.resetForm('roleValidateForm')
       }
-    },
-    createDialog () {
-      this.dialogVisiblerole = true
-      this.isRoleCheck = false
-      this.resetForm('commentsForm')
     },
     resetForm (formName) {
       this.$nextTick(() => {
@@ -189,7 +164,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isRoleCheck) {
-            // this.updateClassList()
+            this.updateClassList()
           } else {
             this.createComments()
           }
