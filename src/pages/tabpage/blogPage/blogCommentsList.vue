@@ -12,11 +12,11 @@
       </span>
     </el-dialog>
      <div class="btn-box">
-        <el-button   icon="el-icon-delete" type="danger" size="mini" @click="createDialog">批量删除</el-button>
+        <el-button   icon="el-icon-delete" type="danger" size="mini" @click="deleteBatchComments">批量删除</el-button>
         <!-- <el-button  :disabled="disbaledBtn" v-has="'sys:user:update'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="checksEdit">修改</el-button>
         <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
     </div>
-     <el-table  @row-click="actionEvents" v-loading="loading"   :height="$tableHeight()"  :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
+     <el-table   @selection-change="handleSelectionChange"  v-loading="loading"   :height="$tableHeight()"  :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column  type="selection"  width="55"></el-table-column>
       <el-table-column     align="center"   prop="comment_id"   label="评论ID"    width="80"></el-table-column>
       <el-table-column     align="center"   prop="article_id"   label="文章ID"    width="100"></el-table-column>
@@ -75,9 +75,6 @@ export default {
         this.tableData = data
       }
       this.loading = false
-    },
-    actionEvents (row) {
-      this.currRow = row
     },
     linkArticle (row) {
       this.$addView(
@@ -145,6 +142,32 @@ export default {
         type: 'warning'
       }).then(async () => {
         let { code, msg } = await this.Req.delete(api.deleteCommentsList, { data: {commentId: row.comment_id} })
+        if (code === 200) {
+          this.init()
+          this.$message({
+            type: 'success',
+            message: msg
+          })
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    handleSelectionChange (rows) {
+      this.currRow = rows
+    },
+    deleteBatchComments () {
+      this.$confirm('批量删除这些评论吗, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        let commentIdArr = []
+        this.currRow.map((it) => { commentIdArr.push(it.comment_id) })
+        let { code, msg } = await this.Req.delete(api.deleteCommentsList, { data: {commentId: commentIdArr} })
         if (code === 200) {
           this.init()
           this.$message({
