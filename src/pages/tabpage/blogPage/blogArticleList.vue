@@ -13,7 +13,7 @@
              <img :src="scope.row.cover_url" width="120"/>
            </template>
         </el-table-column>
-      <el-table-column     align="center"     prop="b_class.class_name"      label="分类"></el-table-column>
+      <el-table-column     align="center"     prop="article_class.class_name"      label="分类"></el-table-column>
       <el-table-column     align="center"  prop="read_count"    label="阅读数"      width="120">    </el-table-column>
       <el-table-column     align="center"  prop="poll_count"    label="点赞数"      width="120">    </el-table-column>
       <el-table-column     align="center"  prop="update_time"      label="创建时间"> </el-table-column>
