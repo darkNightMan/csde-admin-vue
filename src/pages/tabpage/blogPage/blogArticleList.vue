@@ -7,7 +7,7 @@
     </div>
      <el-table  @row-click="actionEvents" v-loading="loading"   :height="$tableHeight()"  :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column     align="center"   fixed   prop="article_id"      label="文章ID"    width="100"></el-table-column>
-      <el-table-column     align="center"     prop="title"      label="标题"   ></el-table-column>
+      <el-table-column     align="center"     prop="title"  :show-overflow-tooltip="true"    label="标题"   ></el-table-column>
         <el-table-column   align="center"   label="封面">
            <template slot-scope="scope">
              <img :src="scope.row.cover_url" width="120"/>
