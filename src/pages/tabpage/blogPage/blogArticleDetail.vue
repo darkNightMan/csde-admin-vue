@@ -56,7 +56,7 @@
         <ul class="comment-list">
           <li v-for="(item) in commentsList.comments" :key="item.comment_id">
             <div class="comments-root">
-              <el-avatar :src="item.avatar">{{item.comment_author}} </el-avatar>
+              <el-avatar :src="item.userInfo ?item.userInfo.avatar: ''">{{item.comment_author}} </el-avatar>
               <div class="comments-right">
                   <p>
                     <span>{{item.comment_author}}</span>
@@ -82,7 +82,7 @@
             </div>
             <ul class="sub-comment-content-row">
               <li v-for="child in item.childComments" :key="child.comment_id">
-                  <el-avatar :src="item.avatar"> {{child.comment_content}}</el-avatar>
+                  <el-avatar :src="child.userInfo ?child.userInfo.avatar: ''"> {{child.comment_author}}</el-avatar>
                   <div  class="comments-right">
                     <p>
                       <span>{{child.comment_author}}</span>
