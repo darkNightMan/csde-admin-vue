@@ -19,18 +19,15 @@
      <el-table   @selection-change="handleSelectionChange"  v-loading="loading"   :height="$tableHeight()"  :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column  type="selection"  width="55"></el-table-column>
       <el-table-column     align="center"   prop="comment_id"   label="评论ID"    width="80"></el-table-column>
-      <el-table-column     align="center"   prop="article_id"   label="文章ID"    width="100"></el-table-column>
-      <el-table-column     align="center"   label="文章标题"  :show-overflow-tooltip="true"    width="240">
+      <el-table-column     align="center"   label="留言内容"  :show-overflow-tooltip="true"    width="240">
         <template slot-scope="scope">
           <el-link type="primary" @click="linkArticle(scope.row)">
-            {{scope.row.title}}
+            {{scope.row.comment_content}}
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column     align="center"  prop="user_id"      label="博客用户"></el-table-column>
       <el-table-column     align="center"   prop="comment_author"      label="匿名用户"></el-table-column>
       <el-table-column     align="center"   prop="comment_author_email"      label="匿名评论邮箱"></el-table-column>
-      <el-table-column     align="center"   prop="comment_content"   :show-overflow-tooltip="true"     label="评论内容"></el-table-column>
       <el-table-column     align="center"   prop="comment_time"      label="评论时间"></el-table-column>
       <el-table-column  label="操作" width="250">
           <template slot-scope="scope">
@@ -70,7 +67,7 @@ export default {
     // handleClose () {}
     async init () {
       this.loading = true
-      let { data, code } = await this.Req.get(api.commentsList, this.queryParam)
+      let { data, code } = await this.Req.get(api.msgCommentsList, this.queryParam)
       if (code === 200) {
         this.tableData = data
       }
@@ -81,9 +78,9 @@ export default {
       this.$addView(
         {
           view: {
-            component: 'blogArticleDetail',
-            res_name: '文章详情',
-            params: {article_id: row.article_id}
+            component: 'blogMsgDetail',
+            res_name: '留言详情',
+            params: {comment_id: row.comment_id}
           }
         }
       )
@@ -99,7 +96,7 @@ export default {
       this.commentsForm.comment_author = this.$userInfo().nick_name
     },
     async updateClassList () {
-      let { code, msg } = await this.Req.put(api.updateCommentsList, this.commentsForm)
+      let { code, msg } = await this.Req.put(api.updateMsgCommentsList, this.commentsForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -118,7 +115,7 @@ export default {
       })
     },
     async createComments () {
-      let { code, msg } = await this.Req.post(api.createCommentsList, this.commentsForm)
+      let { code, msg } = await this.Req.post(api.createMsgCommentsList, this.commentsForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -142,7 +139,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.delete(api.deleteCommentsList, { data: {commentId: row.comment_id} })
+        let { code, msg } = await this.Req.delete(api.deleteMsgCommentsList, { data: {commentId: row.comment_id} })
         if (code === 200) {
           this.init()
           this.$message({

@@ -1,43 +1,6 @@
 <template>
   <div >
     <el-card v-loading="loading" class="box-card">
-      <div slot="header" class="clearfix">
-        <div class="title-box">
-          <el-tag  v-if="form.is_top"  type='danger'>置顶</el-tag>
-          <h2>{{form.title}}</h2>
-        </div>
-        <div class="attr-list">
-          <p style="padding:10px 0">
-             标签：<el-tag style="margin:0 10px"
-                v-for="item in form.tagsArr"
-                :key="item.tags_name"
-                effect="plain">
-                {{ item.tags_name }}
-              </el-tag>
-          </p>
-          <el-row :gutter="18">
-            <el-col :span="3">
-                作者：<el-link type="primary">{{ form.authorName }}</el-link>
-            </el-col>
-             <el-col :span="3">
-                分类：<el-link type="primary">{{ form.class_name }}</el-link>
-            </el-col>
-            <el-col :span="4">
-                发表时间： <el-link type="primary">{{ form.create_time }}</el-link>
-            </el-col>
-             <el-col :span="4">
-                更新时间：<el-link type="primary">{{ form.update_time }}</el-link>
-            </el-col>
-            <el-col :span="3">
-                阅读数 <el-link type="primary">{{ form.read_count }}</el-link>
-            </el-col>
-            <el-col :span="3">
-                点赞数：<el-link type="primary">{{ form.poll_count }}</el-link>
-            </el-col>
-          </el-row>
-        </div>
-      </div>
-      <article  v-loading="loading"  v-highlight v-html="compiledMD"></article>
       <div class="comment-boxs" v-loading="loadingComment">
         <h1 class="comments-title">评论 ({{commentsList.count}})</h1>
         <div class="comment-input-top">
@@ -49,7 +12,7 @@
               <el-input  v-model="commetForm.comment_content" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button size="small" type="primary" @click="submitComment('commetForm')">评论</el-button>
+              <el-button size="small" type="primary" @click="submitComment('commetForm')">留言</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -150,7 +113,6 @@ export default {
     }
   },
   created () {
-    debugger
     this.init()
   },
   computed: {
@@ -180,7 +142,7 @@ export default {
       let commetForm = {
         parent_id: parentId,
         user_id: this.$userInfo().nick_name,
-        article_id: this.$params.article_id,
+        article_id: this.$params.comment_id,
         comment_content: this.commetForms.comment_content,
         comment_author_email: this.$userInfo().email,
         comment_author: this.$userInfo().nick_name
@@ -188,17 +150,14 @@ export default {
       this.createComments(commetForm)
     },
     async init () {
-      let { data, code } = await this.Req.get(api.articleCommentsList, {article_id: this.$params.article_id})
+      let { data, code } = await this.Req.get(api.msgCommentDetail, {comment_id: this.$params.comment_id})
       if (code === 200) {
         this.commentsList = data
-      }
-      if (this.$params.article_id !== undefined) {
-        this.getDetail()
       }
     },
     async createComments (from) {
       this.loadingComment = true
-      let { code, msg } = await this.Req.post(api.createCommentsList, from)
+      let { code, msg } = await this.Req.post(api.createMsgCommentsList, from)
       if (code === 200) {
         this.$message({
           type: 'success',
@@ -210,7 +169,7 @@ export default {
       this.init()
     },
     async updateArticle () {
-      let { msg, code } = await this.Req.put(api.updateArticle, Object.assign(this.form, { article_id: this.$params.article_id }))
+      let { msg, code } = await this.Req.put(api.updateMsgCommentsList, Object.assign(this.form, { article_id: this.$params.article_id }))
       if (code === 200) {
         this.$message({
           type: 'success',
@@ -226,7 +185,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.delete(api.deleteCommentsList, { data: {commentId: commentId} })
+        let { code, msg } = await this.Req.delete(api.deleteMsgCommentsList, { data: {commentId: commentId} })
         if (code === 200) {
           this.init()
           this.$message({

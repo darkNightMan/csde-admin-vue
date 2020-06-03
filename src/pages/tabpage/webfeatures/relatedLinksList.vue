@@ -1,10 +1,20 @@
 <template>
   <div>
-    <el-dialog :title="isRoleCheck ? '编辑标签' : '新增标签'"  :visible.sync="dialogVisiblerole" width="20%" >
+    <el-dialog :title="isRoleCheck ? '编辑' : '新增'"  :visible.sync="dialogVisiblerole" width="25%" >
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item   label="标签名"  prop="tags_name"  :rules="[
-              { required: true, message: '标签名不能为空'}]">
-            <el-input type="input" v-model="roleValidateForm.tags_name" autocomplete="off"></el-input>
+          <el-form-item   label="用户名"  prop="nick_name"  :rules="[
+              { required: true, message: '用户名不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.nick_name" autocomplete="off"></el-input>
+          </el-form-item>
+           <el-form-item   label="网站地址"  prop="url"  :rules="[
+              { required: true, message: '网站地址不能为空'}]">
+            <el-input type="input" v-model="roleValidateForm.url" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item   label="图标"  prop="icon" >
+            <el-input type="input" v-model="roleValidateForm.icon" autocomplete="off"></el-input>
+          </el-form-item>
+           <el-form-item   label="描述"  prop="description" >
+            <el-input type="input" v-model="roleValidateForm.description" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
       <span slot="footer" class="dialog-footer">
@@ -18,8 +28,15 @@
         <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
     </div>
      <el-table  @row-click="actionEvents" v-loading="loading"   :height="$tableHeight()"   :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
-      <el-table-column     align="center"   fixed   prop="tags_id"      label="ID"    width="100"></el-table-column>
-      <el-table-column     align="center"   prop="tags_name"      label="标签名"></el-table-column>
+      <el-table-column     align="center"   fixed   prop="id"      label="ID"    width="100"></el-table-column>
+      <el-table-column     align="center"   prop="nick_name"      label="用户名"></el-table-column>
+      <el-table-column     align="center"   prop="url"      label="网站地址"></el-table-column>
+        <el-table-column     align="center"       label="图标">
+             <template slot-scope="scope">
+               <el-avatar :src="scope.row.icon"></el-avatar>
+             </template>
+        </el-table-column>
+          <el-table-column     align="center"   prop="description"      label="描述"></el-table-column>
       <el-table-column  label="操作">
           <template slot-scope="scope">
           <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
@@ -56,7 +73,7 @@ export default {
     // handleClose () {}
     async init () {
       this.loading = true
-      let { data, code } = await this.Req.get(api.articleTagsList, this.queryParam)
+      let { data, code } = await this.Req.get(api.relatedLinksList, this.queryParam)
       if (code === 200) {
         this.tableData = data
       }
@@ -69,8 +86,11 @@ export default {
       this.isRoleCheck = true
       this.dialogVisiblerole = true
       this.roleValidateForm = {
-        tags_id: row.tags_id,
-        tags_name: row.tags_name
+        id: row.id,
+        nick_name: row.nick_name,
+        url: row.url,
+        icon: row.icon,
+        description: row.description
       }
     },
     deleteTags (row) {
@@ -79,7 +99,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        let { code, msg } = await this.Req.delete(api.deleteTagsList, { data: {tags_id: row.tags_id} })
+        let { code, msg } = await this.Req.delete(api.deleteRelatedLinksList, { data: {id: row.id} })
         if (code === 200) {
           this.init()
           this.$message({
@@ -95,7 +115,7 @@ export default {
       })
     },
     async updateTags () {
-      let { code, msg } = await this.Req.put(api.updateTagsList, this.roleValidateForm)
+      let { code, msg } = await this.Req.put(api.updateRelatedLinksList, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -119,7 +139,7 @@ export default {
       })
     },
     async createTags () {
-      let { code, msg } = await this.Req.post(api.createTagsList, this.roleValidateForm)
+      let { code, msg } = await this.Req.post(api.createRelatedLinksList, this.roleValidateForm)
       if (code === 200) {
         this.init()
         this.$message({
@@ -163,8 +183,11 @@ export default {
         currentPage: 1
       },
       roleValidateForm: {
-        tags_name: '',
-        tags_id: ''
+        id: '',
+        nick_name: '',
+        url: '',
+        icon: '',
+        description: ''
       }
     }
   },

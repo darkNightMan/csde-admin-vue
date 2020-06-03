@@ -38,5 +38,14 @@ export const api = {
   articleCommentsList: '/api/blogs/articleCommentsList',
   createCommentsList: '/api/blogs/createCommentsList',
   updateCommentsList: '/api/blogs/updateCommentsList',
-  deleteCommentsList: '/api/blogs/deleteCommentsList'
+  deleteCommentsList: '/api/blogs/deleteCommentsList',
+  relatedLinksList: '/api/blogs/relatedLinksList',
+  createRelatedLinksList: '/api/blogs/createRelatedLinksList',
+  updateRelatedLinksList: '/api/blogs/updateRelatedLinksList',
+  deleteRelatedLinksList: '/api/blogs/deleteRelatedLinksList',
+  msgCommentsList: '/api/blogs/msgCommentsList',
+  createMsgCommentsList: '/api/blogs/createMsgCommentsList',
+  updateMsgCommentsList: '/api/blogs/updateMsgCommentsList',
+  deleteMsgCommentsList: '/api/blogs/deleteMsgCommentsList',
+  msgCommentDetail: '/api/blogs/msgCommentDetail'
 }
