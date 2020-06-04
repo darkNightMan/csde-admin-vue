@@ -15,5 +15,6 @@ export default {
   blogCommentsList: resolve => require(['@/pages/tabpage/blogPage/blogCommentsList'], resolve),
   relatedLinksList: resolve => require(['@/pages/tabpage/webfeatures/relatedLinksList'], resolve),
   messageComments: resolve => require(['@/pages/tabpage/webfeatures/messageComments'], resolve),
+  blogMsgComentList: resolve => require(['@/pages/tabpage/webfeatures/blogMsgComentList'], resolve),
   test: resolve => require(['@/pages/tabpage/testPage/test'], resolve)
 }

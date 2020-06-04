@@ -50,12 +50,12 @@
           v-model="filterText">
         </el-input>
         <el-tree v-loading="loading"
-          class="filter-tree"
+           node-key="res_id"
           :data="treeMenuList.tree"
-          node-key="res_id"
           :props="defaultProps"
-          default-expand-all
           :filter-node-method="filterNode"
+          highlight-current
+          default-expand-all
           @node-click="nodeClick"
           ref="tree">
         </el-tree>
@@ -130,6 +130,7 @@ export default {
   methods: {
     nodeClick (value) {
       this.queryParam.treeId = value.res_id
+      this.roleValidateForm.parent_id = value.res_id
       this.$refs.tree.setCurrentKey(value.res_id)
       this.init()
     },
