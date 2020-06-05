@@ -165,7 +165,7 @@ export default {
       }).then(async () => {
         let commentIdArr = []
         this.currRow.map((it) => { commentIdArr.push(it.comment_id) })
-        let { code, msg } = await this.Req.delete(api.deleteCommentsList, { data: {commentId: commentIdArr} })
+        let { code, msg } = await this.Req.delete(api.deleteMsgCommentsList, { data: {commentId: commentIdArr} })
         if (code === 200) {
           this.init()
           this.$message({

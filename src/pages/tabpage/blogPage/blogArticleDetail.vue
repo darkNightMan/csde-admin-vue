@@ -150,7 +150,6 @@ export default {
     }
   },
   created () {
-    debugger
     this.init()
   },
   computed: {
