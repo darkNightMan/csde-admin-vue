@@ -2,10 +2,10 @@
   <div class="login-container">
     <canvas id="canvas" :style="{ height:screenHeight + 'px'}"></canvas>
     <form class="login-form">
-      <div class="login-title">CSDE系统后台</div>
+      <div class="login-title">CSDE.W 系统后台</div>
       <el-form :model="loginForm" @keyup.enter.native="submint('loginForm')"   ref="loginForm" :rules="loginRule">
-        <el-form-item label="" prop="phone"  icon="el-icon-user">
-          <el-input :controls="false"  class="el-icon-user-solid"  placeholder="请输入手机号"   v-model.number="loginForm.phone" ></el-input>
+        <el-form-item label="" prop="phone" icon="el-icon-user">
+          <el-input :controls="false"   placeholder="请输入手机号" v-model.number="loginForm.phone" ></el-input>
         </el-form-item>
         <el-form-item label="" prop="password">
           <el-input placeholder="请输入密码" v-model="loginForm.password" show-password></el-input>
