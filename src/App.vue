@@ -21,7 +21,7 @@ html,body,#app{
   height: 100%;
   padding: 0;
   margin: 0;
-  background:url('./assets/unnamed.jpg');
+  /* background:url('./assets/unnamed.jpg'); */
   background-size: cover;
   overflow: hidden;
 }
