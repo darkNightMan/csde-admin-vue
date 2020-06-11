@@ -21,6 +21,7 @@
         </el-form-item>
       </el-form>
     </form>
+    <p class="bottom-copyright">Copyright © 2020 darkNightMan Pro 粤 ICP证1XXXX号 </p>
   </div>
 </template>
 <script>
@@ -198,6 +199,11 @@ export default {
     width: 100%;
     /* background-color: #2d3a4b; */
     overflow: hidden;
+}
+.bottom-copyright{
+  text-align: center;
+  font-size: 12px;
+  color: rgb(96, 128, 146);
 }
 .login-form{
   max-width: 350px;
