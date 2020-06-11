@@ -77,7 +77,6 @@ export default {
       this.loading = false
     },
     linkArticle (row) {
-      debugger
       this.$addView(
         {
           view: {
