@@ -7,6 +7,7 @@ const home = resolve => require(['@/pages/home/index'], resolve)
 Vue.use(Router)
 
 let router = new Router({
+  base: '/csde_admin/',
   routes: [
     {
       path: '/login',
