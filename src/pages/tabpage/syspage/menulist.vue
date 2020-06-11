@@ -18,7 +18,7 @@
           <el-form-item  prop="res_code"   label="菜单编码">
               <el-input type="input" v-model="roleValidateForm.res_code" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item  prop="component"   label="菜单组件" v-show="roleValidateForm.type === 2">
+          <el-form-item  prop="component"   label="菜单组件" v-show="roleValidateForm.type === 2 || roleValidateForm.type === 3">
               <el-input type="input" v-model="roleValidateForm.component" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item  prop="perms"   label="授权标识">
@@ -50,12 +50,12 @@
           v-model="filterText">
         </el-input>
         <el-tree v-loading="loading"
-          class="filter-tree"
+           node-key="res_id"
           :data="treeMenuList.tree"
-          node-key="res_id"
           :props="defaultProps"
-          default-expand-all
           :filter-node-method="filterNode"
+          highlight-current
+          default-expand-all
           @node-click="nodeClick"
           ref="tree">
         </el-tree>
@@ -64,12 +64,16 @@
         <div class="btn-box">
           <el-button type="primary"  v-has="'sys:menu:create'"   icon="el-icon-circle-plus-outline"  size="mini" @click="createDialog">新建</el-button>
         </div>
-        <el-table   v-loading="loading"  :data="tableData.list"  :height="winH"     size="small"  border  stripe   style="width:100%">
+        <el-table   v-loading="loading"  :data="tableData.list"  :height="$tableHeight()"     size="small"  border  stripe   style="width:100%">
           <el-table-column   align="center"   prop="res_id"      label="菜单ID"    width="80" ></el-table-column>
           <el-table-column   align="center"    prop="parent_name"      label="上级菜单"    width="100" ></el-table-column>
           <el-table-column   align="center"    prop="res_name"      label="菜单名"     width="100" > </el-table-column>
-          <el-table-column   align="center"    prop="component"      label="菜单组件名"   width="120" > </el-table-column>
-          <el-table-column   align="center"    prop="res_icon"      label="菜单ICON"      width="150"></el-table-column>
+          <el-table-column   align="center"    prop="component"      label="菜单组件名"   width="140" > </el-table-column>
+          <el-table-column   align="center"    prop="res_icon"      label="图标"      width="50">
+              <template slot-scope="scope">
+                <i :class="scope.row.res_icon == null || scope.row.res_icon == '' ? 'el-icon-eleme': scope.row.res_icon"></i>
+              </template>
+          </el-table-column>
           <el-table-column   align="center"    prop="res_code"      label="菜单编码"      width="80"></el-table-column>
           <el-table-column   align="center"  prop="type"  label="类型" width="80">
             <template slot-scope="scope">
@@ -126,6 +130,7 @@ export default {
   methods: {
     nodeClick (value) {
       this.queryParam.treeId = value.res_id
+      this.roleValidateForm.parent_id = value.res_id
       this.$refs.tree.setCurrentKey(value.res_id)
       this.init()
     },

@@ -1,7 +1,7 @@
 <template>
 <div>
-  <el-tabs v-model="activeViewName" type="card"  @tab-remove="closeTabs" @tab-click="clickTab($event)">
-    <el-tab-pane  v-for="(item) in tabViewList"
+  <el-tabs v-model="activeViewName" type="card"  @tab-remove="closeTab" @tab-click="clickTab($event)">
+    <el-tab-pane  v-for="(item) in $tabViewList()"
       :key="item.name"
       :label="item.res_name"
       :closable="item.closeTabs"
@@ -10,7 +10,11 @@
      >
      <keep-alive>
       <transition name="el-zoom-in-top">
-        <tabs-Component :com="item"></tabs-Component>
+        <div :style="{'height': $windowHeight() + 'px'}">
+          <el-scrollbar  class='page-component__scroll'>
+            <tabs-Component :com="item"></tabs-Component>
+          </el-scrollbar>
+        </div>
       </transition>
       </keep-alive>
     </el-tab-pane>
@@ -18,7 +22,8 @@
 </div>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
+
+// import { mapState } from 'vuex'
 export default {
   name: 'tabs',
   data () {
@@ -26,27 +31,34 @@ export default {
     }
   },
   created () {
-  },
-  components: {
-    // tabsComponent
+    console.log(this.$windowHeight())
   },
   computed: {
-    ...mapState('tabs', ['tabViewList']),
     activeViewName: {
       get () {
-        return this.$store.state.tabs.activeViewName
+        return this.$activeViewName()
       },
       set (value) {
-        this.setActiveTab(value)
+        this.$setActiveTab(value)
       }
     }
   },
   methods: {
-    ...mapMutations('tabs', ['setActiveTab', 'setMenuIndex', 'closeTabs']),
     clickTab (tabs) {
-      this.setMenuIndex(tabs.$attrs.activeIndex)
-      this.setActiveTab(tabs.name)
+      this.$setMenuIndex(tabs.$attrs.activeIndex)
+      this.$setActiveTab(tabs.name)
+    },
+    closeTab (name) {
+      this.$closeTabs(name)
     }
   }
 }
 </script>
+<style>
+.page-component__scroll{
+  height: 100%;
+}
+.page-component__scroll .el-scrollbar__wrap {
+ overflow-x: hidden;
+}
+</style>

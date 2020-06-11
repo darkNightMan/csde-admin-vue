@@ -6,7 +6,7 @@
       </div>
       <el-form style="width:40%" :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
           <el-form-item   label="头像"   prop="avatar">
-            <div @click="dialogVisible = true">
+            <div @click="dialogVisible = true,option.img = roleValidateForm.avatar">
               <el-avatar :size="60"  icon="el-icon-user-solid" :src="roleValidateForm.avatar"> </el-avatar>
             </div>
           </el-form-item>
@@ -213,9 +213,9 @@ export default {
     async submitUpload () {
       let fd = new FormData()
       let baseToblob = this.base64URLtoFile(this.corpperImag)
-      fd.append('userAvatar', baseToblob, `csde_${Date.parse(new Date())}.jpeg`)
+      fd.append('images', baseToblob, `csde_${Date.parse(new Date())}.jpeg`)
       this.loading = true
-      let { data, code } = await this.Req.upload(api.uploadAvatar, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+      let { data, code } = await this.Req.upload(api.uploadImage, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
       if (code === 200) {
         this.roleValidateForm.avatar = data.path
       }

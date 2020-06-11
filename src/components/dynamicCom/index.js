@@ -1,4 +1,5 @@
 
+// import { mapMutations, mapActions } from 'vuex'
 export default {
   name: 'tabsComponent',
   props: {
@@ -15,17 +16,18 @@ export default {
   async created () {
     let com = await new Promise(this.com.component)
     this.component = com.default
+    // console.log('component')
   },
   methods: {
   },
   // 渲染函数 h [Function] 渲染函数
   render (createElement) {
-    let { param, id } = this.com
+    let { params, id } = this.com
     return createElement(this.component, {
       ref: 'component',
       props: {
-        linkParam: param || {},
-        tabIndex: id
+        $params: params || {},
+        $tabsIndex: id
       }
     })
   }

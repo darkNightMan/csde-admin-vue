@@ -1,9 +1,9 @@
 <template>
-  <el-container :style="`height:100%;background:${theme.backGround};border-right:solid 1px #e6e6e6;`"  v-loading="!menu">
+  <el-container :style="`height:100%;background:${theme.backGround};border-right:solid 1px #e6e6e6;`"  v-loading="!$menu()">
       <el-main style="padding:0px;">
         <el-scrollbar class="page-component__nav" style="height:100%">
-          <template v-for="(item, parentIndex) in menu"  >
-            <el-menu style="border-right:none;" :key="parentIndex"  :default-active="menuIndex" >
+          <template v-for="(item, parentIndex) in $menu()"  >
+            <el-menu style="border-right:none;" :key="parentIndex"  :default-active="$menuIndex()" >
               <!-- 如果一级菜单还有子集使用下面这个模板 -->
               <el-submenu  :index="String(parentIndex)" v-if="!item.hiddenMenu">
                 <template slot="title" > <!--一级-->
@@ -12,7 +12,7 @@
                 </template>
                 <template  v-for="(child, childrenIndex) in item.children">
                     <template  v-if="!child.children">
-                      <el-menu-item style="cursor: pointer" :key="childrenIndex" @click="addView({view: child, menuIndex:`${parentIndex}-${childrenIndex}`})" :index="`${parentIndex}-${childrenIndex}`">
+                      <el-menu-item style="cursor: pointer" :key="childrenIndex" @click="$addView({view: child, menuIndex:`${parentIndex}-${childrenIndex}`})" :index="`${parentIndex}-${childrenIndex}`">
                         <i :class="child.res_icon == null || child.res_icon == '' ? 'el-icon-eleme': child.res_icon"></i><span class="menuName">{{child.res_name}}</span> <!--二级-->
                       </el-menu-item>
                     </template>
@@ -26,7 +26,7 @@
   </el-container>
 </template>
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'menuItem',
   props: {
@@ -38,16 +38,10 @@ export default {
     }
   },
   mounted () {
-    this.userInfoMenu()
+    this.$userInfoMenu()
   },
   computed: {
-    ...mapGetters('user', ['userInfo', 'menu']),
-    ...mapState('tabs', ['menuIndex']),
     ...mapGetters('theme', ['theme'])
-  },
-  methods: {
-    ...mapActions('tabs', ['addView']),
-    ...mapActions('user', ['userInfoMenu'])
   }
 }
 </script>

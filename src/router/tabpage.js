@@ -6,5 +6,15 @@ export default {
   roleList: resolve => require(['@/pages/tabpage/syspage/roleList'], resolve),
   loginLogs: resolve => require(['@/pages/tabpage/logsPage/loginLogs'], resolve),
   operationLogs: resolve => require(['@/pages/tabpage/logsPage/operationLogs'], resolve),
+  blogArticleList: resolve => require(['@/pages/tabpage/blogPage/blogArticleList'], resolve),
+  blogArticleDetail: resolve => require(['@/pages/tabpage/blogPage/blogArticleDetail'], resolve),
+  blogMsgDetail: resolve => require(['@/pages/tabpage/webfeatures/blogMsgDetail'], resolve),
+  blogArticleEdit: resolve => require(['@/pages/tabpage/blogPage/blogArticleEdit'], resolve),
+  blogClassList: resolve => require(['@/pages/tabpage/blogPage/blogClassList'], resolve),
+  blogTagsList: resolve => require(['@/pages/tabpage/blogPage/blogTagsList'], resolve),
+  blogCommentsList: resolve => require(['@/pages/tabpage/blogPage/blogCommentsList'], resolve),
+  relatedLinksList: resolve => require(['@/pages/tabpage/webfeatures/relatedLinksList'], resolve),
+  messageComments: resolve => require(['@/pages/tabpage/webfeatures/messageComments'], resolve),
+  blogMsgComentList: resolve => require(['@/pages/tabpage/webfeatures/blogMsgComentList'], resolve),
   test: resolve => require(['@/pages/tabpage/testPage/test'], resolve)
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :title="isRoleCheck ? '编辑用户' : '新增用户'"  :visible.sync="dialogVisiblerole" width="20%" >
+    <el-dialog :title="isRoleCheck ? '编辑用户' : '新增用户'" append-to-body :close-on-click-modal="false"  :visible.sync="dialogVisiblerole" width="20%" >
       <el-form :model="roleValidateForm" ref="roleValidateForm" label-width="100px" class="demo-ruleForm">
           <el-form-item   label="角色"  prop="role_id"  :rules="[ { required: true, message: '角色名不能为空'}]">
             <el-select multiple v-model="roleValidateForm.role_id" placeholder="请选择角色" style="width:100%">
@@ -23,7 +23,7 @@
           <el-form-item   label="email"  prop="email">
             <el-input type="input" v-model="roleValidateForm.email" autocomplete="off"></el-input>
           </el-form-item>
-           <el-form-item   label="avatar"  prop="avatar">
+             <el-form-item   label="avatar"  prop="avatar">
             <el-input type="input" v-model="roleValidateForm.avatar" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
@@ -37,23 +37,37 @@
         <!-- <el-button  :disabled="disbaledBtn" v-has="'sys:user:update'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="checksEdit">修改</el-button>
         <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
     </div>
-     <el-table  @row-click="actionEvents" v-loading="loading"   :height="winH"   :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
+     <el-table  @row-click="actionEvents" v-loading="loading"   :height="$tableHeight()"   :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column     align="center"   fixed   prop="user_id"      label="ID"    width="50"></el-table-column>
       <el-table-column     align="center"   fixed  prop="nick_name"      label="用户名"    width="120"></el-table-column>
-      <el-table-column     align="center"  prop="password"      label="密码"      width="120"> </el-table-column>
-      <el-table-column     align="center"  prop="email"      label="邮箱"   width="120"> </el-table-column>
+      <el-table-column     align="center"       label="密码"      width="120">
+          <template>
+              ******
+          </template>
+      </el-table-column>
+      <el-table-column     align="center"  prop="email"      label="邮箱"   width="180"> </el-table-column>
       <el-table-column     align="center"  prop="phone"      label="电话"      width="120"></el-table-column>
-      <el-table-column     align="center"  prop="state"      label="状态"  width="80"   ></el-table-column>
-      <el-table-column     align="center"  label="角色"   >
-            <template slot-scope="scope">
-              <el-tag style="margin:0px 5px" type="primary" effect="dark" v-for="(it, index) in scope.row.sys_roles" :key="index" size="small">
-                {{it.role_name}}
-              </el-tag>
+      <el-table-column     align="center"      label="状态"  width="80"   >
+          <template slot-scope="scope">
+              <el-tag :type="scope.row.state === 1? 'success': 'danger' " size="small" effect="dark"> {{scope.row.state == 1 ? '正常': '禁用' }}</el-tag>
             </template>
       </el-table-column>
-      <el-table-column      prop="avatar"      label="头像"   :show-overflow-tooltip="true"  > </el-table-column>
-      <el-table-column      prop="create_time"      label="创建时间"      ></el-table-column>
-      <el-table-column      prop="update_id"      label="更新人"      width="120"></el-table-column>
+      <el-table-column     align="center"  label="角色"   >
+        <template slot-scope="scope">
+          <el-tag style="margin:0px 5px" type="primary" effect="dark" v-for="(it, index) in scope.row.sys_roles" :key="index" size="small">
+            {{it.role_name}}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column      label="头像"   width="60" >
+          <template slot-scope="scope">
+            <div style="text-align: center;">
+                <el-avatar :size="25"  icon="el-icon-user-solid" :src="scope.row.avatar" :key="scope.row.avatar"></el-avatar>
+            </div>
+          </template>
+      </el-table-column>
+      <el-table-column      prop="create_time"      label="创建时间" ></el-table-column>
+      <el-table-column      prop="update_id"      label="更新人"    width="120"></el-table-column>
       <el-table-column  label="操作">
           <template slot-scope="scope">
           <!-- <el-button @click="checksEdit(scope.row, true)" type="primary" size="small">查看</el-button> -->

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog  title="菜单权限" :visible.sync="dialogVisible"  width="15%">
+    <el-dialog  title="菜单权限" :visible.sync="dialogVisible" append-to-body :close-on-click-modal="false"  width="15%">
       <el-tree
         :data="dataTree"
         show-checkbox
