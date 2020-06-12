@@ -1,7 +1,7 @@
 <template>
   <div >
     <div class="logo">
-      <img  src="../../assets/logo2.jpg"/>
+      <img  src="../../assets/images/logo2.jpg"/>
     </div>
     <div class="avatar-right" v-if="$userInfo()">
       <el-dropdown @command="handleCommand">

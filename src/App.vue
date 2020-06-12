@@ -17,11 +17,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-html,body,#app{
+#app{
   height: 100%;
   padding: 0;
   margin: 0;
-  /* background:url('./assets/unnamed.jpg'); */
+  background-image:url('./assets/images/background-blog.svg');
   background-size: cover;
   overflow: hidden;
 }
