@@ -1,7 +1,7 @@
 
 export default {
   install (Vue, options) {
-    Vue.directive('has', {
+    Vue.directive('hasAuth', {
       bind: function (el, binding, vnode) {
       },
       inserted: function (el, binding, vnode) {

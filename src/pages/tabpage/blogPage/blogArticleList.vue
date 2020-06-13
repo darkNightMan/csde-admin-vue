@@ -1,9 +1,7 @@
 <template>
   <div>
      <div class="btn-box">
-        <el-button   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="addArticle">新建</el-button>
-        <!-- <el-button  :disabled="disbaledBtn" v-has="'sys:user:update'"   icon="el-icon-circle-plus-outline" type="primary" size="mini" @click="checksEdit">修改</el-button>
-        <el-button  :disabled="disbaledBtn" v-has="'sys:user:delete'"   icon="el-icon-delete" type="danger" size="mini" @click="deleteUser">删除</el-button> -->
+        <el-button   icon="el-icon-circle-plus-outline"  v-hasAuth="'blog:article:add'" type="primary" size="mini" @click="addArticle">新建</el-button>
     </div>
      <el-table  @row-click="actionEvents" v-loading="loading"   :height="$tableHeight()"  :data="tableData.list"  size="small"   border  stripe  fit  highlight-current-row style="width: 100%">
       <el-table-column     align="center"   fixed   prop="article_id"      label="文章ID"    width="100"></el-table-column>
@@ -20,8 +18,8 @@
       <el-table-column     align="center"  prop="create_time"      label="更新时间"></el-table-column>
       <el-table-column  label="操作">
           <template slot-scope="scope">
-          <el-button @click="addArticle(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
-          <el-button @click="deleteArticle(scope.row, false)" type="danger" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
+          <el-button @click="addArticle(scope.row, false)" type="primary"   v-hasAuth="'blog:article:edit'"  effect="dark" icon="el-icon-edit" size="mini">编辑</el-button>
+          <el-button @click="deleteArticle(scope.row, false)" type="danger" v-hasAuth="'blog:article:delete'" effect="dark"  icon="el-icon-delete" size="mini">删除</el-button>
       </template>
       </el-table-column>
     </el-table>
