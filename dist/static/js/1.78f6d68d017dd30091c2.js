@@ -1,2 +1,0 @@
-webpackJsonp([1],{"+vPH":function(e,n){},FP3a:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("\n  home\n")])},staticRenderFns:[]};var i=t("VU/8")({name:"home"},r,!1,function(e){t("+vPH")},null,null);n.default=i.exports}});
-//# sourceMappingURL=1.78f6d68d017dd30091c2.js.map

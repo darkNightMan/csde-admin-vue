@@ -5,8 +5,7 @@
     </div>
     <div class="avatar-right" v-if="$userInfo()">
       <el-dropdown @command="handleCommand">
-        <span style="color:#fff;margin-right:10px; cursor: pointer;">{{$userInfo().nick_name}} </span>
-        <el-avatar class="pop-avatar" :src="$userInfo().avatar" icon="el-icon-user-solid" style="vertical-align: middle;" />
+        <el-avatar class="pop-avatar" :src="$userInfo().avatar" icon="el-icon-user-solid" style="vertical-align: middle;cursor: pointer;" />
         <i class="el-icon-setting" ></i>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="userCenter">个人信息</el-dropdown-item>
