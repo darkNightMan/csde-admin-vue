@@ -16,6 +16,8 @@ import myComponents from './components'
 import mavonEditor from 'mavon-editor'
 import perms from './utils/perms'
 import hightLight from './utils/hightLight'
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.use(hightLight) // 代码高亮
 Vue.use(mavonEditor)// 富文本
@@ -26,6 +28,22 @@ Vue.use(myComponents) // 自己的组件
 Vue.use(perms) //  权限
 Vue.use(JsonViewer)
 Vue.prototype.Req = new Req()
+
+// 拦截登录，token验证
+router.beforeEach((to, from, next) => {
+  let token = window.localStorage.getItem('token')
+  if (!token) {
+    if (to.path === '/login') {
+      next()
+    } else {
+      next({
+        path: '/login'
+      })
+    }
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

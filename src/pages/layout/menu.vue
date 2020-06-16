@@ -38,7 +38,6 @@ export default {
     }
   },
   mounted () {
-    this.$userInfoMenu()
   },
   computed: {
     ...mapGetters('theme', ['theme'])

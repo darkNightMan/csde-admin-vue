@@ -62,7 +62,7 @@
       </el-col>
       <el-col :span="21">
         <div class="btn-box">
-          <el-button type="primary"  v-has="'sys:menu:create'"   icon="el-icon-circle-plus-outline"  size="mini" @click="createDialog">新建</el-button>
+          <el-button type="primary"  v-hasAuth="'sys:menu:create'"   icon="el-icon-circle-plus-outline"  size="mini" @click="createDialog">新建</el-button>
         </div>
         <el-table   v-loading="loading"  :data="tableData.list"  :height="$tableHeight()"     size="small"  border  stripe   style="width:100%">
           <el-table-column   align="center"   prop="res_id"      label="菜单ID"    width="80" ></el-table-column>
@@ -97,8 +97,8 @@
           <el-table-column  align="center"  prop="description"      label="描述"    :show-overflow-tooltip="true" ></el-table-column>
           <el-table-column  align="center"  label="操作" width="200"  fixed="right">
               <template slot-scope="scope" v-if="scope.row.res_id">
-              <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-has="'sys:menu:update'" size="mini">编辑</el-button>
-              <el-button @click="deleteUser(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" v-has="'sys:menu:delete'" size="mini">删除</el-button>
+              <el-button @click="checksEdit(scope.row, false)" type="primary"  effect="dark" icon="el-icon-edit" v-hasAuth="'sys:menu:update'" size="mini">编辑</el-button>
+              <el-button @click="deleteUser(scope.row, false)" type="danger" effect="dark" icon="el-icon-delete" v-hasAuth="'sys:menu:delete'" size="mini">删除</el-button>
           </template>
           </el-table-column>
         </el-table>

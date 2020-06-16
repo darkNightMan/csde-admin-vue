@@ -6,7 +6,11 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  created () {
+    // 获取用户信息
+    this.$getUserInfo()
+  }
 }
 </script>
 
