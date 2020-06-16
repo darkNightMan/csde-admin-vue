@@ -29,6 +29,22 @@ Vue.use(perms) //  权限
 Vue.use(JsonViewer)
 Vue.prototype.Req = new Req()
 
+// 拦截登录，token验证
+router.beforeEach((to, from, next) => {
+  let token = window.localStorage.getItem('token')
+  if (!token) {
+    if (to.path === '/login') {
+      next()
+    } else {
+      next({
+        path: '/login'
+      })
+    }
+  } else {
+    next()
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
