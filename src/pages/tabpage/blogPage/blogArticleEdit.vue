@@ -32,7 +32,7 @@
           <el-switch v-model="form.is_top"></el-switch>
         </el-form-item>
         <el-form-item label="内容">
-          <mavon-editor   @save="saveDoc"  @change="updateDoc" :ishljs="true" ref="editor" v-model="form.content"></mavon-editor>
+          <mavon-editor  @save="saveDoc"  @change="updateDoc" :ishljs="true" ref="editor" @imgAdd="imgAdd" v-model="form.content"></mavon-editor>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit" :loading="loading">提交</el-button>
@@ -78,6 +78,18 @@ export default {
   },
   methods: {
     saveDoc () {},
+    async imgAdd (pos, $file) {
+      let fd = new FormData()
+      fd.append('images', $file, `csde_${Date.parse(new Date())}.jpeg`)
+      this.loading = true
+      let { data, code } = await this.Req.upload(api.uploadImage, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+      if (code === 200) {
+        this.$refs.editor.$img2Url(pos, data.path)
+      } else {
+        this.$refs.editor.toolbar_left.$imgDelByFilename($file.name)
+      }
+      this.loading = false
+    },
     updateDoc (md, html) {
       console.log(html)
     },
