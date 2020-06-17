@@ -1,6 +1,6 @@
 <template>
   <el-container :style="`height:100%;background:${theme.backGround};border-right:solid 1px #e6e6e6;`"  v-loading="!$menu()">
-      <el-main style="padding:0px;">
+      <div style="padding:0px;" :style="{'height': ($windowHeight() + 100) + 'px'}">
         <el-scrollbar class="page-component__nav" style="height:100%">
           <template v-for="(item, parentIndex) in $menu()"  >
             <el-menu style="border-right:none;" :key="parentIndex"  :default-active="$menuIndex()" >
@@ -22,7 +22,7 @@
             </el-menu>
           </template>
         </el-scrollbar>
-      </el-main>
+      </div>
   </el-container>
 </template>
 <script>

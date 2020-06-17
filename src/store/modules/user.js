@@ -14,7 +14,6 @@ const getters = {
 const actions = {
   // 用户信息
   async getUserInfo ({commit, dispatch = {}, state = {}, rootState = {}}) {
-    debugger
     // if (!rootState.user.menu) { // 如果内存中有菜单 将不发送请求
     const { data, code } = await this._vm.Req.get(api.userInfoMenu)
     const viewAndIndex = window.localStorage.getItem('viewAndIndex')

@@ -16,5 +16,6 @@ export default {
   relatedLinksList: resolve => require(['@/pages/tabpage/webfeatures/relatedLinksList'], resolve),
   messageComments: resolve => require(['@/pages/tabpage/webfeatures/messageComments'], resolve),
   blogMsgComentList: resolve => require(['@/pages/tabpage/webfeatures/blogMsgComentList'], resolve),
-  test: resolve => require(['@/pages/tabpage/testPage/test'], resolve)
+  test: resolve => require(['@/pages/tabpage/testPage/test'], resolve),
+  page404: resolve => require(['@/pages/tabpage/404/404.vue'], resolve)
 }
