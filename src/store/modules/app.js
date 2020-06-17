@@ -8,7 +8,7 @@ const getters = {
   windowHeight: state => state.windowHeight
 }
 const actions = {
-  winDonresize: ({ commit }, data) => {
+  winDomResize: ({ commit }, data) => {
     let resizeTimer = null
     let setHeight = () => {
       let tableHeight = document.documentElement.clientHeight - 260
@@ -16,12 +16,16 @@ const actions = {
       commit('setTableHeight', tableHeight)
       commit('setWinHeight', screenHeight)
     }
-    window.onresize = () => {
+    commit('setTableHeight') // 初始化table高度
+    commit('setWinHeight') // 初始化浏览器设备高度
+    const onresize = () => {
       if (resizeTimer) clearTimeout(resizeTimer) // 防止事件多次调用问题
       resizeTimer = setTimeout(() => {
+        console.log('onresize')
         setHeight()
       }, 300)
     }
+    window.addEventListener('resize', onresize)
   }
 }
 const mutations = {

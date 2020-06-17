@@ -21,7 +21,7 @@
         </el-form-item>
       </el-form>
     </form>
-    <p class="bottom-copyright">Copyright © 2020 darkNightMan Pro 粤 ICP证1XXXX号 </p>
+    <p class="bottom-copyright">Copyright © 2020 darkNightMan Pro 黔ICP备20005477号 </p>
   </div>
 </template>
 <script>

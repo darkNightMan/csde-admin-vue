@@ -8,8 +8,6 @@
 export default {
   name: 'App',
   created () {
-    // 获取用户信息
-    this.$getUserInfo()
   }
 }
 </script>
