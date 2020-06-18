@@ -24,7 +24,6 @@ const actions = {
 const mutations = {
   // 打开tab页面
   setViewTab: (state, viewAndIndex) => {
-    debugger
     viewAndIndex.view.res_id = viewAndIndex.view.res_id ? viewAndIndex.view.res_id : `tabs_${new Date().getTime()}`
     state.activeViewName = viewAndIndex.view.res_id.toString() // 标签导航索引
     state.menuIndex = viewAndIndex.menuIndex // 左边菜单索引
