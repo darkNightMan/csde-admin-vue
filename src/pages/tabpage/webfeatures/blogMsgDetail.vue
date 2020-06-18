@@ -225,7 +225,7 @@ export default {
 }
 </script>
 
-<style>
+<style  scoped>
 .comments-title{
   font-size: 24px;
   padding: 20px;

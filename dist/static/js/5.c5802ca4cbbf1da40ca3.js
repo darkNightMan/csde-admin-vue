@@ -1,2 +1,0 @@
-webpackJsonp([5],{"5nip":function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("测试列表")])},staticRenderFns:[]};var i=t("VU/8")({},r,!1,function(e){t("W3vS")},null,null);n.default=i.exports},W3vS:function(e,n){}});
-//# sourceMappingURL=5.c5802ca4cbbf1da40ca3.js.map

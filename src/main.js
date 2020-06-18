@@ -53,8 +53,6 @@ new Vue({
   components: { App },
   template: '<App/>',
   created () {
-    this.$winDonresize()
-    this.$setTableHeight()
-    this.$setWinHeight()
+    this.$winDomResize() // 动态获取浏览器高度
   }
 })

@@ -24,6 +24,7 @@ const actions = {
 const mutations = {
   // 打开tab页面
   setViewTab: (state, viewAndIndex) => {
+    debugger
     viewAndIndex.view.res_id = viewAndIndex.view.res_id ? viewAndIndex.view.res_id : `tabs_${new Date().getTime()}`
     state.activeViewName = viewAndIndex.view.res_id.toString() // 标签导航索引
     state.menuIndex = viewAndIndex.menuIndex // 左边菜单索引
@@ -33,7 +34,7 @@ const mutations = {
         title: viewAndIndex.view.res_name || 'new View',
         index: viewAndIndex.view.res_id.toString(),
         closeTabs: true, // 是否显示关闭标签
-        component: tabpages[viewAndIndex.view.component], // 当前打开的页面
+        component: viewAndIndex.view.component ? tabpages[viewAndIndex.view.component] : tabpages.page404, // 当前打开的页面
         id: viewAndIndex.view.res_id, // 菜单id
         menuIndex: viewAndIndex.menuIndex // 存储当前的打开的menu 索引
       })
