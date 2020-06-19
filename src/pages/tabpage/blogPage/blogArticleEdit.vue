@@ -109,7 +109,7 @@ export default {
       this.loading = false
     },
     async init () {
-      let value = await Promise.all([this.Req.get(api.articleClassList), this.Req.get(api.articleTagsList)])
+      let value = await Promise.all([this.Req.get(api.articleClassListAll), this.Req.get(api.articleTagsListAll)])
       this.classIdArr = value[0].data.list
       this.tagsIdArr = value[1].data.list
       if (this.$params.article_id !== undefined) {
