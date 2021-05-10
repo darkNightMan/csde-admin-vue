@@ -11,10 +11,10 @@ module.exports = {
     assetsPublicPath: '',
     proxyTable: {
       '/api/*': {
-        target: 'http://127.0.0.1:10086'
+        target:  'http://www.csde.club/'//'http://127.0.0.1:10086'
       },
       '/public/*': {
-        target: 'http://127.0.0.1:10086'
+        target: 'http://www.csde.club/'// 'http://127.0.0.1:10086'
       }
     },
 
