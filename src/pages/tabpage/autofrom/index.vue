@@ -2,7 +2,7 @@
   <div>
    <el-row>
       <el-col :span="6"><left></left></el-col>
-      <el-col :span="12"><content> </content></el-col>
+      <el-col :span="12"><contentCenter> </contentCenter></el-col>
       <el-col :span="6"><right></right></el-col>
     </el-row>
   </div>
@@ -10,12 +10,12 @@
 
 <script>
 import left from './components/left'
-import content from './components/content'
+import contentCenter from './components/content'
 import right from './components/right'
 export default {
   components: {
     left,
-    content,
+    contentCenter,
     right
   },
   data () {

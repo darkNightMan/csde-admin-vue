@@ -1,8 +1,9 @@
 <template>
   <div class="left">
-   <el-tag @click="getCom(item)" style="margin:20px" v-for="(item, index) in componentsArr" :key="index">{{item.title}}</el-tag>
-    <vuedraggable  v-bind="{group:{ name:'people', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
-      <component  :is="item.componentName " @click="getCom(item)" style="margin:10px" v-for="(item, index) in componentsArr" :key="index">{{item.title}}</component>
+   <!-- <el-tag @click="getCom(item)" style="margin:20px" v-for="(item, index) in componentsArr" :key="index">{{item.title}}</el-tag> -->
+
+    <vuedraggable :list="componentsArr"  :move="handleMove"   v-bind="{group:{ name:'component', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
+      <component  :is="item.componentName "  style="margin:10px" v-for="(item, index) in componentsArr" :key="index">{{item.title}}</component>
     </vuedraggable>
   </div>
 </template>
@@ -13,12 +14,26 @@ import packages from '@/package'
 export default {
   data () {
     return {
-      componentsArr: packages
+      componentsArr: packages,
+      right: []
     }
   },
   methods: {
     getCom (item) {
       debugger
+    },
+    log (i) {
+      debugger
+    },
+    handleMoveEnd (item) {
+      // debugger
+    },
+    handleMoveStart () {
+      // debugger
+    },
+    handleMove () {
+      // debugger
+      return true
     }
   }
 }
