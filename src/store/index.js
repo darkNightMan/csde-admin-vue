@@ -5,6 +5,7 @@ import tabs from './modules/tabs'
 import user from './modules/user'
 import app from './modules/app'
 import theme from './modules/theme'
+import auto from './modules/auto'
 import VuexExtend from './vuexExtend'
 import createPersistedState from 'vuex-persistedstate'
 
@@ -15,7 +16,8 @@ Vue.use(VuexExtend, {
     app,
     tabs,
     user,
-    theme
+    theme,
+    auto
   }
 })
 const store = new Vuex.Store({
@@ -23,7 +25,8 @@ const store = new Vuex.Store({
     app,
     tabs,
     user,
-    theme
+    theme,
+    auto
   },
   plugins: [createPersistedState({
     storage: window.localStorage,

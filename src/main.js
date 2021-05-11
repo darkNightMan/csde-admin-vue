@@ -30,7 +30,7 @@ Vue.use(myComponents) // 自己的组件
 Vue.use(perms) //  权限
 Vue.use(JsonViewer)
 Vue.prototype.Req = new Req()
-
+Vue.config.devtools = true
 // 拦截登录，token验证
 router.beforeEach(function (to, from, next) {
   var token = window.localStorage.getItem('token')

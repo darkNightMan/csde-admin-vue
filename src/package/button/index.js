@@ -1,7 +1,2 @@
-
-export default {
-  title: '按钮',
-  componentName: 'el-button',
-  size: '',
-  type: ''
-}
+import ElButton from './src/button'
+export default ElButton

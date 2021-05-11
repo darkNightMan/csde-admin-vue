@@ -1,8 +1,6 @@
 import button from './button/index.js'
-import input from './input/index.js'
-
-console.log(button)
+import List from './List/index'
 export default [
   button,
-  input
+  List
 ]

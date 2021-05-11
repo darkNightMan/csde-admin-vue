@@ -1,10 +1,11 @@
 
 import dynamicCom from './dynamicCom'
 import Tree from './tree-select'
-
+import autoTemplate from './generTemplate'
 const components = [
   dynamicCom,
-  Tree
+  Tree,
+  autoTemplate
 ]
 export default {
   install (Vue, option) {
