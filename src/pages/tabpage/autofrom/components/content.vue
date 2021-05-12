@@ -1,10 +1,10 @@
 <template>
   <div  class='content'>
-    {{componentsArr}}
-   <vuedraggable style="min-height:100px"   :list="componentsArr"    @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log"  group="component">
-      <div class="wrap" :class="{red: index === indexItem}" v-for="(item, index) in componentsArr" :key="index" @click="show(index)">
+   <vuedraggable style="min-height:100px"   :list="componentsList"    @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log"  group="component">
+      <div class="wrap" :class="{red: index === indexItem}" v-for="(item, index) in componentsList" :key="index" @click="show(index)">
         <div class="mask"></div>
-        <generTemplate :com="item"></generTemplate>
+        <component :is="item.comTag" :style="item.comStyle"></component>
+        <!-- <generTemplate :com="item"></generTemplate> -->
       </div>
    </vuedraggable>
   </div>
@@ -14,7 +14,7 @@
 export default {
   data () {
     return {
-      componentsArr: [],
+      componentsList: [],
       indexItem: 0
     }
   },
@@ -22,7 +22,8 @@ export default {
     console.log(this.t)
   },
   watch: {
-    componentsArr (newVal, oldVal) {
+    componentsList (newVal, oldVal) {
+      debugger
       this.$setActionsCom(newVal)
     }
   },
@@ -40,6 +41,7 @@ export default {
       // debugger
     },
     show (index) {
+      debugger
       this.$setIndexCurent(index)
       this.indexItem = index
     }

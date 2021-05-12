@@ -17,10 +17,13 @@ import mavonEditor from 'mavon-editor'
 import perms from './utils/perms'
 import hightLight from './utils/hightLight'
 import echarts from 'echarts'
+import {installComponents} from '@/package'
 import vuedraggable from 'vuedraggable'
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.component('vuedraggable', vuedraggable)
+// 安装组件
+installComponents(Vue)
 Vue.use(hightLight) // 代码高亮
 Vue.use(mavonEditor) // 富文本
 Vue.use(ElementUI) // 引入饿了么主题
@@ -46,7 +49,6 @@ router.beforeEach(function (to, from, next) {
     next()
   }
 })
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

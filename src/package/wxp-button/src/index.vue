@@ -1,5 +1,5 @@
 <template>
-  <div class="button" :style="{background: color}">
+  <div class="button">
     {{text}}
   </div>
 </template>
@@ -9,18 +9,15 @@ export default {
   data () {
     return {}
   },
-  name: 'button',
+  name: 'wxp-button',
   props: {
     text: {
       type: String,
-      default: '按钮',
-      field: '按钮文案'
-    },
-    color: {
-      type: String,
-      default: 'red',
-      field: '背景颜色'
+      default: '按钮'
     }
+  },
+  created () {
+    console.log(this)
   }
 }
 </script>

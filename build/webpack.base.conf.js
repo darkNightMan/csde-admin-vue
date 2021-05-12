@@ -63,7 +63,11 @@ module.exports = {
           resolve('test'),
           resolve('node_modules/vue-echarts'),
           resolve('node_modules/resize-detector')
-        ]
+        ],
+        options:{
+          plugins:['syntax-dynamic-import']
+        },
+        
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

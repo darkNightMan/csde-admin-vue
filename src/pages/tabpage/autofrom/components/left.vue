@@ -1,34 +1,31 @@
 <template>
   <div class="left">
-    <vuedraggable :list="componentsArr"  :move="handleMove"   v-bind="{group:{ name:'component', pull:'clone',put:false},sort:false, ghostClass: 'ghost'}">
-       <el-tag @click="getCom(item)" style="margin:20px" v-for="(item, index) in componentsArr" :key="index">{{item.name}}</el-tag>
+    <vuedraggable :list="componentsConfig"  :move="handleMove"   v-bind="{group:{ name:'component', pull:'clone',put:false},sort:false, ghostClass: 'com'}">
+       <el-tag @click="getCom(item)" style="margin:20px" v-for="(item, index) in componentsConfig" :key="index">{{item.comName}}</el-tag>
     </vuedraggable>
   </div>
 </template>
 <script>
-
-import packages from '@/package'
+import { config } from '@/package'
 export default {
   data () {
     return {
-      componentsArr: packages
+      componentsConfig: config()
     }
+  },
+  created () {
+
   },
   methods: {
     getCom (item) {
-      debugger
     },
     log (i) {
-      debugger
     },
     handleMoveEnd (item) {
-      // debugger
     },
     handleMoveStart () {
-      // debugger
     },
     handleMove () {
-      // debugger
       return true
     }
   }

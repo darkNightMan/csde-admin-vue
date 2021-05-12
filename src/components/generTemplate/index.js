@@ -10,20 +10,26 @@ export default {
     return h(Vue.extend({
       render (h) {
         // eslint-disable-next-line standard/object-curly-even-spacing
-        return h(that.com, { props: this.validata()})
+        return h(that.com.comTag, { props: this.validata()})
       },
       methods: {
         validata () {
           let props = {}
-          for (let item in that.com.props) {
-            props[item] = that.com.props[item].default
-          }
+          // that.com.comAttr.map((x) => {
+          //   debugger
+          //   props[x] = that.com.comAttr[x]
+          // })
           return props
+        },
+        Fnclick (uuid, id) {
+          this.current = uuid
+          // this.$store.commit('EditPanel/changeId', uuid)
         }
       }
     }))
   },
   created () {
-    console.log(1)
+    debugger
+    console.log(this.com)
   }
 }

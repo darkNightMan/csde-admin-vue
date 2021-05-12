@@ -10,24 +10,18 @@
 
 <script>
 export default {
-  name: 'list',
+  name: 'wxp-List',
   props: {
     imgUrl: {
       type: String,
-      default: 'http://localhost:8080/public/uploads/84ae30c406481c699e9e0294838d6852.jpg',
-      field: '图片地址'
+      default: 'http://localhost:8080/public/uploads/84ae30c406481c699e9e0294838d6852.jpg'
     },
     title: {
       type: String,
-      default: '自动化列表',
-      field: '标题'
-    },
-    width: {
-      type: String,
-      default: '100%',
-      field: '长度'
+      default: '自动化列表'
     }
   }
+
 }
 </script>
 

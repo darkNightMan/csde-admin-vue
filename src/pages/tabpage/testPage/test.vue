@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import packages from '@/package'
 import draggable from 'vuedraggable'
 export default {
   name: 'clone',
@@ -49,7 +48,7 @@ export default {
   },
   data () {
     return {
-      packages,
+      packages: [],
       list2: [
         // { name: 'Juan', id: 5 },
         // { name: 'Edgard', id: 6 },
