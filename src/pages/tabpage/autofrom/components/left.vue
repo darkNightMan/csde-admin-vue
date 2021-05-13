@@ -20,7 +20,9 @@ export default {
     handleMoveEnd (item) {
     },
     addComponents (e, list) {
-      this.$setActionscurrentCom(JSON.parse(list[e.oldIndex]))
+      const itemString = JSON.stringify(list[e.oldIndex])
+      const record = JSON.parse(itemString)
+      this.$setActionscurrentCom(record)
     },
     handleMove () {
       return true
