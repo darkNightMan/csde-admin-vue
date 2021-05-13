@@ -1,6 +1,6 @@
 <template>
-  <div class="button">
-    {{text}}
+  <div class="button" :class="type">
+    {{btnText}}
   </div>
 </template>
 
@@ -11,9 +11,15 @@ export default {
   },
   name: 'wxp-button',
   props: {
-    text: {
+    type: {
       type: String,
-      default: '按钮'
+      default: 'default'
+    },
+    btnText: {
+      type: {
+        type: String,
+        default: '按钮'
+      }
     }
   },
   created () {
@@ -21,10 +27,25 @@ export default {
   }
 }
 </script>
-<style lang="" scoped>
+<style lang="less" scoped>
   .button{
     padding: 4px 10px;
     display: inline-block;
-    color:#fff
+    color:#fff;
+    border: 1px solid #eee;
+  &.default{
+    background-color:#fff;
+     color:#333;
   }
+  &.primary{
+    background-color: hsl(210deg 100% 63%);
+  };
+  &.success{
+    background-color: hsl(100deg 54% 49%);
+  };
+  &.danger{
+    background-color: hsl(0deg 87% 69%);
+  }
+};
+
 </style>

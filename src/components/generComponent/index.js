@@ -1,7 +1,7 @@
 
 import Vue from 'vue'
 export default {
-  name: 'generTemplate',
+  name: 'generComponent',
   props: {
     com: Object
   },
@@ -10,17 +10,9 @@ export default {
     return h(Vue.extend({
       render (h) {
         // eslint-disable-next-line standard/object-curly-even-spacing
-        return h(that.com.comTag, { props: this.validata()})
+        return h(that.com.comTag, { props: that.com.comAttr})
       },
       methods: {
-        validata () {
-          let props = {}
-          // that.com.comAttr.map((x) => {
-          //   debugger
-          //   props[x] = that.com.comAttr[x]
-          // })
-          return props
-        },
         Fnclick (uuid, id) {
           this.current = uuid
           // this.$store.commit('EditPanel/changeId', uuid)
@@ -29,7 +21,6 @@ export default {
     }))
   },
   created () {
-    debugger
     console.log(this.com)
   }
 }

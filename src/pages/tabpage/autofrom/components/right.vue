@@ -2,17 +2,18 @@
 <div class="right">
   <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="属性" name="1">
-      {{comAttr}}
-      {{ComList}}
       <el-form ref="form"  label-width="80px">
-        <div v-if="ComList[indexCurrent]">
-          <el-form-item :label="item.field" v-for="(item, index) in comAttr" :key="index">
-              <el-input v-model="item.text"></el-input>
-          </el-form-item>
-      </div>
+        <div  v-if="currentCom.type === 'button'">
+            <el-form-item label="按钮类型">
+                <el-input v-model="currentCom.comAttr.type"></el-input>
+            </el-form-item>
+            <el-form-item label="标签">
+                <el-input v-model="currentCom.comAttr.btnText"></el-input>
+            </el-form-item>
+         </div>
       </el-form>
     </el-tab-pane>
-    <el-tab-pane label="样式" name="2">
+    <!-- <el-tab-pane label="样式" name="2">
       <pre v-if="ComList[indexCurrent]">
         {{ ComList[indexCurrent].comStyle}}
       </pre>
@@ -21,7 +22,7 @@
       <pre v-if="ComList[indexCurrent]">
         {{ ComList[indexCurrent].events}}
       </pre>
-    </el-tab-pane>
+    </el-tab-pane> -->
   </el-tabs>
 
 </div>
@@ -42,14 +43,20 @@ export default {
         return this.$comList()
       }
     },
-    comAttr: {
-      get () {
-        return {}
-      }
-    },
+    // currentCom: {
+    //   get () {
+    //     debugger
+    //     return this.$getterscurrentCom()
+    //   }
+    // },
     indexCurrent: {
       get () {
         return this.$indexCurrent()
+      }
+    },
+    currentCom: {
+      get () {
+        return this.$currentCom()
       }
     }
   },

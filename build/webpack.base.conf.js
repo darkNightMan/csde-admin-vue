@@ -67,7 +67,6 @@ module.exports = {
         options:{
           plugins:['syntax-dynamic-import']
         },
-        
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

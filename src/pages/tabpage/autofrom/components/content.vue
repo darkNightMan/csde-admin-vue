@@ -3,8 +3,10 @@
    <vuedraggable style="min-height:100px"   :list="componentsList"    @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log"  group="component">
       <div class="wrap" :class="{red: index === indexItem}" v-for="(item, index) in componentsList" :key="index" @click="show(index)">
         <div class="mask"></div>
-        <component :is="item.comTag" :style="item.comStyle"></component>
-        <!-- <generTemplate :com="item"></generTemplate> -->
+         <transition name="fade">
+            <!-- <component :is="item.comTag" :style="item.comStyle"></component> -->
+         </transition >
+        <generComponent :com="item"></generComponent>
       </div>
    </vuedraggable>
   </div>
@@ -22,10 +24,9 @@ export default {
     console.log(this.t)
   },
   watch: {
-    componentsList (newVal, oldVal) {
-      debugger
-      this.$setActionsCom(newVal)
-    }
+    // componentsList (newVal, oldVal) {
+    //   this.$setActionsCom(newVal)
+    // }
   },
   methods: {
     getCom (item) {
@@ -41,8 +42,8 @@ export default {
       // debugger
     },
     show (index) {
-      debugger
-      this.$setIndexCurent(index)
+      this.$setActionscurrentCom(this.componentsList[index])
+      // this.$setIndexCurent(index)
       this.indexItem = index
     }
   }
@@ -59,6 +60,7 @@ export default {
   }
   .wrap.red {
     border: 1px solid red;
+    padding: 10px;
   }
   .mask{
     position: absolute;

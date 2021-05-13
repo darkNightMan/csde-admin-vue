@@ -2,10 +2,12 @@
 const state = {
   comList: [],
   comConfig: [],
-  indexCurrent: 0
+  indexCurrent: 0,
+  currentCom: {}
 }
 const getters = {
-  gettersComList: state.comList
+  gettersComList: state.comList,
+  currentCom: state.currentCom
 }
 const actions = {
   setActionsCom: ({ commit }, data) => {
@@ -15,11 +17,17 @@ const actions = {
     commit('setMutationsIndexCurent', data)
   },
   setActionsComConfig ({ commit }, data) {
-    debugger
     commit('setMutationsComConfigt', data)
+  },
+  setActionscurrentCom ({ commit }, data) {
+    commit('setsetMutationsComcurrentCom', data)
   }
 }
 const mutations = {
+  setsetMutationsComcurrentCom (state, data) {
+    debugger
+    state.currentCom = data
+  },
   setMutationsCom: (state, data) => {
     state.comList = data
   },

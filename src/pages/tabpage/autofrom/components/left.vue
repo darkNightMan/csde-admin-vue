@@ -1,7 +1,7 @@
 <template>
   <div class="left">
-    <vuedraggable :list="componentsConfig"  :move="handleMove"   v-bind="{group:{ name:'component', pull:'clone',put:false},sort:false, ghostClass: 'com'}">
-       <el-tag @click="getCom(item)" style="margin:20px" v-for="(item, index) in componentsConfig" :key="index">{{item.comName}}</el-tag>
+    <vuedraggable :list="componentsConfig" @start="addComponents($event, componentsConfig)" @end="handleMoveEnd" :move="handleMove"   v-bind="{group:{ name:'component', pull:'clone',put:false},sort:false, ghostClass: 'com'}">
+       <el-tag style="margin:20px" v-for="(item, index) in componentsConfig" :key="index">{{item.comName}}</el-tag>
     </vuedraggable>
   </div>
 </template>
@@ -17,13 +17,10 @@ export default {
 
   },
   methods: {
-    getCom (item) {
-    },
-    log (i) {
-    },
     handleMoveEnd (item) {
     },
-    handleMoveStart () {
+    addComponents (e, list) {
+      this.$setActionscurrentCom(JSON.parse(list[e.oldIndex]))
     },
     handleMove () {
       return true
