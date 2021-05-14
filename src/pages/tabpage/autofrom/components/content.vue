@@ -1,13 +1,15 @@
 <template>
-  <div  class='content'>
-   <vuedraggable style="min-height:100px"   :list="ComList"    @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log" >
-      <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in ComList" :key="index"  @click="active(item)"  >
-         <transition name="fade">
-            <component :is="item.comTag"  :propsAttr="item.propsAttr"></component>
-         </transition >
-        <!-- <generComponent :com="item"></generComponent> -->
-      </div>
-   </vuedraggable>
+  <div  class='content' :style="{height: $windowHeight() + 'px'}">
+    <el-scrollbar class="page-component__nav" style="height:100%">
+      <vuedraggable :style="{height: $windowHeight() + 'px'}"   :list="ComList"    @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log" >
+          <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in ComList" :key="index"  @click="active(item)"  >
+            <transition name="fade">
+                <component :is="item.comTag"  :propsAttr="item.propsAttr"></component>
+            </transition >
+            <!-- <generComponent :com="item"></generComponent> -->
+          </div>
+      </vuedraggable>
+     </el-scrollbar>
   </div>
 </template>
 <script>
@@ -52,7 +54,7 @@ export default {
 
 <style scoped>
   .content{
-    background: #eee;
+    background: #000;
     height: 600px;
   }
   .wrap{
