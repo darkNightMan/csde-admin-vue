@@ -2,9 +2,9 @@ import List from './src'
 export default {
   component: List,
   config: {
-    type: 'list',
     comName: '列表',
     comTag: 'wxp-List',
+    comAttrTag: 'attr-list',
     comIcon: 'icon',
     comStyle: {
       width: '100'

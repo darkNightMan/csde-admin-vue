@@ -14,9 +14,6 @@ export default {
       btnType: 'default',
       btnText: '按钮'
     },
-    typeAttr: {
-
-    },
     comAttrEvents: {
 
     }
