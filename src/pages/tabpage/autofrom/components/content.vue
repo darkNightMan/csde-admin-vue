@@ -1,6 +1,5 @@
 <template>
   <div  class='content'>
-    {{ComList}} {{uuid}}
    <vuedraggable style="min-height:100px"   :list="ComList"    @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log" >
       <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in ComList" :key="index"  @click="active(item)"  >
          <transition name="fade">
