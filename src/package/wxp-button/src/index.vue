@@ -1,6 +1,6 @@
 <template>
-  <div class="button" :class="type">
-    {{btnText}}
+  <div class="button" :class="propsAttr.btnType">
+    {{propsAttr.btnText}}
   </div>
 </template>
 
@@ -11,14 +11,11 @@ export default {
   },
   name: 'wxp-button',
   props: {
-    type: {
-      type: String,
-      default: 'default'
-    },
-    btnText: {
-      type: {
-        type: String,
-        default: '按钮'
+    propsAttr: {
+      type: Object,
+      default: () => {
+        return {
+        }
       }
     }
   },

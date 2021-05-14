@@ -2,16 +2,16 @@ import Button from './src'
 export default {
   component: Button,
   config: {
-    type: 'button',
     comName: '按钮',
     comTag: 'wxp-button',
+    comAttrTag: 'attr-button',
     comIcon: 'icon',
     comStyle: {
       background: '#333'
     },
     // props
-    comAttr: {
-      type: 'default',
+    propsAttr: {
+      btnType: 'default',
       btnText: '按钮'
     },
     typeAttr: {

@@ -1,12 +1,12 @@
 <template>
   <div  class='content'>
-   <vuedraggable style="min-height:100px"   :list="componentsList"    @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log"  group="component">
-      <div class="wrap" :class="{red: index === indexItem}" v-for="(item, index) in componentsList" :key="index" @click="show(index)">
-        <div class="mask"></div>
+    {{ComList}} {{uuid}}
+   <vuedraggable style="min-height:100px"   :list="ComList"    @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log" >
+      <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in ComList" :key="index"  @click="active(item)"  >
          <transition name="fade">
-            <!-- <component :is="item.comTag" :style="item.comStyle"></component> -->
+            <component :is="item.comTag"  :propsAttr="item.propsAttr"></component>
          </transition >
-        <generComponent :com="item"></generComponent>
+        <!-- <generComponent :com="item"></generComponent> -->
       </div>
    </vuedraggable>
   </div>
@@ -16,17 +16,20 @@
 export default {
   data () {
     return {
-      componentsList: [],
-      indexItem: 0
+      componentsList: []
     }
   },
   created () {
-    console.log(this.t)
   },
-  watch: {
-    // componentsList (newVal, oldVal) {
-    //   this.$setActionsCom(newVal)
-    // }
+  computed: {
+    ComList: {
+      get () {
+        return this.$comList()
+      }
+    },
+    uuid () {
+      return this.$uuid()
+    }
   },
   methods: {
     getCom (item) {
@@ -41,10 +44,8 @@ export default {
     handleMove (item) {
       // debugger
     },
-    show (index) {
-      this.$setActionscurrentCom(this.componentsList[index])
-      // this.$setIndexCurent(index)
-      this.indexItem = index
+    active (item) {
+      this.$setCurrenUuid(item.uuid)
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="left">
-    <vuedraggable :list="componentsConfig" @start="addComponents($event, componentsConfig)" @end="handleMoveEnd" :move="handleMove"   v-bind="{group:{ name:'component', pull:'clone',put:false},sort:false, ghostClass: 'com'}">
+    <vuedraggable :list="componentsConfig" @start="addComponents($event, componentsConfig)" @end="handleMoveEnd" :move="handleMove"   v-bind="{group:{ name:'', pull:'clone',put:false},sort:false, ghostClass: 'com'}">
        <el-tag style="margin:20px" v-for="(item, index) in componentsConfig" :key="index">{{item.comName}}</el-tag>
     </vuedraggable>
   </div>
@@ -20,9 +20,15 @@ export default {
     handleMoveEnd (item) {
     },
     addComponents (e, list) {
-      const itemString = JSON.stringify(list[e.oldIndex])
-      const record = JSON.parse(itemString)
-      this.$setActionscurrentCom(record)
+      let currentCom = list[e.oldIndex]
+      if (!currentCom.uuid) {
+        currentCom.uuid = currentCom.comAttrTag + '_' + new Date().getTime()
+      } else {
+        currentCom.uuid = currentCom.comAttrTag + '_' + new Date().getTime()
+      }
+      const listString = JSON.stringify(currentCom)
+      this.$addComponents(JSON.parse(listString))
+      // this.$addComponents(currentCom)
     },
     handleMove () {
       return true

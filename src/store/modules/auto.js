@@ -1,8 +1,7 @@
 
 const state = {
   comList: [],
-  comConfig: [],
-  indexCurrent: 0,
+  uuid: 0,
   currentCom: {}
 }
 const getters = {
@@ -10,32 +9,24 @@ const getters = {
   currentCom: state.currentCom
 }
 const actions = {
-  setActionsCom: ({ commit }, data) => {
-    commit('setMutationsCom', data)
+  addComponents ({ commit }, data) {
+    commit('addComponentM', data)
   },
-  setIndexCurent ({ commit }, data) {
-    commit('setMutationsIndexCurent', data)
-  },
-  setActionsComConfig ({ commit }, data) {
-    commit('setMutationsComConfigt', data)
-  },
-  setActionscurrentCom ({ commit }, data) {
-    commit('setsetMutationsComcurrentCom', data)
+  setCurrenUuid ({ commit }, uuid) {
+    commit('setCurrenUuidM', uuid)
   }
 }
 const mutations = {
-  setsetMutationsComcurrentCom (state, data) {
-    debugger
+  addComponentM (state, data) {
+    state.uuid = data.uuid
     state.currentCom = data
+    state.comList.push(data)
   },
-  setMutationsCom: (state, data) => {
-    state.comList = data
-  },
-  setMutationsIndexCurent (state, data) {
-    state.indexCurrent = data
-  },
-  setMutationsComConfig (state, data) {
-    state.comConfig = data
+  setCurrenUuidM (state, uuid) {
+    state.uuid = uuid
+    state.currentCom = state.comList.find((x) => {
+      return x.uuid === uuid
+    })
   }
 }
 export default {

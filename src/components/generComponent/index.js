@@ -9,8 +9,9 @@ export default {
     let that = this
     return h(Vue.extend({
       render (h) {
+        debugger
         // eslint-disable-next-line standard/object-curly-even-spacing
-        return h(that.com.comTag, { props: that.com.comAttr})
+        return h(that.com.comTag, { props: that.com.propsAttr})
       },
       methods: {
         Fnclick (uuid, id) {
@@ -21,6 +22,7 @@ export default {
     }))
   },
   created () {
+    debugger
     console.log(this.com)
   }
 }

@@ -2,15 +2,9 @@
 <div class="right">
   <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="属性" name="1">
+      <pre>   {{currentCom}}</pre>
       <el-form ref="form"  label-width="80px">
-        <div  v-if="currentCom.type === 'button'">
-            <el-form-item label="按钮类型">
-                <el-input v-model="currentCom.comAttr.type"></el-input>
-            </el-form-item>
-            <el-form-item label="标签">
-                <el-input v-model="currentCom.comAttr.btnText"></el-input>
-            </el-form-item>
-         </div>
+        <component :is="currentCom.comAttrTag"  :propsAttr="currentCom.propsAttr" v-bind.sync="currentCom.propsAttr"></component>
       </el-form>
     </el-tab-pane>
     <!-- <el-tab-pane label="样式" name="2">
@@ -38,21 +32,8 @@ export default {
     console.log()
   },
   computed: {
-    ComList: {
-      get () {
-        return this.$comList()
-      }
-    },
-    // currentCom: {
-    //   get () {
-    //     debugger
-    //     return this.$getterscurrentCom()
-    //   }
-    // },
-    indexCurrent: {
-      get () {
-        return this.$indexCurrent()
-      }
+    propsAttr () {
+      return this.$currentCom().propsAttr
     },
     currentCom: {
       get () {
@@ -72,5 +53,6 @@ export default {
 .right{
   /* border: 1px solid #eee; */
   height: 550px;
+  padding: 20px;
 }
 </style>
