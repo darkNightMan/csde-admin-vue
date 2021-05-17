@@ -1,10 +1,12 @@
 import Button from './wxp-button'
 import List from './wxp-List'
 import Carousel from './wxp-carousel'
+import Grid from './wxp-grid'
 const components = [
   Button,
   List,
-  Carousel
+  Carousel,
+  Grid
 ]
 // 异步加载组件
 const installComponents = (Vue) => {

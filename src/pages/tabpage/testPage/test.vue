@@ -1,69 +1,59 @@
 <template>
   <div class="row">
-    <div class="col-3">
-      <h3>Draggable 1</h3>
-      <draggable
-        class="dragArea list-group"
-        :list="packages"
-        :group="{ name: 'com', pull: 'clone', put: false }"
-      >
-        <div
-          class="list-group-item"
-          v-for="element in packages"
-          :key="element.componentName"
-        >
-          {{ element.componentName }}
-        </div>
-      </draggable>
+    <div class="col-8">
+      <h3>Nested draggable</h3>
+      <nested-draggable :tasks="list" />
     </div>
 
-    <div class="col-3">
-      <h3>Draggable 2</h3>
-      <draggable
-        class="dragArea list-group"
-        :list="list2"
-        group="com"
-
-      >
-        <div
-          class="list-group-item"
-          v-for="element in list2"
-          :key="element.componentName"
-        >
-          {{ element.componentName }}
-        </div>
-      </draggable>
-    </div>
+    <rawDisplayer class="col-3" :value="list" title="List" />
   </div>
 </template>
 
 <script>
-import draggable from 'vuedraggable'
+import nestedDraggable from './raw'
+import rawDisplayer from './rawDisplayer'
 export default {
-  name: 'clone',
-  display: 'Clone',
-  order: 2,
+  name: 'nested-example',
+  display: 'Nested',
+  order: 15,
   components: {
-    draggable
+    nestedDraggable,
+    rawDisplayer
   },
   data () {
     return {
-      packages: [],
-      list2: [
-        // { name: 'Juan', id: 5 },
-        // { name: 'Edgard', id: 6 },
-        // { name: 'Johnson', id: 7 }
+      list: [
+        {
+          name: 'task 1',
+          tasks: [
+            {
+              name: 'task 2',
+              tasks: []
+            }
+          ]
+        },
+        {
+          name: 'task 3',
+          tasks: [
+            {
+              name: 'task 4',
+              tasks: []
+            }
+          ]
+        },
+        {
+          name: 'task 5',
+          tasks: []
+        }
       ]
-    }
-  },
-  computed: {
-
-  },
-  methods: {
-    log: function (evt) {
-      window.console.log(evt)
     }
   }
 }
 </script>
-<style scoped></style>
+<style lang="less" scoped>
+body, dl, dt, dd, ul, ol, li, pre, form, fieldset, input, p, blockquote, th, td{
+    padding: revert;
+
+}
+
+</style>

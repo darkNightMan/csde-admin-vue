@@ -6,7 +6,7 @@
             <transition name="fade">
                 <component :is="item.comTag"  :propsAttr="item.propsAttr"></component>
             </transition >
-            <!-- <generComponent :com="item"></generComponent> -->
+             <el-button class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
           </div>
       </vuedraggable>
      </el-scrollbar>
@@ -43,6 +43,9 @@ export default {
     },
     handleMove (item) {
     },
+    delCom (item) {
+      this.$delComponent(item)
+    },
     active (item) {
       this.$setCurrenUuid(item.uuid)
     }
@@ -50,13 +53,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .content{
     background: #eee;
     height: 600px;
   }
   .wrap{
     position: relative;
+    .btn{
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
   }
   .wrap.red {
     border: 1px solid red;
