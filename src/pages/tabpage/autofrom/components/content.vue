@@ -1,7 +1,7 @@
 <template>
   <div  class='content' :style="{height: $windowHeight() + 'px'}">
     <el-scrollbar class="page-component__nav" style="height:100%">
-      <vuedraggable :style="{height: $windowHeight() + 'px'}"   :list="ComList"    @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log" >
+      <vuedraggable :style="{height: $windowHeight() + 'px'}"   :list="ComList"  :group="{ name: 'g1' }"  @end="handleMoveEnd"   @start="handleMoveStart"  :move="handleMove"  @change="log" >
           <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in ComList" :key="index"  @click="active(item)"  >
             <transition name="fade">
                 <component :is="item.comTag"  :propsAttr="item.propsAttr"></component>

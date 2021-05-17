@@ -3,7 +3,6 @@
     <h2>组件库</h2>
     <ul class="component-content">
         <vuedraggable :list="componentsConfig" @start="addComponents($event, componentsConfig)" @end="handleMoveEnd" :move="handleMove"   v-bind="{group:{ name:'', pull:'clone',put:false},sort:false, ghostClass: 'com'}">
-          <!-- <el-tag style="margin:10px" v-for="(item, index) in componentsConfig" :key="index">{{item.comName}}</el-tag> -->
             <li v-for="(item, index) in componentsConfig" :key="index">
                 <i :class="item.comIcon ? item.comIcon: 'el-icon-eleme'"></i>
               {{item.comName}}

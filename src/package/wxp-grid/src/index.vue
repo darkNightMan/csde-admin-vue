@@ -1,8 +1,9 @@
 <template>
   <el-row>
-    <el-col v-for="(item, index) in propsAttr.columns" :span="propsAttr.columns.span" :key="index">
-      <vuedraggable>
-           <div class="grid-content bg-purple-dark"></div>
+    <el-col v-for="(item, index) in propsAttr.columns" :span="item.span" :key="index" >
+      <vuedraggable :group="{ name: 'g1' }" >
+        {{item}}
+           <wxp-grid :propsAttr="item.list"></wxp-grid>
       </vuedraggable>
       </el-col>
   </el-row>
