@@ -5,7 +5,7 @@ export default {
     comName: '列表',
     comTag: 'wxp-List',
     comAttrTag: 'attr-list',
-    comIcon: 'icon',
+    comIcon: 'fa fa-file-image-o',
     comStyle: {
       width: '100'
     },

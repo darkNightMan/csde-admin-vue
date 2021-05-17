@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="main">
    <el-row>
-      <el-col :span="6"><left></left></el-col>
-      <el-col :span="12"><contentCenter> </contentCenter></el-col>
+      <el-col :span="4"><left></left></el-col>
+      <el-col :span="14"><contentCenter> </contentCenter></el-col>
       <el-col :span="6"><right></right></el-col>
     </el-row>
   </div>
@@ -20,8 +20,13 @@ export default {
   },
   data () {
     return {
-      a: 1
     }
   }
 }
 </script>
+
+<style lang="less">
+  .main{
+    background: #eee;
+  }
+</style>

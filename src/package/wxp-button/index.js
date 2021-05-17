@@ -5,7 +5,7 @@ export default {
     comName: '按钮',
     comTag: 'wxp-button',
     comAttrTag: 'attr-button',
-    comIcon: 'icon',
+    comIcon: 'fa fa-hand-o-down',
     comStyle: {
       background: '#333'
     },

@@ -1,14 +1,15 @@
 import Button from './wxp-button'
 import List from './wxp-List'
+import Carousel from './wxp-carousel'
 const components = [
   Button,
-  List
+  List,
+  Carousel
 ]
 // 异步加载组件
 const installComponents = (Vue) => {
   components.forEach(key => {
     if (key.component.name) {
-      debugger
       Vue.component(key.config.comTag, () => import(`@/package/${key.component.name}/src/index.vue`)) // 功能组件
       Vue.component(key.config.comAttrTag, () => import(`@/package/${key.component.name}/src/attr.vue`)) // 组件属性
     } else {

@@ -40,10 +40,8 @@ export default {
     handleMoveEnd (item) {
     },
     handleMoveStart (item) {
-      // debugger
     },
     handleMove (item) {
-      // debugger
     },
     active (item) {
       this.$setCurrenUuid(item.uuid)
@@ -54,7 +52,7 @@ export default {
 
 <style scoped>
   .content{
-    background: #000;
+    background: #eee;
     height: 600px;
   }
   .wrap{
@@ -71,6 +69,6 @@ export default {
     z-index: 1;
     width: 100%;
     height: 100%;
-    border: 1px solid #333
+    border: 1px solid #eee
   }
 </style>

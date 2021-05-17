@@ -1,8 +1,15 @@
 <template>
-  <div class="left">
-    <vuedraggable :list="componentsConfig" @start="addComponents($event, componentsConfig)" @end="handleMoveEnd" :move="handleMove"   v-bind="{group:{ name:'', pull:'clone',put:false},sort:false, ghostClass: 'com'}">
-       <el-tag style="margin:20px" v-for="(item, index) in componentsConfig" :key="index">{{item.comName}}</el-tag>
-    </vuedraggable>
+  <div class="left" :style="{height: $windowHeight() + 'px'}">
+    <h2>组件库</h2>
+    <ul class="component-content">
+        <vuedraggable :list="componentsConfig" @start="addComponents($event, componentsConfig)" @end="handleMoveEnd" :move="handleMove"   v-bind="{group:{ name:'', pull:'clone',put:false},sort:false, ghostClass: 'com'}">
+          <!-- <el-tag style="margin:10px" v-for="(item, index) in componentsConfig" :key="index">{{item.comName}}</el-tag> -->
+            <li v-for="(item, index) in componentsConfig" :key="index">
+                <i :class="item.comIcon ? item.comIcon: 'el-icon-eleme'"></i>
+              {{item.comName}}
+            </li>
+        </vuedraggable>
+      </ul>
   </div>
 </template>
 <script>
@@ -37,9 +44,28 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.component-content{
+  padding: 0 10px;
+  li{
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    background:#fff;
+    margin-bottom:10px;
+    font-size: 16px;
+    line-height: 40px;
+    border-radius: 4px;
+    i{
+      margin-right: 10px;
+    }
+  }
+}
 .left{
-  /* border: 1px solid #eee; */
-  height: 550px;
+  border-right: 4px solid #fff;
+   background: rgb(236, 234, 234);
+  h2{
+    padding: 10px;
+  }
 }
 </style>

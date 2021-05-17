@@ -1,24 +1,25 @@
 <template>
-<div class="right">
-  <el-tabs v-model="activeName" @tab-click="handleClick">
+<div class="right" :style="{height: $windowHeight() + 'px'}">
+  <div class="right-attr">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="属性" name="1">
-      <pre>   {{currentCom}}</pre>
       <el-form ref="form"  label-width="80px">
         <component :is="currentCom.comAttrTag"  :propsAttr="currentCom.propsAttr" v-bind.sync="currentCom.propsAttr"></component>
       </el-form>
     </el-tab-pane>
-    <!-- <el-tab-pane label="样式" name="2">
-      <pre v-if="ComList[indexCurrent]">
-        {{ ComList[indexCurrent].comStyle}}
+     <el-tab-pane label="数据" name="2">
+      <pre>
+        {{currentCom.propsAttr}}
       </pre>
     </el-tab-pane>
+    <!--
     <el-tab-pane label="事件" name="3">
       <pre v-if="ComList[indexCurrent]">
         {{ ComList[indexCurrent].events}}
       </pre>
     </el-tab-pane> -->
   </el-tabs>
-
+  </div>
 </div>
 </template>
 <script>
@@ -49,10 +50,12 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style lang="less"  scoped>
 .right{
-  /* border: 1px solid #eee; */
-  height: 550px;
-  padding: 20px;
+  background:#fff;
+    border-left: 4px solid rgb(215, 229, 231);
+  .right-attr{
+    padding: 20px;
+  }
 }
 </style>

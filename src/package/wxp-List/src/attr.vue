@@ -44,7 +44,6 @@ export default {
     }
   },
   mounted () {
-    debugger
     this.localPropsAttr = this.propsAttr
   }
 }
