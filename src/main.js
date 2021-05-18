@@ -18,9 +18,11 @@ import perms from './utils/perms'
 import hightLight from './utils/hightLight'
 import echarts from 'echarts'
 import {installComponents} from '@/package'
+import wxpGridItem from '@/package/wxp-grid/src/grid'
 import vuedraggable from 'vuedraggable'
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
+Vue.component('wxpGridItem', wxpGridItem)
 Vue.component('vuedraggable', vuedraggable)
 // 安装组件
 installComponents(Vue)

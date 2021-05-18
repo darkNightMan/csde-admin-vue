@@ -26,4 +26,8 @@ export default {
   min-height: 50px;
   outline: 1px dashed;
 }
+ li{
+    padding: 20px;
+
+}
 </style>

@@ -11,19 +11,19 @@ export default {
     },
     // props
     propsAttr: {
-      columns: [
-        {
-          span: 12,
-          list: []
-        },
-        {
-          span: 12,
-          list: []
-        }
-      ]
-    },
-    comAttrEvents: {
-
+      rows: {
+        columns: [
+          {
+            span: 12,
+            list: [
+            ]
+          },
+          {
+            span: 12,
+            list: []
+          }
+        ]
+      }
     }
   }
 }

@@ -1,22 +1,27 @@
 <template>
-  <div  class='content' :style="{height: $windowHeight() + 'px'}">
-    <el-scrollbar class="page-component__nav" style="height:100%">
-        <contentItem :list="ComList"></contentItem>
-     </el-scrollbar>
+  <div>
+    {{list}}
+    <vuedraggable :list="list"  :group="{ name: 'g1' }"  @end="handleMoveEnd"   @start="handleMoveStart($event, ComList)" @add="add"  :move="handleMove"  @change="log" >
+        <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in list" :key="index"  @click="active(item)">
+          <component :is="item.comTag"  :propsAttr="item.propsAttr" @dragStart="dragStart" @handleColAdd="handleColAdd"></component>
+          <el-button class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
+        </div>
+    </vuedraggable>
   </div>
 </template>
 <script>
-import contentItem from './contentItem'
+
 export default {
-  components: {
-    contentItem
-  },
+  name: 'content-item',
   data () {
     return {
       componentsList: []
     }
   },
   created () {
+  },
+  props: {
+    list: Object
   },
   computed: {
     ComList: {
@@ -49,6 +54,7 @@ export default {
     handleMove (item) {
     },
     delCom (item) {
+      debugger
       this.$delComponent(item)
     },
     active (item) {

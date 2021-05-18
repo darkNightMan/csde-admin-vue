@@ -1,45 +1,46 @@
 <template>
-  <el-row>
-    <el-col v-for="(item, index) in propsAttr.columns" :span="item.span" :key="index" >
-      <vuedraggable :group="{ name: 'g1' }" >
-        {{item}}
-           <wxp-grid :propsAttr="item.list"></wxp-grid>
-      </vuedraggable>
-      </el-col>
-  </el-row>
+    <div class="grid">
+      <wxpGridItem :columns="propsAttr.rows.columns" @dragStart="dragStart" @handleColAdd="handleColAdd"></wxpGridItem>
+  </div>
 </template>
 
 <script>
+import wxpGridItem from './grid'
 export default {
   data () {
     return {}
+  },
+  components: {
+    wxpGridItem
   },
   name: 'wxp-grid',
   props: {
     propsAttr: {
       type: Object,
       default: () => {
-        return {
-          columns: [
-            {
-              span: 12,
-              list: []
-            },
-            {
-              span: 12,
-              list: []
-            }
-          ]
-        }
+        return {}
       }
     }
   },
   created () {
-    console.log(this)
+    console.log(this.propsAttr.rows)
+  },
+  methods: {
+    dragStart (i, d) {
+      debugger
+      this.$emit('dragStart', i)
+    },
+    handleColAdd (i, d) {
+    },
+    end (item) {
+    }
   }
 }
 </script>
 <style lang="less" scoped>
+.grid{
+  padding: 4px;
+}
   .button{
     padding: 4px 10px;
     display: inline-block;

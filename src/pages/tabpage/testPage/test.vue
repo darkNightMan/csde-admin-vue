@@ -6,12 +6,7 @@
     </div>
 
     <rawDisplayer class="col-3" :value="list" title="List" />
-    <el-row :gutter="20">
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-  <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-</el-row>
+
   </div>
 </template>
 
@@ -57,9 +52,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-body, dl, dt, dd, ul, ol, li, pre, form, fieldset, input, p, blockquote, th, td{
-    padding: revert;
-
-}
 
 </style>
