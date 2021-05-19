@@ -41,6 +41,7 @@ export default {
 .grid-item{
   border: 1px #ccc dashed;
   padding: 4px;
+   min-height: 70px;
 }
 
 </style>
