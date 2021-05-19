@@ -1,10 +1,9 @@
 <template>
-  <div>
-    {{list}}
-    <vuedraggable :list="list"  :group="{ name: 'g1' }"  @end="handleMoveEnd"   @start="handleMoveStart($event, ComList)" @add="add"  :move="handleMove"  @change="log" >
-        <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in list" :key="index"  @click="active(item)">
+  <div >
+    <vuedraggable :list="list"  :group="{ name: 'g1' }"    :animation="300"  @end="handleMoveEnd"   @start="handleMoveStart($event, ComList)" @add="add($event, ComList)"  :move="handleMove"  @change="log" >
+      <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in list" :key="index"  @click.stop="active(item)">
           <component :is="item.comTag"  :propsAttr="item.propsAttr" @dragStart="dragStart" @handleColAdd="handleColAdd"></component>
-          <el-button class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
+          <el-button v-show="uuid === item.uuid"  class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
         </div>
     </vuedraggable>
   </div>
@@ -35,7 +34,6 @@ export default {
   },
   methods: {
     add (d, c) {
-      debugger
       console.log(d, c)
     },
     dragStart (i, d) {
@@ -49,12 +47,10 @@ export default {
     handleMoveEnd (item) {
     },
     handleMoveStart (e, item) {
-      console.log(item)
     },
     handleMove (item) {
     },
     delCom (item) {
-      debugger
       this.$delComponent(item)
     },
     active (item) {
@@ -75,11 +71,11 @@ export default {
       position: absolute;
       bottom: 0;
       right: 0;
+      z-index: 11111;
     }
   }
   .wrap.red {
-    border: 1px solid red;
-    padding: 4px;
+      border: 4px solid rgb(45, 140, 240);
   }
   .mask{
     position: absolute;

@@ -24,39 +24,20 @@ const actions = {
 }
 const mutations = {
   delComponentM (state, data) {
-    debugger
     const delFn = (list, uuid) => {
-      let com = null
       list.map((item, index) => {
         if (item.uuid === uuid) {
-          return item
+          list.splice(index, 1)
         } else {
-          if (item.propsAttr.rows.columns.length && item.propsAttr.rows) {
+          if (item.propsAttr.rows && item.propsAttr.rows) {
             item.propsAttr.rows.columns.map((i, d) => {
               delFn(i.list, uuid)
             })
           }
         }
-        return com
       })
-      // console.log(delFn())
-      // list.filter((item, index) => {
-      //   debugger
-      //   if (item.propsAttr.rows.columns.length) {
-      //     item.propsAttr.rows.columns.map((x, i) => {
-      //       debugger
-      //       delFn(item.propsAttr.rows.columns.list)
-      //     })
-      //   } else {
-      //     return item.uuid !== uuid
-      //   }
-      // })
     }
-    console.log(delFn(state.comList, data.uuid))
-    // if (res.length === 0 || state.currentCom.uuid === data.uuid) {
-    //   state.currentCom = []
-    // }
-    // state.comList = res
+    delFn(state.comList, data.uuid)
   },
   addComponentM (state, data) {
     state.uuid = data.uuid
@@ -64,10 +45,22 @@ const mutations = {
     state.comList.push(data)
   },
   setCurrenUuidM (state, uuid) {
-    state.uuid = uuid
-    state.currentCom = state.comList.find((x) => {
-      return x.uuid === uuid
-    })
+    let findCurrentCom = (list, uuid) => {
+      list.map((item, index) => {
+        if (item.uuid === uuid) {
+          state.uuid = item.uuid
+          state.currentCom = item
+          return false
+        } else {
+          if (item.propsAttr.rows && item.propsAttr.rows) {
+            item.propsAttr.rows.columns.map((i, d) => {
+              findCurrentCom(i.list, uuid)
+            })
+          }
+        }
+      })
+    }
+    findCurrentCom(state.comList, uuid)
   }
 }
 export default {

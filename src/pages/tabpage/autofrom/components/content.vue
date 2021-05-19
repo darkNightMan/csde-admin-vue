@@ -1,7 +1,16 @@
 <template>
   <div  class='content' :style="{height: $windowHeight() + 'px'}">
-    <el-scrollbar class="page-component__nav" style="height:100%">
-        <contentItem :list="ComList"></contentItem>
+     <el-scrollbar class="page-component__nav" style="height:100%" >
+         <el-tabs v-model="activeName" @tab-click="handleClick" >
+            <el-tab-pane label="布局" name="1">
+              <contentItem :list="ComList"></contentItem>
+            </el-tab-pane>
+            <el-tab-pane label="数据" name="2">
+              <pre>
+                {{ComList}}
+              </pre>
+            </el-tab-pane>
+        </el-tabs>
      </el-scrollbar>
   </div>
 </template>
@@ -13,7 +22,7 @@ export default {
   },
   data () {
     return {
-      componentsList: []
+      activeName: '1'
     }
   },
   created () {
@@ -30,7 +39,6 @@ export default {
   },
   methods: {
     add (d, c) {
-      debugger
       console.log(d, c)
     },
     dragStart (i, d) {
@@ -70,10 +78,6 @@ export default {
       bottom: 0;
       right: 0;
     }
-  }
-  .wrap.red {
-    border: 1px solid red;
-    padding: 4px;
   }
   .mask{
     position: absolute;

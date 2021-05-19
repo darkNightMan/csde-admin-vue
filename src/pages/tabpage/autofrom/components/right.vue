@@ -12,12 +12,6 @@
         {{currentCom.propsAttr}}
       </pre>
     </el-tab-pane>
-    <!--
-    <el-tab-pane label="事件" name="3">
-      <pre v-if="ComList[indexCurrent]">
-        {{ ComList[indexCurrent].events}}
-      </pre>
-    </el-tab-pane> -->
   </el-tabs>
   </div>
 </div>

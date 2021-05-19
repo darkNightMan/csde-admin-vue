@@ -1,6 +1,6 @@
 <template>
     <div class="grid">
-      <wxpGridItem :columns="propsAttr.rows.columns" @dragStart="dragStart" @handleColAdd="handleColAdd"></wxpGridItem>
+      <wxpGridItem :columns="propsAttr.rows.columns"  :gutter="propsAttr.rows.gutter"  @dragStart="dragStart" @handleColAdd="handleColAdd"></wxpGridItem>
   </div>
 </template>
 
@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     dragStart (i, d) {
-      debugger
       this.$emit('dragStart', i)
     },
     handleColAdd (i, d) {
@@ -39,26 +38,9 @@ export default {
 </script>
 <style lang="less" scoped>
 .grid{
-  padding: 4px;
+  padding: 6px;
+   min-height: 70px;
+  border: 1px #ccc dashed;
 }
-  .button{
-    padding: 4px 10px;
-    display: inline-block;
-    color:#fff;
-    border: 1px solid #eee;
-  &.default{
-    background-color:#fff;
-     color:#333;
-  }
-  &.primary{
-    background-color: hsl(210deg 100% 63%);
-  };
-  &.success{
-    background-color: hsl(100deg 54% 49%);
-  };
-  &.danger{
-    background-color: hsl(0deg 87% 69%);
-  }
-};
 
 </style>
