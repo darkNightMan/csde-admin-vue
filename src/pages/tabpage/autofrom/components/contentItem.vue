@@ -1,6 +1,6 @@
 <template>
   <div >
-    <vuedraggable :list="list"  :group="{ name: 'g1' }"    :animation="300"  @end="handleMoveEnd"   @start="handleMoveStart($event, ComList)" @add="add($event, ComList)"  :move="handleMove"  @change="log" >
+    <vuedraggable class="draggable-box" :list="list"  :group="{ name: 'g1' }"    :animation="300"  @end="handleMoveEnd"   @start="handleMoveStart($event, ComList)" @add="add($event, ComList)"  :move="handleMove"  @change="log" >
       <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in list" :key="index"  @click.stop="active(item)">
           <component :is="item.comTag"  :propsAttr="item.propsAttr" @dragStart="dragStart" @handleColAdd="handleColAdd"></component>
           <el-button v-show="uuid === item.uuid"  class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
@@ -61,6 +61,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.draggable-box{
+  min-height: 70px;
+}
   .content{
     background: #eee;
     height: 600px;

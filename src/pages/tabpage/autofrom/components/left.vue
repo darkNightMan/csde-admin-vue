@@ -27,20 +27,6 @@ export default {
 
   },
   methods: {
-    // handleMoveEnd (item) {
-    //   debugger
-    // },
-    // addComponents (e, list) {
-    //   let currentCom = list[e.oldIndex]
-    //   if (!currentCom.uuid) {
-    //     currentCom.uuid = currentCom.comAttrTag + '_' + new Date().getTime()
-    //   } else {
-    //     currentCom.uuid = currentCom.comAttrTag + '_' + new Date().getTime()
-    //   }
-    //   const listString = JSON.stringify(currentCom)
-    //   this.$addComponents(JSON.parse(listString))
-    // },
-
     handleMove () {
       return true
     }
