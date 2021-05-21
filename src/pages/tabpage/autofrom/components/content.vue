@@ -10,6 +10,11 @@
                 {{ComList}}
               </pre>
             </el-tab-pane>
+             <el-tab-pane label="预览" name="3">
+               <div v-for="(item, index) in ComList" :key="index">
+                 <component :is="item.comTag"  :propsAttr="item.propsAttr"></component>
+               </div>
+            </el-tab-pane>
         </el-tabs>
      </el-scrollbar>
   </div>
@@ -38,17 +43,6 @@ export default {
     }
   },
   methods: {
-    add (d, c) {
-      console.log(d, c)
-    },
-    dragStart (i, d) {
-    },
-    handleColAdd (i, d) {
-    },
-    getCom (item) {
-    },
-    log (i) {
-    },
     handleMoveEnd (item) {
     },
     handleMoveStart (e, item) {
