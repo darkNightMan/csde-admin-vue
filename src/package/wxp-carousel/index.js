@@ -25,7 +25,12 @@ export default {
       interval: '',
       direction: 'horizontal'
     },
+    // 事件
     comAttrEvents: {
+
+    },
+    // 样式
+    style: {
 
     }
   }

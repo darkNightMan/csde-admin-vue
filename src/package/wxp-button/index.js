@@ -14,7 +14,12 @@ export default {
       btnType: 'default',
       btnText: '按钮'
     },
+    // 事件
     comAttrEvents: {
+
+    },
+    // 样式
+    style: {
 
     }
   }

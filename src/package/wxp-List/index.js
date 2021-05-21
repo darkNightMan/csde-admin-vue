@@ -12,6 +12,14 @@ export default {
     propsAttr: {
       imgUrl: 'http://localhost:8080/public/uploads/84ae30c406481c699e9e0294838d6852.jpg',
       title: '自动化列表'
+    },
+    // 事件
+    comAttrEvents: {
+
+    },
+    // 样式
+    style: {
+
     }
   }
 }
