@@ -2,7 +2,7 @@
   <div class="wxp-grid-item">
     <el-row :gutter="gutter">
       <el-col class="grid-item" :class="{dashed: isEdit }" v-for="(item, index) in columns" :span="item.span" :key="index" >
-        <contentItem :list="item.list"></contentItem>
+        <contentItem :list="item.list" :isEdit="isEdit"></contentItem>
       </el-col>
     </el-row>
   </div>

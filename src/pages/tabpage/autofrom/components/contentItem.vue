@@ -3,9 +3,10 @@
     <div style="display:none">
       {{list}}
     </div>
-    <vuedraggable class="draggable-box" :list="list"  :group="{ name: 'g1' }"
+    <vuedraggable class="draggable-box" :list="list"  :group="{ name: 'com' }"
       :animation="300"
       @end="handleMoveEnd"
+      ghostClass="ghost"
       @start="handleMoveStart($event, ComList)"
       :move="handleMove"
      >
@@ -66,6 +67,7 @@ export default {
       }
     },
     active (item) {
+      debugger
       if (this.isEdit) {
         this.$setCurrenUuid(item.uuid)
       }
@@ -77,6 +79,11 @@ export default {
 <style lang="less" scoped>
 .draggable-box{
   min-height: 70px;
+  .ghost{
+    background: red;
+    height:0;
+    overflow: hidden;
+  }
 }
   .content{
     background: #eee;

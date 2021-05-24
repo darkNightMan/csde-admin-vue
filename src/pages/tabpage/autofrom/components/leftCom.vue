@@ -6,7 +6,7 @@
         v-bind="{group:{ name:'wxp',},
                 sort:false,
                 animation: 180,
-                ghostClass: 'com'}">
+                ghostClass: 'comList'}">
             <li v-for="(item, index) in componentsConfig" :key="index" @click="$emit('handPushList', index, componentsConfig)"  @dragstart="$emit('handPushList', index, componentsConfig)">
                 <i :class="item.comIcon ? item.comIcon: 'el-icon-eleme'"></i>
               {{item.comName}}
@@ -46,6 +46,7 @@ export default {
     font-size: 16px;
     line-height: 40px;
     border-radius: 4px;
+    cursor: pointer;
     i{
       margin-right: 10px;
     }
