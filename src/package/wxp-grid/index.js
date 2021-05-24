@@ -23,7 +23,7 @@ export default {
             list: []
           }
         ],
-        gutter: 0
+        gutter: 10
       }
     },
     // 事件

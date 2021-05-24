@@ -3,7 +3,7 @@
      <el-scrollbar class="page-component__nav" style="height:100%" >
          <el-tabs v-model="activeName" @tab-click="handleClick" >
             <el-tab-pane label="布局" name="1">
-              <contentItem :list="ComList"></contentItem>
+              <contentItem :list="ComList" :isEdit="true"></contentItem>
             </el-tab-pane>
             <el-tab-pane label="数据" name="2">
               <pre>

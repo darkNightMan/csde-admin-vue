@@ -1,8 +1,13 @@
 <template>
-  <div >
-    <vuedraggable class="draggable-box" :list="list"  :group="{ name: 'g1' }"    :animation="300"  @end="handleMoveEnd"   @start="handleMoveStart($event, ComList)" @add="add($event, ComList)"  :move="handleMove"  @change="log" >
+  <div>
+    <vuedraggable class="draggable-box" :list="list"  :group="{ name: 'g1' }"
+      :animation="300"
+      @end="handleMoveEnd"
+      @start="handleMoveStart($event, ComList)"
+      :move="handleMove"
+     >
       <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in list" :key="index"  @click.stop="active(item)">
-          <component :is="item.comTag"  :propsAttr="item.propsAttr" @dragStart="dragStart" @handleColAdd="handleColAdd"></component>
+          <component :is="item.comTag"  :isEdit="isEdit" :propsAttr="item.propsAttr" @dragStart="dragStart" @handleColAdd="handleColAdd"></component>
           <el-button v-show="uuid === item.uuid"  class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
         </div>
     </vuedraggable>
@@ -20,7 +25,8 @@ export default {
   created () {
   },
   props: {
-    list: Object
+    list: Object,
+    isEdit: false
   },
   computed: {
     ComList: {
@@ -33,16 +39,9 @@ export default {
     }
   },
   methods: {
-    add (d, c) {
-      console.log(d, c)
-    },
     dragStart (i, d) {
     },
     handleColAdd (i, d) {
-    },
-    getCom (item) {
-    },
-    log (i) {
     },
     handleMoveEnd (item) {
     },
@@ -51,10 +50,14 @@ export default {
     handleMove (item) {
     },
     delCom (item) {
-      this.$delComponent(item)
+      if (this.isEdit) {
+        this.$delComponent(item)
+      }
     },
     active (item) {
-      this.$setCurrenUuid(item.uuid)
+      if (this.isEdit) {
+        this.$setCurrenUuid(item.uuid)
+      }
     }
   }
 }

@@ -1,22 +1,28 @@
 <template>
   <div class="main">
    <el-row>
-      <el-col :span="3"><left @createComKey="createComKey" @handPushList="handPushList"></left></el-col>
-      <el-col :span="16"><contentCenter> </contentCenter></el-col>
-      <el-col :span="5"><right></right></el-col>
+      <el-col :span="3">
+        <leftCom @createComKey="createComKey" @handPushList="handPushList"></leftCom>
+      </el-col>
+      <el-col :span="16">
+        <contentCenter> </contentCenter>
+      </el-col>
+      <el-col :span="5">
+        <rightAttr></rightAttr>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import left from './components/left'
+import leftCom from './components/leftCom'
 import contentCenter from './components/content'
-import right from './components/right'
+import rightAttr from './components/rightAttr'
 export default {
   components: {
-    left,
+    leftCom,
     contentCenter,
-    right
+    rightAttr
   },
   data () {
     return {
@@ -27,11 +33,7 @@ export default {
     },
     handPushList (index, list) {
       let currentCom = list[index]
-      if (!currentCom.uuid) {
-        currentCom['uuid'] = currentCom.comAttrTag + '_' + new Date().getTime()
-      } else {
-        currentCom['uuid'] = currentCom.comAttrTag + '_' + new Date().getTime()
-      }
+      currentCom['uuid'] = currentCom.comAttrTag + '_' + new Date().getTime()
       const listString = JSON.stringify(currentCom)
       this.$addComponents(JSON.parse(listString))
     }

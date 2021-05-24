@@ -1,6 +1,6 @@
 <template>
-    <div class="grid">
-      <wxpGridItem :columns="propsAttr.rows.columns"  :gutter="propsAttr.rows.gutter"  @dragStart="dragStart" @handleColAdd="handleColAdd"></wxpGridItem>
+    <div class="grid" :class="{dashed:isEdit}">
+      <wxpGridItem :columns="propsAttr.rows.columns"  :gutter="propsAttr.rows.gutter"  :isEdit="isEdit"></wxpGridItem>
   </div>
 </template>
 
@@ -20,19 +20,16 @@ export default {
       default: () => {
         return {}
       }
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
     }
   },
   created () {
     console.log(this.propsAttr.rows)
   },
   methods: {
-    dragStart (i, d) {
-      this.$emit('dragStart', i)
-    },
-    handleColAdd (i, d) {
-    },
-    end (item) {
-    }
   }
 }
 </script>
@@ -40,7 +37,10 @@ export default {
 .grid{
   padding: 6px;
    min-height: 70px;
-  border: 1px #ccc dashed;
+
+}
+.dashed{
+   border: 1px #ccc dashed;
 }
 
 </style>

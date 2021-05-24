@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="wxp-grid-item">
     <el-row :gutter="gutter">
-      <el-col class="grid-item 2" v-for="(item, index) in columns" :span="item.span" :key="index" >
+      <el-col class="grid-item" :class="{dashed: isEdit }" v-for="(item, index) in columns" :span="item.span" :key="index" >
         <contentItem :list="item.list"></contentItem>
       </el-col>
     </el-row>
@@ -29,6 +29,10 @@ export default {
     gutter: {
       type: Number,
       default: 0
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
     }
   },
   created () {
@@ -39,9 +43,12 @@ export default {
 </script>
 <style lang="less" scoped>
 .grid-item{
-  border: 1px #ccc dashed;
   padding: 4px;
-   min-height: 70px;
+  min-height: 70px;
+
 }
+ .dashed{
+     border: 1px #ccc dashed;
+  }
 
 </style>
