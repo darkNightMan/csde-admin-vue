@@ -6,9 +6,6 @@ export default {
     comTag: 'wxp-button',
     comAttrTag: 'attr-button',
     comIcon: 'fa fa-hand-o-down',
-    comStyle: {
-      background: '#333'
-    },
     // props
     propsAttr: {
       btnType: 'default',
@@ -19,8 +16,12 @@ export default {
 
     },
     // 样式
-    style: {
-
+    styleCom: {
+      width: '',
+      height: '',
+      background: '',
+      fontSize: '',
+      color: ''
     }
   }
 }

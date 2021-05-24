@@ -4,12 +4,14 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="属性" name="1">
       <el-form ref="form"  label-width="80px">
-        <component :is="currentCom.comAttrTag"  :propsAttr="currentCom.propsAttr" v-bind.sync="currentCom.propsAttr"></component>
+        <component :is="currentCom.comAttrTag"  :propsAttr="currentCom.propsAttr"  v-bind.sync="currentCom.propsAttr"></component>
+         <comAttr v-if="currentCom.styleCom" :styleCom="currentCom.styleCom"></comAttr>
       </el-form>
+
     </el-tab-pane>
      <el-tab-pane label="数据" name="2">
       <pre>
-        {{currentCom.propsAttr}}
+        {{currentCom}}
       </pre>
     </el-tab-pane>
   </el-tabs>
@@ -17,6 +19,7 @@
 </div>
 </template>
 <script>
+import comAttr from './comAttr'
 export default {
   data () {
     return {
@@ -25,6 +28,9 @@ export default {
   },
   created () {
     console.log()
+  },
+  components: {
+    comAttr
   },
   computed: {
     propsAttr () {

@@ -12,7 +12,7 @@
             </el-tab-pane>
              <el-tab-pane label="预览" name="3">
                <div v-for="(item, index) in ComList" :key="index">
-                 <component :is="item.comTag"  :propsAttr="item.propsAttr"></component>
+                 <component :is="item.comTag" :style="item.styleCom"  :propsAttr="item.propsAttr"></component>
                </div>
             </el-tab-pane>
         </el-tabs>

@@ -7,7 +7,7 @@
       :move="handleMove"
      >
       <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in list" :key="index"  @click.stop="active(item)">
-          <component :is="item.comTag"  :isEdit="isEdit" :propsAttr="item.propsAttr" @dragStart="dragStart" @handleColAdd="handleColAdd"></component>
+          <component :is="item.comTag"  :isEdit="isEdit" :propsAttr="item.propsAttr" @dragStart="dragStart" :style="item.styleCom"  @handleColAdd="handleColAdd"></component>
           <el-button v-show="uuid === item.uuid"  class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
         </div>
     </vuedraggable>

@@ -1,5 +1,5 @@
 <template>
-  <div class="button" :class="propsAttr.btnType">
+  <div class="button" :class="propsAttr.btnType" @click="clickFn">
     {{propsAttr.btnText}}
   </div>
 </template>
@@ -21,6 +21,11 @@ export default {
   },
   created () {
     console.log(this)
+  },
+  methods: {
+    clickFn () {
+
+    }
   }
 }
 </script>
