@@ -15,8 +15,12 @@ export default {
 
     },
     // 样式
-    style: {
-
+    styleCom: {
+      width: '300px',
+      height: '',
+      background: '',
+      fontSize: '',
+      color: ''
     }
   }
 }

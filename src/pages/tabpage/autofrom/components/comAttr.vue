@@ -1,28 +1,35 @@
 <template>
   <div>
     <el-form-item label="宽度" >
-         <el-input v-model="localPropsAttr.width"></el-input>
+         <el-input v-model="localstyleCom.width"></el-input>
      </el-form-item>
         <el-form-item label="高度" >
-         <el-input v-model="localPropsAttr.height"></el-input>
+         <el-input v-model="localstyleCom.height"></el-input>
      </el-form-item>
         <el-form-item label="背景颜色">
-         <el-input v-model="localPropsAttr.background"></el-input>
+         <el-input v-model="localstyleCom.background"></el-input>
      </el-form-item>
         <el-form-item label="字体大小" >
-         <el-input v-model="localPropsAttr.fontSize"></el-input>
+         <el-input v-model="localstyleCom.fontSize"></el-input>
      </el-form-item>
         <el-form-item label="字体颜色" >
-         <el-input v-model="localPropsAttr.color"></el-input>
+         <el-input v-model="localstyleCom.color"></el-input>
      </el-form-item>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'comAttr',
   data () {
     return {
-      localPropsAttr: {}
+      localstyleCom: {
+        width: '',
+        height: '',
+        background: '',
+        fontSize: '',
+        color: ''
+      }
     }
   },
   props: {
@@ -40,22 +47,20 @@ export default {
     }
   },
   watch: {
-    propsAttr: {
+    localstyleCom: {
       deep: true,
       handler () {
-        this.localPropsAttr = this.styleCom
+        for (let item in this.localstyleCom) {
+          this.$set(this.styleCom, item, this.localstyleCom[item])
+        }
       }
     },
-    localPropsAttr: {
+    styleCom: {
       deep: true,
       handler () {
-        this.$emit('update:styleCom', this.localPropsAttr)
+        this.localstyleCom = this.styleCom
       }
     }
-  },
-  mounted () {
-    debugger
-    this.localPropsAttr = this.styleCom
   }
 }
 </script>

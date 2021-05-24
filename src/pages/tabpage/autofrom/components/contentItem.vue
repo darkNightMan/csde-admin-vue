@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div style="display:none">
+      {{list}}
+    </div>
     <vuedraggable class="draggable-box" :list="list"  :group="{ name: 'g1' }"
       :animation="300"
       @end="handleMoveEnd"
@@ -7,7 +10,7 @@
       :move="handleMove"
      >
       <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in list" :key="index"  @click.stop="active(item)">
-          <component :is="item.comTag"  :isEdit="isEdit" :propsAttr="item.propsAttr" @dragStart="dragStart" :style="item.styleCom"  @handleColAdd="handleColAdd"></component>
+          <component :is="item.comTag"  :isEdit="isEdit" :style="item.styleCom" :propsAttr="item.propsAttr" @dragStart="dragStart"   @handleColAdd="handleColAdd"></component>
           <el-button v-show="uuid === item.uuid"  class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
         </div>
     </vuedraggable>
@@ -36,6 +39,14 @@ export default {
     },
     uuid () {
       return this.$uuid()
+    }
+  },
+  watch: {
+    list: {
+      deep: true,
+      handler () {
+
+      }
     }
   },
   methods: {

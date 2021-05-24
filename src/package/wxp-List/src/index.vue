@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="list-box">
-        <img  :src="propsAttr.imgUrl"/>
+        <img :src="propsAttr.imgUrl"/>
         <h2>{{propsAttr.title}}</h2>
         <p></p>
     </div>
@@ -27,14 +27,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .list-box{
-  border: 1px solid #eee;
-}
- img{
-    padding: 4px;
+  border: 1px solid #333;
+  padding: 4px;
+  width: 100%;
+  box-shadow: 3px 5px 6px #eee;
+  img{
+    width: 100%;
   }
   h2 {
     font-size: 16px;
+    padding: 6px;
   }
+}
+
 </style>

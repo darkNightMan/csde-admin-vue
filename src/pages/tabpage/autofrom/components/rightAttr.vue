@@ -4,8 +4,9 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="属性" name="1">
       <el-form ref="form"  label-width="80px">
-        <component :is="currentCom.comAttrTag"  :propsAttr="currentCom.propsAttr"  v-bind.sync="currentCom.propsAttr"></component>
-         <comAttr v-if="currentCom.styleCom" :styleCom="currentCom.styleCom"></comAttr>
+        {{currentCom}}
+        <component :is="currentCom.comAttrTag"  :propsAttr="currentCom.propsAttr"  v-bind.sync="currentCom.propsAttr" ></component>
+        <comAttr v-if="currentCom.comAttrTag" :styleCom="currentCom.styleCom"  v-bind.sync="currentCom.styleCom"></comAttr>
       </el-form>
 
     </el-tab-pane>
