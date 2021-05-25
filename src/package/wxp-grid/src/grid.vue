@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import contentItem from '@/pages/tabpage/autoPage/components/contentItem'
+import contentItem from './contentItem'
 export default {
   components: {
     contentItem

@@ -67,6 +67,7 @@ export default {
       }
     },
     active (item) {
+      debugger
       if (this.isEdit) {
         this.$setCurrenUuid(item.uuid)
       }

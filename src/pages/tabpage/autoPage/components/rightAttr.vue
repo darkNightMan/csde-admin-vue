@@ -1,21 +1,23 @@
 <template>
 <div class="right" :style="{height: $windowHeight() + 'px'}">
-  <div class="right-attr">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="属性" name="1">
-      <el-form ref="form"  label-width="80px">
-        <component :is="currentCom.comAttrTag"  :propsAttr="currentCom.propsAttr"  v-bind.sync="currentCom.propsAttr" ></component>
-        <comAttr v-if="currentCom.comAttrTag" :styleCom="currentCom.styleCom"  v-bind.sync="currentCom.styleCom"></comAttr>
-      </el-form>
-    </el-tab-pane>
-    <el-tab-pane label="数据" name="2">
-       <json-viewer :value="currentCom" :copyable="{copiedText:'复制成功', copyText:'复制'}"  expand-depth="10" theme="jv-light"></json-viewer>
-    </el-tab-pane>
-     <el-tab-pane label="事件" name="3">
-        <component :is="currentCom.comEventTag"  :comEvents="currentCom.comEvents"  v-bind.sync="currentCom.comEvents" ></component>
-    </el-tab-pane>
-  </el-tabs>
-  </div>
+   <el-scrollbar class="page-component__nav" style="height:100%" >
+      <div class="right-attr">
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="属性" name="1">
+          <el-form ref="form"  label-width="80px">
+            <component :is="currentCom.comAttrTag"  :propsAttr="currentCom.propsAttr"  v-bind.sync="currentCom.propsAttr" ></component>
+            <comAttr v-if="currentCom.comAttrTag" :styleCom="currentCom.styleCom"  v-bind.sync="currentCom.styleCom"></comAttr>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="数据" name="2">
+          <json-viewer :value="currentCom" :copyable="{copiedText:'复制成功', copyText:'复制'}"  expand-depth="10" theme="jv-light"></json-viewer>
+        </el-tab-pane>
+        <el-tab-pane label="事件" name="3">
+            <component :is="currentCom.comEventTag"  :comEvents="currentCom.comEvents"  v-bind.sync="currentCom.comEvents" ></component>
+        </el-tab-pane>
+      </el-tabs>
+      </div>
+  </el-scrollbar>
 </div>
 </template>
 <script>
