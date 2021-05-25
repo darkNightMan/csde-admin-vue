@@ -13,7 +13,12 @@ const installComponents = (Vue) => {
   components.forEach(key => {
     if (key.component.name) {
       Vue.component(key.config.comTag, () => import(`@/package/${key.component.name}/src/index.vue`)) // 功能组件
-      Vue.component(key.config.comAttrTag, () => import(`@/package/${key.component.name}/src/attr.vue`)) // 组件属性
+      if (key.config.comAttrTag) {
+        Vue.component(key.config.comAttrTag, () => import(`@/package/${key.component.name}/src/attr.vue`)) // 组件属性
+      }
+      if (key.config.comEventTag) {
+        Vue.component(key.config.comEventTag, () => import(`@/package/${key.component.name}/src/event.vue`)) // 组件事件
+      }
     } else {
       console.error(`无组件名称！`)
     }

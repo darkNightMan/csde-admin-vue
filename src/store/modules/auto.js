@@ -20,9 +20,16 @@ const actions = {
   // 删除组件
   delComponent ({ commit }, data) {
     commit('delComponentM', data)
+  },
+  // 重做
+  redoPage ({ commit }) {
+    commit('redoPageM')
   }
 }
 const mutations = {
+  redoPageM (state) {
+    state.comList = []
+  },
   delComponentM (state, data) {
     const delFn = (list, uuid) => {
       list.map((item, index) => {

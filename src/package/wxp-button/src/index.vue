@@ -17,6 +17,16 @@ export default {
         return {
         }
       }
+    },
+    comEvents: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
     }
   },
   created () {
@@ -24,7 +34,9 @@ export default {
   },
   methods: {
     clickFn () {
-
+      if (!this.isEdit) {
+        window.open(this.comEvents.link, '_blank')
+      }
     }
   }
 }

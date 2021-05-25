@@ -1,29 +1,18 @@
 <template>
   <div  class='content' :style="{height: $windowHeight() + 'px'}">
      <el-scrollbar class="page-component__nav" style="height:100%" >
-         <el-tabs v-model="activeName" @tab-click="handleClick" >
-            <el-tab-pane label="布局" name="1">
-              <contentItem :list="ComList" :isEdit="true"></contentItem>
-            </el-tab-pane>
-            <el-tab-pane label="数据" name="2">
-              <pre>
-                {{ComList}}
-              </pre>
-            </el-tab-pane>
-             <el-tab-pane label="预览" name="3">
-               <div v-for="(item, index) in ComList" :key="index">
-                 <component :is="item.comTag" :style="item.styleCom"  :propsAttr="item.propsAttr"></component>
-               </div>
-            </el-tab-pane>
-        </el-tabs>
+        <editBar></editBar>
+        <contentItem :list="ComList"  :isEdit="true"></contentItem>
      </el-scrollbar>
   </div>
 </template>
 <script>
 import contentItem from './contentItem'
+import editBar from './editBar'
 export default {
   components: {
-    contentItem
+    contentItem,
+    editBar
   },
   data () {
     return {
@@ -43,13 +32,6 @@ export default {
     }
   },
   methods: {
-    handleMoveEnd (item) {
-    },
-    handleMoveStart (e, item) {
-      console.log(item)
-    },
-    handleMove (item) {
-    },
     delCom (item) {
       this.$delComponent(item)
     },

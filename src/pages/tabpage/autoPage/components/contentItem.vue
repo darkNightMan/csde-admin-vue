@@ -10,9 +10,9 @@
       @start="handleMoveStart($event, ComList)"
       :move="handleMove"
      >
-      <div class="wrap" :class="{red: uuid === item.uuid}" v-for="(item, index) in list" :key="index"  @click.stop="active(item)">
-          <component :is="item.comTag"  :isEdit="isEdit" :style="item.styleCom" :propsAttr="item.propsAttr" @dragStart="dragStart"   @handleColAdd="handleColAdd"></component>
-          <el-button v-show="uuid === item.uuid"  class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
+      <div class="wrap" :class="{active: uuid === item.uuid && isEdit}" v-for="(item, index) in list" :key="index"  @click.stop="active(item)">
+          <component :is="item.comTag"  :isEdit="isEdit" :style="item.styleCom" :propsAttr="item.propsAttr" :comEvents="item.comEvents" @dragStart="dragStart"   @handleColAdd="handleColAdd"></component>
+          <el-button v-show="uuid === item.uuid && isEdit"  class="btn del" type="danger" size="mini"  plain @click.stop="delCom(item)">删除</el-button>
         </div>
     </vuedraggable>
   </div>
@@ -98,7 +98,7 @@ export default {
       z-index: 11111;
     }
   }
-  .wrap.red {
+  .wrap.active {
       border: 4px solid rgb(45, 140, 240);
   }
   .mask{

@@ -4,6 +4,7 @@ export default {
   config: {
     comName: '按钮',
     comTag: 'wxp-button',
+    comEventTag: 'event-button',
     comAttrTag: 'attr-button',
     comIcon: 'fa fa-hand-o-down',
     // props
@@ -12,8 +13,8 @@ export default {
       btnText: '按钮'
     },
     // 事件
-    comAttrEvents: {
-
+    comEvents: {
+      link: 'https://www.yoins.com'
     },
     // 样式
     styleCom: {
