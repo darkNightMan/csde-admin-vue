@@ -18,11 +18,12 @@ const createLintingRule = () => ({
     emitWarning: !config.dev.showEslintErrorsInOverlay
   }
 })
+const market = process.env.npm_config_market
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js'
+    app: !market ? './src/main.js' : './marketing/main.js'
   },
   output: {
     path: config.build.assetsRoot,

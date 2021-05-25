@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div style="display:none">
-      {{list}}
-    </div>
     <vuedraggable class="draggable-box" :list="list"  :group="{ name: 'com' }"
       :animation="300"
       @end="handleMoveEnd"
@@ -46,7 +43,6 @@ export default {
     list: {
       deep: true,
       handler () {
-
       }
     }
   },
@@ -67,7 +63,6 @@ export default {
       }
     },
     active (item) {
-      debugger
       if (this.isEdit) {
         this.$setCurrenUuid(item.uuid)
       }
