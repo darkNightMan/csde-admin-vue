@@ -6,7 +6,7 @@
         <el-tab-pane label="属性" name="1">
           <el-form ref="form"  label-width="80px">
             <component :is="currentCom.comAttrTag"  :propsAttr="currentCom.propsAttr"  v-bind.sync="currentCom.propsAttr" ></component>
-            <comAttr v-if="currentCom.comAttrTag" :styleCom="currentCom.styleCom"  v-bind.sync="currentCom.styleCom"></comAttr>
+            <comAttr v-if="currentCom.styleCom" :styleCom="currentCom.styleCom"  v-bind.sync="currentCom.styleCom"></comAttr>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="数据" name="2">
