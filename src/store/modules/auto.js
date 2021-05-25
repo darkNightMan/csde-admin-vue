@@ -29,6 +29,7 @@ const actions = {
 const mutations = {
   redoPageM (state) {
     state.comList = []
+    state.currentCom = {}
   },
   delComponentM (state, data) {
     const delFn = (list, uuid) => {
