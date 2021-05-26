@@ -4,6 +4,7 @@ import App from './App'
 import ElementUI from 'element-ui'
 import store from '@/store'
 import Req from '@/request/http'
+import router from './router'
 import { installComponents } from '@/package'
 Vue.config.productionTip = false
 // 安装组件
@@ -15,6 +16,7 @@ Vue.config.devtools = true
 new Vue({
   el: '#app',
   store: store,
+  router: router,
   components: { App: App },
   template: '<App/>'
 })

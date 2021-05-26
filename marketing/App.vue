@@ -1,20 +1,17 @@
 
 <template>
   <div id="app">
-    <marketing />
+    <router-view></router-view>
   </div>
 </template>
 <script>
-import marketing from './components/marketing'
+
 export default {
   name: 'app',
   data () {
     return {
       marketing: false
     }
-  },
-  components: {
-    marketing
   }
 }
 
