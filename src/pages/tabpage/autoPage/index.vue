@@ -28,6 +28,9 @@ export default {
     return {
     }
   },
+  created () {
+    console.log(this)
+  },
   methods: {
     createComKey (index, list) {
     },

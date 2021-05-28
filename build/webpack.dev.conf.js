@@ -23,10 +23,24 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     clientLogLevel: 'warning',
-    historyApiFallback: {
+    historyApiFallback: true,
+    // historyApiFallback: {
+    //   rewrites: [
+    //     { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
+    //   ],
+    // },
+    historyApiFallback: { // 兼容vue-router history模式
+      disableDotRule: true,
       rewrites: [
-        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
-      ],
+        {
+          from: /marketing.html/g,
+          to:  '/index.html'
+        },
+        // {
+        //   from: /.*/g,
+        //   to: 'index.html'
+        // }
+      ]
     },
     hot: true,
     contentBase: false, // since we use CopyWebpackPlugin.
@@ -54,7 +68,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: !market ? 'index.html' : './marketing/index.html',
+      template: !market ? 'index.html' :  market === 'SSR'? './marketing/index.ssr.html' : './marketing/index.html',
       inject: true
     }),
     // copy custom static assets

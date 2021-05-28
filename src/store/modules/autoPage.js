@@ -5,8 +5,8 @@ const state = {
   currentCom: {}
 }
 const getters = {
-  gettersComList: state.comList,
-  currentCom: state.currentCom
+  gettersComList: state => state.comList,
+  currentCom: state => state.currentCom
 }
 const actions = {
   // 添加组件

@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from './store'
+import {store} from './store'
 import ElementUI from 'element-ui'
 import VueCropper from 'vue-cropper'
 // import 'element-ui/lib/theme-chalk/index.css'
@@ -21,7 +21,7 @@ import {installComponents} from '@/package'
 import vuedraggable from 'vuedraggable'
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
-
+console.log(store)
 Vue.component('vuedraggable', vuedraggable)
 // 安装组件
 installComponents(Vue)

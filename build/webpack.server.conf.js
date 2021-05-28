@@ -1,27 +1,22 @@
 const merge = require('webpack-merge');
 const webpack  = require('webpack');
-const base = require('./webpack.base.conf.js');
+const config = require('../config')
+const baseConfig  = require('./webpack.base.conf.js');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
-const serveConfig = merge(base, {
+process.env.NODE_ENV = 'production'
+const serveConfig = merge(baseConfig, {
   target: 'node',
-  mode: 'production',
-  entry: './src/entry-server.js',    
-  
+  // mode: 'production',
+  entry: './marketing/entry-ssr-server.js',
   output: {
-    filename: 'server-bundle.js', // bundle.js
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs2',
+    path: config.build.assetsRoot,
+    filename: 'server-bundle.js',
+    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   // 只打包dependencies配置 里面所依赖的包模块
   externals: Object.keys(require('../package.json').dependencies),
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.ssr.html',
-      filename: 'index.ssr.html',
-      files: {
-        js: 'clinet.js'
-      }, // client.js需要在html中引入
-      excludeChunks: ['server'] // server.js只在服务端执行，所以不能打包到html中
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.VUE_ENV': '"server"'

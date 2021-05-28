@@ -4,7 +4,7 @@
       :animation="300"
       @end="handleMoveEnd"
       ghostClass="ghost"
-      @start="handleMoveStart($event, ComList)"
+      @start="handleMoveStart($event, list)"
       :move="handleMove"
      >
       <div class="wrap" :class="{active: uuid === item.uuid && isEdit}" v-for="(item, index) in list" :key="index"  @click.stop="active(item)">
@@ -20,24 +20,14 @@ export default {
   name: 'content-item',
   data () {
     return {
-      componentsList: []
+      uuid: ''
     }
   },
   created () {
   },
   props: {
-    list: Object,
+    list: Array,
     isEdit: false
-  },
-  computed: {
-    ComList: {
-      get () {
-        return this.$comList()
-      }
-    },
-    uuid () {
-      return this.$uuid()
-    }
   },
   watch: {
     list: {
@@ -64,7 +54,7 @@ export default {
     },
     active (item) {
       if (this.isEdit) {
-        this.$setCurrenUuid(item.uuid)
+        this.uuid = item.uuid
       }
     }
   }
@@ -75,7 +65,6 @@ export default {
 .draggable-box{
   min-height: 70px;
   .ghost{
-    background: red;
     height:0;
     overflow: hidden;
   }

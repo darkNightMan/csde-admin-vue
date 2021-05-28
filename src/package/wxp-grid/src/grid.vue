@@ -21,9 +21,9 @@ export default {
   name: 'wxp-grid-item',
   props: {
     columns: {
-      type: Object,
+      type: Array,
       default: () => {
-        return {}
+        return []
       }
     },
     gutter: {

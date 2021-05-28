@@ -2,7 +2,7 @@
   <div class="left" :style="{height: $windowHeight() + 'px'}">
     <h2>组件库</h2>
     <ul class="component-content">
-        <vuedraggable :list="componentsConfig" @end="handleMoveEnd" :move="handleMove"
+        <vuedraggable :list="componentsConfig"
         v-bind="{group:{ name:'wxp',},
                 sort:false,
                 animation: 180,

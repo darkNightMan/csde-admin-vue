@@ -1,12 +1,12 @@
 
 import Vuex from 'vuex'
 import Vue from 'vue'
-import tabs from './modules/tabs'
-import user from './modules/user'
-import app from './modules/app'
-import theme from './modules/theme'
-import autoPage from './modules/autoPage'
-import VuexExtend from './vuexExtend'
+import tabs from '@/store/modules/tabs'
+import user from '@/store/modules/user'
+import app from '@/store/modules/app'
+import theme from '@/store/modules/theme'
+import autoPage from '@/store/modules/autoPage'
+import VuexExtend from '@/store/vuexExtend'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
@@ -38,5 +38,12 @@ const store = new Vuex.Store({
     }
   })]
 })
-
-export default store
+// SSR 返回实列
+const createStore = () => {
+  return new Vuex.Store({
+    modules: {
+      autoPage
+    }
+  })
+}
+export {store, createStore}

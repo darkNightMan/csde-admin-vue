@@ -7,7 +7,7 @@
       <el-button size="small" type="primary" icon="el-icon-position">保存发布</el-button>
     </el-row>
     <el-dialog    title="JOSN 数据"    :visible.sync="dialogVisibleJson"    width="50%">
-      <json-viewer :value="ComList" :copyable="{copiedText:'复制成功', copyText:'复制'}"  expand-depth="10" theme="jv-light"></json-viewer>
+      <json-viewer :value="ComList" :copyable="{copiedText:'复制成功', copyText:'复制'}"  :expand-depth="5" theme="jv-light"></json-viewer>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisibleJson = false">取 消</el-button>
           <el-button type="primary" @click="dialogVisibleJson = false">确 定</el-button>

@@ -10,7 +10,7 @@
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="数据" name="2">
-          <json-viewer :value="currentCom" :copyable="{copiedText:'复制成功', copyText:'复制'}"  expand-depth="10" theme="jv-light"></json-viewer>
+          <json-viewer :value="currentCom" :copyable="{copiedText:'复制成功', copyText:'复制'}"  :expand-depth="10" theme="jv-light"></json-viewer>
         </el-tab-pane>
         <el-tab-pane label="事件" name="3">
             <component :is="currentCom.comEventTag"  :comEvents="currentCom.comEvents"  v-bind.sync="currentCom.comEvents" ></component>

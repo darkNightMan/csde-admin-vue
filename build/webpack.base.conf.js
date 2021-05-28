@@ -23,22 +23,20 @@ const market = process.env.npm_config_market
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: !market ? './src/main.js' : './marketing/main.js'
+    app: !market ? './src/main.js' : './marketing/entry-ssr-clinet.js'
   },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   externals: {
-    'vue': 'Vue',
-    'vue-router': 'VueRouter',
-    'axios': 'axios',
-    'element-ui': 'ELEMENT',
-    'vuex': 'Vuex',
-    'echarts': 'echarts'
+    // 'vue': 'Vue',
+    // 'vue-router': 'VueRouter',
+    // 'axios': 'axios',
+    // 'element-ui': 'ELEMENT',
+    // 'vuex': 'Vuex',
+    // 'echarts': 'echarts'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

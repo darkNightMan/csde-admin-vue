@@ -29,7 +29,7 @@ export default {
   created () {
   },
   props: {
-    list: Object,
+    list: Array,
     isEdit: false
   },
   computed: {
