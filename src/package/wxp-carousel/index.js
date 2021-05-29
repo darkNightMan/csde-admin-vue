@@ -18,7 +18,7 @@ export default {
         },
         {
           name: 'u=337418265,3258441697&fm=193.jpg',
-          url: 'http://localhost:8080/public/uploads/u=337418265,3258441697&fm=193.jpg'
+          url: 'http://localhost:8080/public/uploads/5ba338b158474650.jpg'
         }
       ],
       autoplay: true,
