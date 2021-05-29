@@ -60,6 +60,10 @@ function renderToString (context) {
 }
 
 server.get('*',async(req, res) => {
+  if(req.url!=="/favicon.ico"){
+        console.log(req.url);
+    　　res.end();
+　　}
   console.log(req.url)
   // if(req.url.indexOf("/favicon.ico") ===-1){
   //      res.end();
@@ -81,7 +85,7 @@ server.get('*',async(req, res) => {
   }
  try {
     res.setHeader('Content-Type', 'text/html')
-    const context = { title: 'SSR我来啦', url: req.url  }
+    const context = { title: 'SSR', url: req.url  }
     const html = await renderToString(context)
     res.send(html)
   } catch (error) {

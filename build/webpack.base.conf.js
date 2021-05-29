@@ -3,7 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
+const VueLoaderPlugin = require('vue-loader').VueLoaderPlugin
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -18,12 +18,10 @@ const createLintingRule = () => ({
     emitWarning: !config.dev.showEslintErrorsInOverlay
   }
 })
-const market = process.env.npm_config_market
-
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: !market ? './src/main.js' : './marketing/entry-ssr-clinet.js'
+    app: './src/main.js'
   },
   output: {
     path: config.build.assetsRoot,
@@ -31,12 +29,12 @@ module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   externals: {
-    // 'vue': 'Vue',
-    // 'vue-router': 'VueRouter',
-    // 'axios': 'axios',
-    // 'element-ui': 'ELEMENT',
-    // 'vuex': 'Vuex',
-    // 'echarts': 'echarts'
+    'vue': 'Vue',
+    'vue-router': 'VueRouter',
+    'axios': 'axios',
+    'element-ui': 'ELEMENT',
+    'vuex': 'Vuex',
+    'echarts': 'echarts'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -45,6 +43,9 @@ module.exports = {
       '@': resolve('src'),
     }
   },
+  plugins:[
+    new VueLoaderPlugin()
+  ],
   module: {
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),

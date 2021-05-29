@@ -9,12 +9,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const market = process.env.npm_config_market
 const env = require('../config/prod.env')
-console.log(market, 'marketmarketmarketmarketmarketmarketmarketmarketmarketmarket')
-console.log( !market ? 'index.html' : './marketing/index.html',)
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -64,7 +60,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: config.build.index,
-      template: !market ? 'index.html' : market === 'SSR'? './marketing/index.ssr.html' : './marketing/index.html',
+      template: 'index.html',
       inject: true,
       minify: {
         removeComments: true,
@@ -144,8 +140,8 @@ if (config.build.bundleAnalyzerReport) {
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
-if (market === 'SSR') {
-  webpackConfig.plugins.push(new VueSSRClientPlugin())
-}
+// if (market === 'SSR') {
+//   webpackConfig.plugins.push(new VueSSRClientPlugin())
+// }
 
 module.exports = webpackConfig

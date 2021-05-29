@@ -38,12 +38,4 @@ const store = new Vuex.Store({
     }
   })]
 })
-// SSR 返回实列
-const createStore = () => {
-  return new Vuex.Store({
-    modules: {
-      autoPage
-    }
-  })
-}
-export {store, createStore}
+export {store}
