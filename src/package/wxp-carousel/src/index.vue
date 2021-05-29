@@ -35,7 +35,7 @@ export default {
             }
           ],
           autoplay: true,
-          interval: 100,
+          interval: 1000,
           direction: 'horizontal'
         }
       }

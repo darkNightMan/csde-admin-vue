@@ -22,7 +22,7 @@ export default {
         }
       ],
       autoplay: true,
-      interval: '',
+      interval: 1000,
       direction: 'horizontal'
     },
     // 事件
