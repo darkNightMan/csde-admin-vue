@@ -15,10 +15,8 @@ installComponents(Vue)
 export function createApp () {
   // 创建 router 实例
   const router = createRouter()
-  debugger
   // 穿件 store 实列
   const store = createStore()
-
   // 同步路由状态(route state)到 store
   sync(store, router)
 

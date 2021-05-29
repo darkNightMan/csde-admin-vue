@@ -14,11 +14,11 @@ export default {
       imgUrlArr: [
         {
           name: 'u=4180093578,3682525324&fm=193.jpg',
-          url: '/public/uploads/u=4180093578,3682525324&fm=193.jpg'
+          url: 'http://localhost:8080/public/uploads/u=4180093578,3682525324&fm=193.jpg'
         },
         {
           name: 'u=337418265,3258441697&fm=193.jpg',
-          url: '/public/uploads/u=337418265,3258441697&fm=193.jpg'
+          url: 'http://localhost:8080/public/uploads/u=337418265,3258441697&fm=193.jpg'
         }
       ],
       autoplay: true,

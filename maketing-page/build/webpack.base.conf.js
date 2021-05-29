@@ -11,6 +11,13 @@ module.exports  = {
     // 'babel-polyfill': 'babel-polyfill',
     clinet: './src/entry-clinet.js'
   },
+  externals: {
+    'vue': 'Vue',
+    'vue-router': 'VueRouter',
+    'axios': 'axios',
+    'element-ui': 'ELEMENT',
+    'vuex': 'Vuex',
+  },
   output: {
     path: buildConfig.build.assetsRoot,
     filename: '[name].js',
