@@ -11,7 +11,7 @@ const template = fs.readFileSync(resolve('./index.pro.html'), 'utf-8')  // 渲�
  
 let renderer
 
-  // 生成服务端渲染函数
+// 生成服务端渲染函数
 function createRenderer (serverbundle, clientBundle ,template) {
   // 生成服务端渲染函数
   return createBundleRenderer(serverbundle, {
@@ -23,12 +23,12 @@ function createRenderer (serverbundle, clientBundle ,template) {
     clientManifest: clientBundle
   })
 }
-
-const serve = (path, cache) => express.static(resolve(path), { // 静态资源设置缓存
+// 静态资源设置缓存
+const serve = (path, cache) => express.static(resolve(path), { 
   maxAge: cache ? 60 * 60 * 24 * 30 : 0 
 })
-
-server.use('/dist', serve('./dist', true)) // 静态资源
+// 静态资源
+server.use('/static', serve('./dist/static', true)) 
 
 renderer = createRenderer(serverBundle, clientBundle, template)
 
@@ -59,7 +59,7 @@ server.get('*',async(req, res) => {
   }
  try {
     res.setHeader('Content-Type', 'text/html')
-    const context = { title: 'SSR我来啦', url: req.url  }
+    const context = { title: 'marketing-page-SSR', url: req.url  }
     const html = await renderToString(context)
     res.send(html)
   } catch (error) {
