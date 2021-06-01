@@ -27,7 +27,7 @@ function createRenderer (serverbundle, clientBundle ,template) {
 const serve = (path, cache) => express.static(resolve(path), { 
   maxAge: cache ? 60 * 60 * 24 * 30 : 0 
 })
-// 静态资源
+// 静态资源目录
 server.use('/static', serve('./dist/static', true)) 
 
 renderer = createRenderer(serverBundle, clientBundle, template)

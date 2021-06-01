@@ -18,5 +18,6 @@ export default {
   blogMsgComentList: resolve => require(['@/pages/tabpage/webfeatures/blogMsgComentList'], resolve),
   test: resolve => require(['@/pages/tabpage/testPage/test'], resolve),
   page404: resolve => require(['@/pages/tabpage/404/404.vue'], resolve),
-  autoPage: resolve => require(['@/pages/tabpage/autoPage/index.vue'], resolve)
+  autoConfig: resolve => require(['@/pages/tabpage/autoPage/autoConfig.vue'], resolve),
+  autoList: resolve => require(['@/pages/tabpage/autoPage/autoList.vue'], resolve)
 }

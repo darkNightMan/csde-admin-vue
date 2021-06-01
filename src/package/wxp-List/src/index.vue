@@ -15,7 +15,7 @@ export default {
     propsAttr: {
       imgUrl: {
         type: String,
-        default: 'http://localhost:8080/public/uploads/84ae30c406481c699e9e0294838d6852.jpg'
+        default: 'http://localhost:8080/public/uploads/5ba338b158474650.jpg'
       },
       title: {
         type: String,
@@ -23,7 +23,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 
@@ -32,7 +31,6 @@ export default {
   border: 1px solid #333;
   padding: 4px;
   width: 100%;
-  box-shadow: 3px 5px 6px #eee;
   img{
     width: 100%;
   }
@@ -41,5 +39,4 @@ export default {
     padding: 6px;
   }
 }
-
 </style>

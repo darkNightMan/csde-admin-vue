@@ -49,5 +49,10 @@ export const api = {
   createMsgCommentsList: '/api/blogs/createMsgCommentsList',
   updateMsgCommentsList: '/api/blogs/updateMsgCommentsList',
   deleteMsgCommentsList: '/api/blogs/deleteMsgCommentsList',
-  msgCommentDetail: '/api/blogs/msgCommentDetail'
+  msgCommentDetail: '/api/blogs/msgCommentDetail',
+  maketingList: '/api/maketing/list', // 列表
+  maketingCreate: '/api/maketing/create', // 添加
+  maketingUpdate: '/api/maketing/update', // 更新
+  maketingDelete: '/api/maketing/delete'
+
 }
