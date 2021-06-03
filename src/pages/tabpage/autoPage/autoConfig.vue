@@ -29,7 +29,6 @@ export default {
     }
   },
   created () {
-    debugger
     this.$redoPage()
   },
   methods: {

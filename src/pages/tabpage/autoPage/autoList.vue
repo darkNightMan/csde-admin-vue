@@ -26,7 +26,7 @@
         <el-table-column     align="center"   prop="update_time"      label="更新时间"></el-table-column>
         <el-table-column     align="center"      label="地址">
            <template slot-scope="scope">
-              maketint-{{scope.row.id}}.html
+              marketint-{{scope.row.id}}.html
             </template>
         </el-table-column>
       <el-table-column  label="操作">
