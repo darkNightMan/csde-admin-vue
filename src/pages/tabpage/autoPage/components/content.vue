@@ -1,7 +1,7 @@
 <template>
   <div  class='content' :style="{height: $windowHeight() + 'px'}">
      <el-scrollbar class="page-component__nav" style="height:100%" >
-        <editBar></editBar>
+        <editBar :params="params" :init="init" :tabsIndex="tabsIndex"></editBar>
         <contentItem :list="ComList"  :isEdit="true"></contentItem>
      </el-scrollbar>
   </div>
@@ -10,6 +10,7 @@
 import contentItem from './contentItem'
 import editBar from './editBar'
 export default {
+  props: ['params', 'init', 'tabsIndex'],
   components: {
     contentItem,
     editBar
@@ -20,6 +21,13 @@ export default {
     }
   },
   created () {
+    let comConfig = this.params.mk_config
+    if (comConfig) {
+      let config = JSON.parse(comConfig)
+      config.map((item) => {
+        this.$addComponents(item)
+      })
+    }
   },
   computed: {
     ComList: {

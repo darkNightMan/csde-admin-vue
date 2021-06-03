@@ -24,6 +24,9 @@ const actions = {
   // 重做
   redoPage ({ commit }) {
     commit('redoPageM')
+  },
+  setComponent ({ commit }, data) {
+    commit('addComponentM', data)
   }
 }
 const mutations = {
@@ -46,6 +49,9 @@ const mutations = {
       })
     }
     delFn(state.comList, data.uuid)
+  },
+  setComponentM (state, data) {
+    state.comList = data
   },
   addComponentM (state, data) {
     state.uuid = data.uuid

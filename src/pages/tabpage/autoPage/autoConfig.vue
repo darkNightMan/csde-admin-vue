@@ -5,7 +5,7 @@
         <leftCom @createComKey="createComKey" @handPushList="handPushList"></leftCom>
       </el-col>
       <el-col :span="16">
-        <contentCenter></contentCenter>
+        <contentCenter :params="$params" :init="$init" :tabsIndex="$tabsIndex"></contentCenter>
       </el-col>
       <el-col :span="5">
         <rightAttr></rightAttr>
@@ -13,12 +13,12 @@
     </el-row>
   </div>
 </template>
-
 <script>
 import leftCom from './components/leftCom'
 import contentCenter from './components/content'
 import rightAttr from './components/rightAttr'
 export default {
+  props: ['$params', '$init', '$tabsIndex'],
   components: {
     leftCom,
     contentCenter,
@@ -29,7 +29,8 @@ export default {
     }
   },
   created () {
-    console.log(this)
+    debugger
+    this.$redoPage()
   },
   methods: {
     createComKey (index, list) {

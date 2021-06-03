@@ -50,9 +50,9 @@ export const api = {
   updateMsgCommentsList: '/api/blogs/updateMsgCommentsList',
   deleteMsgCommentsList: '/api/blogs/deleteMsgCommentsList',
   msgCommentDetail: '/api/blogs/msgCommentDetail',
-  maketingList: '/api/maketing/list', // 列表
-  maketingCreate: '/api/maketing/create', // 添加
-  maketingUpdate: '/api/maketing/update', // 更新
-  maketingDelete: '/api/maketing/delete'
+  marketingList: '/api/marketing/list', // 列表
+  marketingCreate: '/api/marketing/create', // 添加
+  marketingUpdate: '/api/marketing/update', // 更新
+  marketingDelete: '/api/marketing/delete'
 
 }
