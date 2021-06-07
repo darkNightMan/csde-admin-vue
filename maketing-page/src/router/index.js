@@ -8,7 +8,7 @@ export function createRouter () {
     mode: 'history',
     routes: [
       {
-        path: '/marketing.html',
+        path: '/marketing-:id.html',
         name: 'marketing',
         component: marketing
       },

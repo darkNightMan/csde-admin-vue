@@ -26,7 +26,6 @@ export function createApp () {
     store,
     render: h => h(App)
   })
-  const matchedComponents = router.getMatchedComponents('/')
   // 返回 app 和 router
   return { app, router ,store}
 }

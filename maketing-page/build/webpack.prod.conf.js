@@ -25,7 +25,7 @@ module.exports = merge(baseWebpackConfig, {
     chunkFilename: assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
-    // http://vuejs.github.io/vue-loader/en/workflow/production.html
+    // 设置环境变量
     new webpack.DefinePlugin({
       'process.env': buildconfig.build.env
     }),   

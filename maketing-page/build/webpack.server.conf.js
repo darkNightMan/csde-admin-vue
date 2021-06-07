@@ -32,5 +32,4 @@ const serveConfig = merge(base, {
     new VueSSRServerPlugin()
   ]
 });
-console.log(serveConfig,"SERVERS")
 module.exports = serveConfig

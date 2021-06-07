@@ -30,7 +30,6 @@ Vue.mixin({
   // },
   // 客户端数据预取 (Client Data Fetching)
   beforeRouteEnter (to, from, next) {
-    console.log('beforeRouteEnter')
     next((vm)=>{
       const { asyncData } = vm.$options
       if (asyncData) {

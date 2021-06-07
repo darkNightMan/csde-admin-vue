@@ -19,7 +19,7 @@ module.exports = merge(baseConfig,{
       disableDotRule: true,
       rewrites: [
         {
-          from: /marketing\.html/g,
+          from: /marketing-.*\.html/g,
           to: '/index.html'
         },
         {
@@ -31,6 +31,7 @@ module.exports = merge(baseConfig,{
     proxy: config.dev.proxyTable
   },
   plugins :[
+    // 设置环境变量
     new webpack.DefinePlugin({  // 设置node 全局变量 判断当前build 环境
       'process.env': config.dev.env
     }),

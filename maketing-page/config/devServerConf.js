@@ -15,7 +15,7 @@ module.exports = {
     proxyTable: {   // 代理配置，对于另外有单独的后端开发服务器API来说比较适合。
       '/api':
        {
-         target: 'http://172.16.2.225:8069',
+         target: 'http://localhost:10086',
          changeOrigin: true,
         }
     },
