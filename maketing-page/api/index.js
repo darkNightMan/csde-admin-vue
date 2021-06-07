@@ -1,10 +1,7 @@
-
-let  baseURL = ''
-if (process.env.NODE_ENV === 'development') {
-  baseURL = '/'
-} else {
+let baseURL = ''
+if (process.env.VUE_ENV === 'server') {
   baseURL = 'http://127.0.0.1:10086/'
+} else {
+  baseURL = '/'
 }
-console.log(baseURL, 'baseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURL')
-
 export default baseURL

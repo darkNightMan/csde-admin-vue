@@ -9,15 +9,18 @@
 <script>
 export default {
   asyncData ({store, app}) {
-      // return store.dispatch('market/getConfig', app.$route.params.id) // 返回promise 
+    return store.dispatch('market/getConfig', app.$route.params.id) // 返回promise 
   },
-  async created () {
-    this.$getConfig(this.$route.params.id)
-  },
+  // async created () {
+  //   this.$getConfig(this.$route.params.id)
+  // },
   data () {
     return {
       ComList: []
     }
+  },
+  mounted () {
+    console.log(this.$store)
   }
 }
 </script>

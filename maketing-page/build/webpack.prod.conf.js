@@ -10,10 +10,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const assetsPath = function (_path) { // 
   /* 兼容多平台拼接编译输出文件路径 */
-  const assetsSubDirectory = process.env.NODE_ENV === 'production'
-    ? buildconfig.build.assetsSubDirectory
-    : devServer.dev.assetsSubDirectory
-
+  const assetsSubDirectory = process.env.NODE_ENV === 'production'  ? buildconfig.build.assetsSubDirectory  : devServer.dev.assetsSubDirectory
   return path.posix.join(assetsSubDirectory, _path)
 }
 module.exports = merge(baseWebpackConfig, {  

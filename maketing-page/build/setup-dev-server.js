@@ -30,7 +30,7 @@ module.exports = function setupDevServer (app, cb) {
   clientCompiler.plugin('done', () => {
     const fs = devMiddleware.fileSystem
     console.log(fs,'fsfsfsfsfs')
-    const filePath = path.join(clientConfig.output.path, 'index.ssr.html') // 模板为打包后的html文件
+    const filePath = path.join(clientConfig.output.path, 'index.html') // 模板为打包后的html文件
     console.log(filePath,'filePath--------------------------------------')
     console.log(fs.existsSync(filePath),'fs.existsSync(filePath)fs.existsSync(filePath)fs.existsSync(filePath)fs.existsSync(filePath)')
     if (fs.existsSync(filePath)) {

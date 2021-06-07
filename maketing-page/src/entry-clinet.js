@@ -14,7 +14,6 @@ for (let key in components) {
       }))
   }
 }
-console.log( App.components )
 Vue.mixin({
   // beforeMount () {
   //   const { asyncData } = this.$options

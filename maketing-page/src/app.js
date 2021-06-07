@@ -9,7 +9,6 @@ import { installComponents } from '@/package'
 Vue.config.productionTip = false
 Vue.use(ElementUI) // 引入饿了么主题
 Vue.component('vuedraggable', vuedraggable)
-Vue.config.productionTip = false
 // 安装组件
 installComponents(Vue)
 export function createApp () {

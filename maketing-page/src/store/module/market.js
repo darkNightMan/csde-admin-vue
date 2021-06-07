@@ -11,8 +11,8 @@ const getters = {
 const actions = {
   async getConfig({commit}, id) {
     try {
-      console.log(baseURL, 'baseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURLbaseURL')
-      const { data } = await axios.get(`${baseURL}api/marketing/getMarketPage?id=${id}`)
+      let url = `${baseURL}api/marketing/getMarketPage?id=${id}`
+      const { data } = await axios.get(url)
       commit('setConfig', data)
     } catch (ex) {
       console.log(ex)

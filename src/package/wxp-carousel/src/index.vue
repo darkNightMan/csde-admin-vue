@@ -1,7 +1,7 @@
 <template>
   <div class="swiper">
     <el-carousel  :autoplay="propsAttr.autoplay" :direction="propsAttr.direction" :interval="propsAttr.interval">
-        <el-carousel-item v-for="item in propsAttr.imgUrlArr" :key="item">
+        <el-carousel-item v-for="(item, index) in propsAttr.imgUrlArr" :key="index">
         <img :src="item.url"/>
         </el-carousel-item>
     </el-carousel>
@@ -17,7 +17,6 @@ export default {
     }
   },
   created () {
-    console.log(this)
   },
   props: {
     propsAttr: {
