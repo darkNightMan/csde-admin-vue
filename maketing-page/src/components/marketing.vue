@@ -8,9 +8,11 @@
 
 <script>
 export default {
+  // 服务端都执行
   asyncData ({store, app}) {
     return store.dispatch('market/getConfig', app.$route.params.id) // 返回promise 
   },
+  // 客户端和服务端都执行
   // async created () {
   //   this.$getConfig(this.$route.params.id)
   // },

@@ -1,6 +1,6 @@
 <template>
   <div>
-     <el-form ref="form"  label-width="120px">
+     <el-form ref="form"  label-width="80px">
         <div>
             <el-form-item label="图片地址" >
                 <el-upload
@@ -10,12 +10,24 @@
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
                     :headers="Headers"
+                    :show-file-list="false"
                     :file-list="localPropsAttr.imgUrlArr"
                     :on-success="handleSuccess"
                     list-type="picture">
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
+                 <ul class="file-list-box">
+                      <li v-for="(item, index) in localPropsAttr.imgUrlArr" :key="index">
+                        <div class="image-box">
+                          <img :src="item.bannerUrl"/>
+                          <span>{{item.name}}</span>
+                        </div>
+                        <p class="input-url">
+                          <el-input  placeholder="请输入跳转地址"  v-model.number="item.url"  clearable></el-input>
+                        </p>
+                      </li>
+                    </ul>
             </el-form-item>
             <el-form-item label="是否自动轮播">
                <el-switch  v-model="localPropsAttr.autoplay"  active-color="#13ce66"  inactive-color="#ff4949"></el-switch>
@@ -65,7 +77,7 @@ export default {
   },
   props: {
     propsAttr: {
-      imgUrlArr: Object,
+      imgUrlArr: Array,
       autoplay: Boolean,
       interval: Number,
       direction: String
@@ -95,7 +107,8 @@ export default {
     handleSuccess (res, file) {
       this.localPropsAttr.imgUrlArr.push({
         name: file.name,
-        url: res.data.path
+        bannerUrl: res.data.path,
+        url: ''
       })
     }
   },
@@ -104,3 +117,33 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+  .file-list-box{
+    li{
+      border-radius: 8px;
+      border: 1px solid #c0ccda;
+      overflow:hidden;
+      margin: 10px 0;
+      padding: 10px 0;
+      .image-box{
+        display: flex;
+        height: 80px;
+        img{
+          padding: 6px;
+          width: 80px;
+        }
+        span{
+          width: 90%;
+           white-space:nowrap;
+           overflow:hidden;
+           text-overflow:ellipsis;
+        }
+      }
+      .input-url{
+        width: 90%;
+        margin: 0px auto;
+      }
+    }
+  }
+</style>

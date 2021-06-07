@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/marketing.html">WANG</router-link> 
-    </div>
-    <router-View>ts</router-View>
+    <router-View></router-View>
   </div>
 </template>
 

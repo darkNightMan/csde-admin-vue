@@ -15,7 +15,7 @@ export default {
     propsAttr: {
       imgUrl: {
         type: String,
-        default: 'http://localhost:8080/public/uploads/5ba338b158474650.jpg'
+        default: '/public/uploads/5ba338b158474650.jpg'
       },
       title: {
         type: String,

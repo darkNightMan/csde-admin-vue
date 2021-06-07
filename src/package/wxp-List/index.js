@@ -7,7 +7,7 @@ export default {
     comAttrTag: 'attr-list',
     comIcon: 'fa fa-file-image-o',
     propsAttr: {
-      imgUrl: 'http://localhost:8080/public/uploads/5ba338b158474650.jpg',
+      imgUrl: '/public/uploads/5ba338b158474650.jpg',
       title: '自动化列表'
     },
     // 事件
