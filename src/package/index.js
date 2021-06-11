@@ -8,7 +8,7 @@ const components = [
   Carousel,
   Grid
 ]
-// 异步加载组件
+// 安装组件
 const installComponents = (Vue) => {
   components.forEach(key => {
     if (key.component.name) {

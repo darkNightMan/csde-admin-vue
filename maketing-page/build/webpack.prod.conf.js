@@ -34,20 +34,6 @@ module.exports = merge(baseWebpackConfig, {
     // 此插件在输出目录中
        // 生成 `vue-ssr-client-manifest.json`。
     new VueSSRClientPlugin(),
-
-    // new HtmlWebpackPlugin({
-    //   filename: buildconfig.build.index,
-    //   template: 'index.html',
-    //   inject: true,
-    //   // favicon: path.resolve(__dirname, 'favicon.ico'),s
-    //   // minify: { // 压缩的方式
-    //   //   removeComments: true,
-    //   //   collapseWhitespace: true,
-    //   //   removeAttributeQuotes: true       
-    //   // },
-    //   // // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-    //   // chunksSortMode: 'dependency'
-    // }),
   ],
   optimization: {
     minimizer: [

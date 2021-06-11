@@ -32,13 +32,11 @@ export default {
     this.$redoPage()
   },
   methods: {
-    createComKey (index, list) {
-    },
     handPushList (index, list) {
       let currentCom = list[index]
       currentCom['uuid'] = currentCom.comAttrTag + '_' + new Date().getTime()
-      const listString = JSON.stringify(currentCom)
-      this.$addComponents(JSON.parse(listString))
+      const currentString = JSON.stringify(currentCom)
+      this.$addComponents(JSON.parse(currentString))
     }
   }
 }

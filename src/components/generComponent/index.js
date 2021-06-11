@@ -13,10 +13,6 @@ export default {
         return h(that.com.comTag, { props: that.com.propsAttr})
       },
       methods: {
-        Fnclick (uuid, id) {
-          this.current = uuid
-          // this.$store.commit('EditPanel/changeId', uuid)
-        }
       }
     }))
   },
