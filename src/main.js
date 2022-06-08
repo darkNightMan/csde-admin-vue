@@ -25,7 +25,7 @@ Vue.use(ElementUI) // 引入饿了么主题
 Vue.use(iconPicker) // icon
 Vue.use(VueCropper) // 图片剪切
 Vue.use(myComponents) // 自己的组件
-Vue.use(perms) //  权限
+Vue.use(perms) //  权限2
 Vue.use(JsonViewer)
 Vue.prototype.Req = new Req()
 
